@@ -12,7 +12,8 @@
 # License:                                                                                                             #
 # ==================================================================================================================== #
 # Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2014-2016 Technische Universität Dresden - Germany                                                         #
+#                     Chair of VLSI-Design, Diagnostics and Architecture                                               #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -30,23 +31,33 @@
 # ==================================================================================================================== #
 #
 """\
-Package installer for 'An abstraction layer of EDA CLI tools'.
+This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__.
 """
-from pathlib             import Path
-from pyTooling.Packaging import DescribePythonPackageHostedOnGitHub
+from typing import Dict, Optional
 
-gitHubNamespace =        "edaa-org"
-packageName =            "pyEDAA.CLIAbstraction"
-packageDirectory =       packageName.replace(".", "/")
-packageInformationFile = Path(f"{packageDirectory}/__init__.py")
+from pyTooling.CLIAbstraction.Executable import Executable
+from pyTooling.CLIAbstraction.Argument   import CommandLineArgument, ExecutableArgument, LongFlagArgument, CommandArgument
 
-DescribePythonPackageHostedOnGitHub(
-	packageName=packageName,
-	description="An abstraction layer of EDA CLI tools.",
-	gitHubNamespace=gitHubNamespace,
-	sourceFileWithVersion=packageInformationFile,
-	developmentStatus="pre-alpha",
-	classifiers=[
-		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
-	]
-)
+
+class GHDL(Executable):
+	class Executable(metaclass=ExecutableArgument):
+		pass
+
+	class FlagHelp(metaclass=LongFlagArgument):
+		_name = "help"
+
+	class FlagVersion(metaclass=LongFlagArgument):
+		_name = "version"
+
+	class CommandAnalyze(metaclass=CommandArgument):
+		_name = "analyze"
+
+	class CommandElaborate(metaclass=CommandArgument):
+		_name = "elaborate"
+
+	Parameters: Dict[CommandLineArgument, Optional[CommandLineArgument]] = {
+			Executable: None,
+			FlagHelp: None,
+			FlagVersion: None,
+			CommandAnalyze: None
+	}

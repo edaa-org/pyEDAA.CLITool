@@ -12,7 +12,8 @@
 # License:                                                                                                             #
 # ==================================================================================================================== #
 # Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2014-2016 Technische Universität Dresden - Germany                                                         #
+#                     Chair of VLSI-Design, Diagnostics and Architecture                                               #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -30,23 +31,23 @@
 # ==================================================================================================================== #
 #
 """\
-Package installer for 'An abstraction layer of EDA CLI tools'.
+Unit tests for executable ``ghdl``.
 """
-from pathlib             import Path
-from pyTooling.Packaging import DescribePythonPackageHostedOnGitHub
+from unittest import TestCase
 
-gitHubNamespace =        "edaa-org"
-packageName =            "pyEDAA.CLIAbstraction"
-packageDirectory =       packageName.replace(".", "/")
-packageInformationFile = Path(f"{packageDirectory}/__init__.py")
+from CLITool.GHDL import GHDL
 
-DescribePythonPackageHostedOnGitHub(
-	packageName=packageName,
-	description="An abstraction layer of EDA CLI tools.",
-	gitHubNamespace=gitHubNamespace,
-	sourceFileWithVersion=packageInformationFile,
-	developmentStatus="pre-alpha",
-	classifiers=[
-		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
-	]
-)
+
+class CommonOptions(TestCase):
+	def test_Help(self):
+		tool = GHDL()
+		tool[tool.FlagHelp] = True
+
+	def test_Version(self):
+		tool = GHDL()
+		tool[tool.FlagVersion] = True
+
+class Analyze(TestCase):
+	def test_AnalyzeFile(self):
+		tool = GHDL()
+		tool[tool.CommandAnalyze] = True
