@@ -26,7 +26,7 @@
 -->
 
 <p align="center">
-  <a title="edaa-org.github.io/pyEDAA.UCIS" href="https://edaa-org.github.io/pyEDAA.UCIS"><img height="275px" src="doc/_static/work-in-progress.png"/></a>
+  <a title="edaa-org.github.io/pyEDAA.CLITool" href="https://edaa-org.github.io/pyEDAA.CLITool"><img height="275px" src="doc/_static/work-in-progress.png"/></a>
 </p>
 
 # Main Goals
