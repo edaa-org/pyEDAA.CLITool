@@ -33,31 +33,20 @@
 """\
 This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__.
 """
-from typing import Dict, Optional
-
+from pyTooling.CLIAbstraction            import CLIOption
 from pyTooling.CLIAbstraction.Executable import Executable
-from pyTooling.CLIAbstraction.Argument   import CommandLineArgument, ExecutableArgument, LongFlagArgument, CommandArgument
+from pyTooling.CLIAbstraction.Argument   import CommandArgument, LongFlagArgument
 
 
 class GHDL(Executable):
-	class Executable(metaclass=ExecutableArgument):
-		pass
+	@CLIOption()
+	class FlagHelp(LongFlagArgument, name="help"): ...
 
-	class FlagHelp(metaclass=LongFlagArgument):
-		_name = "help"
+	@CLIOption()
+	class FlagVersion(LongFlagArgument, name="version"): ...
 
-	class FlagVersion(metaclass=LongFlagArgument):
-		_name = "version"
+	@CLIOption()
+	class CommandAnalyze(CommandArgument, name="analyze"): ...
 
-	class CommandAnalyze(metaclass=CommandArgument):
-		_name = "analyze"
-
-	class CommandElaborate(metaclass=CommandArgument):
-		_name = "elaborate"
-
-	Parameters: Dict[CommandLineArgument, Optional[CommandLineArgument]] = {
-			Executable: None,
-			FlagHelp: None,
-			FlagVersion: None,
-			CommandAnalyze: None
-	}
+	@CLIOption()
+	class CommandElaborate(CommandArgument, name="elaborate"): ...
