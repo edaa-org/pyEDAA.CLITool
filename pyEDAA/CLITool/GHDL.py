@@ -35,7 +35,7 @@ This module contains the CLI abstraction layer for `GHDL <https://github.com/ghd
 """
 from pyTooling.CLIAbstraction            import CLIOption
 from pyTooling.CLIAbstraction.Executable import Executable
-from pyTooling.CLIAbstraction.Argument   import CommandArgument, LongFlagArgument
+from pyTooling.CLIAbstraction.Argument   import CommandArgument, ShortFlagArgument, LongFlagArgument, LongValuedFlagArgument
 
 
 class GHDL(Executable):
@@ -46,7 +46,43 @@ class GHDL(Executable):
 	class FlagVersion(LongFlagArgument, name="version"): ...
 
 	@CLIOption()
+	class FlagVerbose(ShortFlagArgument, name="v"): ...
+
+	# Analyze options
+	@CLIOption()
 	class CommandAnalyze(CommandArgument, name="analyze"): ...
 
+	@CLIOption()
+	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+
+	@CLIOption()
+	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
+
+	@CLIOption()
+	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
+
+	@CLIOption()
+	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
+
+	@CLIOption()
+	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
+
+	@CLIOption()
+	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
+
+	@CLIOption()
+	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
+
+	@CLIOption()
+	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...
+
+	@CLIOption()
+	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
+
+	# TODO: -Pdirectory
+
+	# TODO: list of files (path list)
+
+	# Elaborate options
 	@CLIOption()
 	class CommandElaborate(CommandArgument, name="elaborate"): ...
