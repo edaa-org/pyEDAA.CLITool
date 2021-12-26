@@ -35,7 +35,11 @@ This module contains the CLI abstraction layer for `GHDL <https://github.com/ghd
 """
 from pyTooling.CLIAbstraction            import CLIOption
 from pyTooling.CLIAbstraction.Executable import Executable
-from pyTooling.CLIAbstraction.Argument   import CommandArgument, ShortFlagArgument, LongFlagArgument, LongValuedFlagArgument
+from pyTooling.CLIAbstraction.Argument   import (
+	CommandArgument,
+	ShortFlagArgument, LongFlagArgument,
+	ShortValuedFlagArgument, LongValuedFlagArgument
+)
 
 
 class GHDL(Executable):
@@ -79,7 +83,8 @@ class GHDL(Executable):
 	@CLIOption()
 	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
 
-	# TODO: -Pdirectory
+	@CLIOption()
+	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"): ...
 
 	# TODO: list of files (path list)
 
