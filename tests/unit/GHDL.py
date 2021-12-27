@@ -30,6 +30,7 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl``."""
+from os                   import environ as os_environ
 from pathlib              import Path
 from unittest             import TestCase
 
@@ -37,7 +38,7 @@ from pyEDAA.CLITool.GHDL  import GHDL
 
 
 class CommonOptions(TestCase):
-	_binaryDirectoryPath = Path(r"C:\Tools\GHDL\2.0.0.dev0-mingw32-mcode\bin")
+	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
 
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -53,7 +54,7 @@ class CommonOptions(TestCase):
 
 
 class Analyze(TestCase):
-	_binaryDirectoryPath = Path(r"C:\Tools\GHDL\2.0.0.dev0-mingw32-mcode\bin")
+	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
 
 	def test_AnalyzeFile(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)

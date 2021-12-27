@@ -33,6 +33,7 @@
 from pyTooling.CLIAbstraction            import CLIOption
 from pyTooling.CLIAbstraction.Executable import Executable
 from pyTooling.CLIAbstraction.Argument   import (
+	ExecutableArgument,
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
 	ShortValuedFlagArgument, LongValuedFlagArgument
@@ -100,9 +101,13 @@ class GHDL(Executable):
 		tool[tool.CommandAnalyze] = True
 
 		for key in self.__cliParameters__:
+			if issubclass(key, ExecutableArgument):
+				continue
+
 			if self._NeedsParameterInitialization(key):
-				tool.__cliParameters__[key] = key(self.__cliParameters__[key].Value)
+				value = self.__cliParameters__[key].Value
+				tool.__cliParameters__[key] = key(value)
 			else:
-				tool.__cliParameters__[key] = True
+				tool.__cliParameters__[key] = key()
 
 		return tool
