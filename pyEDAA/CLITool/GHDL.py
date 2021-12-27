@@ -42,8 +42,8 @@ from pyTooling.CLIAbstraction.Argument   import (
 
 class GHDL(Executable):
 	_executableNames = {
-		"Windows": "ghdl.exe",
-		"Linux": "ghdl"
+		"Linux":   "ghdl",
+		"Windows": "ghdl.exe"
 	}
 
 	@CLIOption()

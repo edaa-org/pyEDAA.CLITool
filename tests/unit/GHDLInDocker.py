@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2021-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,46 +28,52 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction.Executable import Executable
-from pyTooling.CLIAbstraction.Argument   import (
-	CommandArgument,
-	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument,
-	LongTupleArgument,
-	StringArgument
-)
+"""Unit tests for executable ``ghdl`` inside a container run via Docker."""
+from pytest                 import mark
+from unittest               import TestCase
+
+from pyEDAA.CLITool.GHDL    import GHDL
+from pyEDAA.CLITool.Docker  import Docker
 
 
-class Docker(Executable):
-	_executableNames = {
-		"Linux":   "docker",
-		"Windows": "docker.exe"
-	}
+class GHDLInDocker(Docker, GHDL):
+	pass
 
-	# 'version' sub commands and options
-	@CLIOption()
-	class CommandVersion(CommandArgument, name="version"): ...
 
-	# 'container' sub commands and options
-	@CLIOption()
-	class CommandContainer(CommandArgument, name="container"): ...
+class CommonOptions(TestCase):
+	@mark.xfail
+	def test_Help(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[GHDL.FlagHelp] = True
+		tool[Docker.CommandContainer] = True
+		tool[Docker.CommandRun] = True
+		tool[Docker.FlagRemoveContainer] = True
+		tool[Docker.ValueImageName] = "ghdl:latest"
 
-	@CLIOption()
-	class CommandRun(CommandArgument, name="run"): ...
+		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
 
-	@CLIOption()
-	class FlagContainerName(LongTupleArgument, name="name"): ...
+	@mark.xfail
+	def test_Version(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[Docker.CommandContainer] = True
+		tool[Docker.CommandRun] = True
+		tool[Docker.FlagRemoveContainer] = True
+		tool[Docker.ValueImageName] = "ghdl:latest"
+		tool[GHDL.FlagVersion] = True
 
-	@CLIOption()
-	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
+		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
 
-	@CLIOption()
-	class FlagMount(LongTupleArgument, name="mount"): ...
 
-	@CLIOption()
-	class FlagVolume(LongTupleArgument, name="volume"): ...
+class Analyze(TestCase):
+	@mark.xfail
+	def test_AnalyzeFile(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[tool.CommandAnalyze] = True
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+		tool[tool.FlagLibrary] = "lib_Test"
 
-	@CLIOption()
-	class ValueImageName(StringArgument): ...
+		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))

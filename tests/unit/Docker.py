@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2021-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,46 +28,30 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction.Executable import Executable
-from pyTooling.CLIAbstraction.Argument   import (
-	CommandArgument,
-	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument,
-	LongTupleArgument,
-	StringArgument
-)
+"""Unit tests for container execution via ``docker``."""
+from pytest                 import mark
+from sys                    import platform as sys_platform
+from unittest               import TestCase
+
+from pyEDAA.CLITool.Docker  import Docker
 
 
-class Docker(Executable):
-	_executableNames = {
-		"Linux":   "docker",
-		"Windows": "docker.exe"
-	}
+@mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
+class CommonOptions(TestCase):
+	def test_Version(self):
+		tool = Docker(dryRun=True)
+		tool[tool.CommandVersion] = True
 
-	# 'version' sub commands and options
-	@CLIOption()
-	class CommandVersion(CommandArgument, name="version"): ...
+		self.assertEqual(f"[\"docker.exe\", \"version\"]", repr(tool))
 
-	# 'container' sub commands and options
-	@CLIOption()
-	class CommandContainer(CommandArgument, name="container"): ...
 
-	@CLIOption()
-	class CommandRun(CommandArgument, name="run"): ...
+@mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
+class Analyze(TestCase):
+	def test_Alpine(self):
+		tool = Docker(dryRun=True)
+		tool[tool.CommandContainer] = True
+		tool[tool.CommandRun] = True
+		tool[tool.FlagRemoveContainer] = True
+		tool[tool.ValueImageName] = "alpine:latest"
 
-	@CLIOption()
-	class FlagContainerName(LongTupleArgument, name="name"): ...
-
-	@CLIOption()
-	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
-
-	@CLIOption()
-	class FlagMount(LongTupleArgument, name="mount"): ...
-
-	@CLIOption()
-	class FlagVolume(LongTupleArgument, name="volume"): ...
-
-	@CLIOption()
-	class ValueImageName(StringArgument): ...
+		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"alpine:latest\"]", repr(tool))
