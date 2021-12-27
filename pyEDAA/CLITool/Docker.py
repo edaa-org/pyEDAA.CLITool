@@ -34,56 +34,36 @@ from pyTooling.CLIAbstraction.Executable import Executable
 from pyTooling.CLIAbstraction.Argument   import (
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument
+	ShortValuedFlagArgument, LongValuedFlagArgument,
+	LongTupleArgument,
+	StringArgument
 )
 
 
-class GHDL(Executable):
-	@CLIOption()
-	class FlagHelp(LongFlagArgument, name="help"): ...
+class Docker(Executable):
+	_executableNames = {
+		"Linux": "docker"
+	}
 
 	@CLIOption()
-	class FlagVersion(LongFlagArgument, name="version"): ...
+	class CommandContainer(CommandArgument, name="container"): ...
+
+	# 'container' sub commands and options
+	@CLIOption()
+	class CommandRun(CommandArgument, name="run"): ...
+
+	# --name
+	@CLIOption()
+	class FlagContainerName(LongTupleArgument, name="name"): ...
 
 	@CLIOption()
-	class FlagVerbose(ShortFlagArgument, name="v"): ...
-
-	# Analyze options
-	@CLIOption()
-	class CommandAnalyze(CommandArgument, name="analyze"): ...
+	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
 
 	@CLIOption()
-	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+	class FlagMount(LongTupleArgument, name="mount"): ...
 
 	@CLIOption()
-	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
+	class FlagVolume(LongTupleArgument, name="volume"): ...
 
 	@CLIOption()
-	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
-
-	@CLIOption()
-	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
-
-	@CLIOption()
-	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
-
-	@CLIOption()
-	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
-
-	@CLIOption()
-	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
-
-	@CLIOption()
-	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...
-
-	@CLIOption()
-	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
-
-	@CLIOption()
-	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"): ...
-
-	# TODO: list of files (path list)
-
-	# Elaborate options
-	@CLIOption()
-	class CommandElaborate(CommandArgument, name="elaborate"): ...
+	class ValueImageName(StringArgument): ...
