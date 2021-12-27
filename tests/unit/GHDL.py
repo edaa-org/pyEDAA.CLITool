@@ -30,21 +30,53 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl``."""
+from pathlib              import Path
 from unittest             import TestCase
 
 from pyEDAA.CLITool.GHDL  import GHDL
 
 
 class CommonOptions(TestCase):
+	_binaryDirectoryPath = Path(r"C:\Tools\GHDL\2.0.0.dev0-mingw32-mcode\bin")
+
 	def test_Help(self):
-		tool = GHDL()
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagHelp] = True
 
+		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"--help\"]", repr(tool))
+
 	def test_Version(self):
-		tool = GHDL()
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagVersion] = True
 
+		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"--version\"]", repr(tool))
+
+
 class Analyze(TestCase):
+	_binaryDirectoryPath = Path(r"C:\Tools\GHDL\2.0.0.dev0-mingw32-mcode\bin")
+
 	def test_AnalyzeFile(self):
-		tool = GHDL()
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandAnalyze] = True
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+		tool[tool.FlagLibrary] = "lib_Test"
+
+		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
+
+	def test_DeriveAnalyzer(self):
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+
+		derived = tool.DeriveForAnalyze()
+		derived[derived.FlagLibrary] = "lib_Test"
+
+		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(derived))
+

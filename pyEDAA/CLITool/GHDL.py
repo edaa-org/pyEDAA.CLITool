@@ -40,6 +40,11 @@ from pyTooling.CLIAbstraction.Argument   import (
 
 
 class GHDL(Executable):
+	_executableNames = {
+		"Windows": "ghdl.exe",
+		"Linux": "ghdl"
+	}
+
 	@CLIOption()
 	class FlagHelp(LongFlagArgument, name="help"): ...
 
@@ -88,3 +93,16 @@ class GHDL(Executable):
 	# Elaborate options
 	@CLIOption()
 	class CommandElaborate(CommandArgument, name="elaborate"): ...
+
+	def DeriveForAnalyze(self):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandAnalyze] = True
+
+		for key in self.__cliParameters__:
+			if self._NeedsParameterInitialization(key):
+				tool.__cliParameters__[key] = key(self.__cliParameters__[key].Value)
+			else:
+				tool.__cliParameters__[key] = True
+
+		return tool
