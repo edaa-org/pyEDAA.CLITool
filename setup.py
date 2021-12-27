@@ -29,9 +29,7 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""\
-Package installer for 'An abstraction layer of EDA CLI tools'.
-"""
+"""Package installer for 'An abstraction layer of EDA CLI tools'."""
 from pathlib             import Path
 from pyTooling.Packaging import DescribePythonPackageHostedOnGitHub, DEFAULT_CLASSIFIERS
 

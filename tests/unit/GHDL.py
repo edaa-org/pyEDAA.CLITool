@@ -12,8 +12,7 @@
 # License:                                                                                                             #
 # ==================================================================================================================== #
 # Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany                                                         #
-#                     Chair of VLSI-Design, Diagnostics and Architecture                                               #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -30,12 +29,10 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""\
-Unit tests for executable ``ghdl``.
-"""
-from unittest import TestCase
+"""Unit tests for executable ``ghdl``."""
+from unittest             import TestCase
 
-from CLITool.GHDL import GHDL
+from pyEDAA.CLITool.GHDL  import GHDL
 
 
 class CommonOptions(TestCase):

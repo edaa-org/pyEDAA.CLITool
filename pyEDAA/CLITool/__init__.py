@@ -12,8 +12,7 @@
 # License:                                                                                                             #
 # ==================================================================================================================== #
 # Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany                                                         #
-#                     Chair of VLSI-Design, Diagnostics and Architecture                                               #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -30,9 +29,7 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""\
-An abstraction layer of EDA CLI tools.
-"""
+"""An abstraction layer of EDA CLI tools."""
 __author__ =    "Patrick Lehmann"
 __email__ =     "Paebbels@gmail.com"
 __copyright__ = "2014-2021, Patrick Lehmann, Unai Martinez-Corral"
