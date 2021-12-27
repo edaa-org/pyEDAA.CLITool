@@ -34,13 +34,14 @@ from unittest               import TestCase
 
 from pyEDAA.CLITool.GHDL    import GHDL
 from pyEDAA.CLITool.Docker  import Docker
+from .                      import Helper
 
 
 class GHDLInDocker(Docker, GHDL):
 	pass
 
 
-class CommonOptions(TestCase):
+class CommonOptions(TestCase, Helper):
 	@mark.xfail
 	def test_Help(self):
 		tool = GHDLInDocker(dryRun=True)
@@ -50,7 +51,8 @@ class CommonOptions(TestCase):
 		tool[Docker.FlagRemoveContainer] = True
 		tool[Docker.ValueImageName] = "ghdl:latest"
 
-		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
 
 	@mark.xfail
 	def test_Version(self):
@@ -61,10 +63,11 @@ class CommonOptions(TestCase):
 		tool[Docker.ValueImageName] = "ghdl:latest"
 		tool[GHDL.FlagVersion] = True
 
-		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
 
 
-class Analyze(TestCase):
+class Analyze(TestCase, Helper):
 	@mark.xfail
 	def test_AnalyzeFile(self):
 		tool = GHDLInDocker(dryRun=True)
@@ -76,4 +79,5 @@ class Analyze(TestCase):
 		tool[tool.FlagMultiByteComments] = True
 		tool[tool.FlagLibrary] = "lib_Test"
 
-		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))

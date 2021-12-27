@@ -34,25 +34,28 @@ from pathlib              import Path
 from unittest             import TestCase
 
 from pyEDAA.CLITool.GHDL  import GHDL
+from .                    import Helper
 
 
-class CommonOptions(TestCase):
+class CommonOptions(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
 
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagHelp] = True
 
-		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"--help\"]", repr(tool))
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--help\"]", repr(tool))
 
 	def test_Version(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagVersion] = True
 
-		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"--version\"]", repr(tool))
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
 
 
-class Analyze(TestCase):
+class Analyze(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
 
 	def test_AnalyzeFile(self):
@@ -65,7 +68,8 @@ class Analyze(TestCase):
 		tool[tool.FlagMultiByteComments] = True
 		tool[tool.FlagLibrary] = "lib_Test"
 
-		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
 
 	def test_DeriveAnalyzer(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -78,5 +82,5 @@ class Analyze(TestCase):
 		derived = tool.DeriveForAnalyze()
 		derived[derived.FlagLibrary] = "lib_Test"
 
-		self.assertEqual(f"[\"{self._binaryDirectoryPath}\ghdl.exe\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(derived))
-
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(derived))

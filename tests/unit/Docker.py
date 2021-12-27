@@ -34,19 +34,21 @@ from sys                    import platform as sys_platform
 from unittest               import TestCase
 
 from pyEDAA.CLITool.Docker  import Docker
+from .                      import Helper
 
 
 @mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
-class CommonOptions(TestCase):
+class CommonOptions(TestCase, Helper):
 	def test_Version(self):
 		tool = Docker(dryRun=True)
 		tool[tool.CommandVersion] = True
 
-		self.assertEqual(f"[\"docker.exe\", \"version\"]", repr(tool))
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"version\"]", repr(tool))
 
 
 @mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
-class Analyze(TestCase):
+class Analyze(TestCase, Helper):
 	def test_Alpine(self):
 		tool = Docker(dryRun=True)
 		tool[tool.CommandContainer] = True
@@ -54,4 +56,5 @@ class Analyze(TestCase):
 		tool[tool.FlagRemoveContainer] = True
 		tool[tool.ValueImageName] = "alpine:latest"
 
-		self.assertEqual(f"[\"docker.exe\", \"container\", \"run\", \"--rm\", \"alpine:latest\"]", repr(tool))
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"alpine:latest\"]", repr(tool))
