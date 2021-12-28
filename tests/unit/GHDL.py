@@ -82,7 +82,7 @@ class Analyze(TestCase, Helper):
 		tool[tool.FlagExplicit] = True
 		tool[tool.FlagMultiByteComments] = True
 
-		derived = tool.DeriveForAnalyze()
+		derived = tool.GetGHDLAsAnalyzer()
 		derived[derived.FlagLibrary] = "lib_Test"
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
