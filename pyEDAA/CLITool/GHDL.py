@@ -32,10 +32,8 @@
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
 from pyVHDLModel import VHDLVersion
 
-from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction            import Executable
+from pyTooling.CLIAbstraction            import CLIOption, Executable
 from pyTooling.CLIAbstraction.Argument   import (
-	ExecutableArgument,
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
 	ShortValuedFlagArgument, LongValuedFlagArgument

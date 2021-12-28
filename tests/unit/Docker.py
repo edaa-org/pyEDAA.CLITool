@@ -55,6 +55,7 @@ class Analyze(TestCase, Helper):
 		tool[tool.CommandRun] = True
 		tool[tool.FlagRemoveContainer] = True
 		tool[tool.ValueImageName] = "alpine:latest"
+		tool[tool.ValueCommand] = "cat /etc/alpine-release"
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"alpine:latest\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"alpine:latest\", \"cat /etc/alpine-release\"]", repr(tool))
