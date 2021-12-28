@@ -31,7 +31,7 @@
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
 from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction.Executable import Executable
+from pyTooling.CLIAbstraction            import Executable
 from pyTooling.CLIAbstraction.Argument   import (
 	ExecutableArgument,
 	CommandArgument,
@@ -60,25 +60,25 @@ class GHDL(Executable):
 	class CommandAnalyze(CommandArgument, name="analyze"): ...
 
 	@CLIOption()
-	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
-
-	@CLIOption()
-	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
-
-	@CLIOption()
 	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
 
 	@CLIOption()
 	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
 
 	@CLIOption()
-	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
-
-	@CLIOption()
 	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
 
 	@CLIOption()
+	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
+
+	@CLIOption()
 	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
+
+	@CLIOption()
+	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+
+	@CLIOption()
+	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
 
 	@CLIOption()
 	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...

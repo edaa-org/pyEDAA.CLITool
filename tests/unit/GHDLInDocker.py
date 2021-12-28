@@ -29,6 +29,8 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl`` inside a container run via Docker."""
+from pathlib import Path
+
 from pytest                 import mark
 from unittest               import TestCase
 
@@ -38,7 +40,10 @@ from .                      import Helper
 
 
 class GHDLInDocker(Docker, GHDL):
-	pass
+	def __init__(self, executablePath: Path = None, binaryDirectoryPath: Path = None, dryRun: bool = False):
+		super().__init__(executablePath, binaryDirectoryPath, dryRun)
+
+		self.__cliParameters__[Docker.Executable] = Docker.Executable(Path("ghdl"))
 
 
 class CommonOptions(TestCase, Helper):
@@ -80,4 +85,4 @@ class Analyze(TestCase, Helper):
 		tool[tool.FlagLibrary] = "lib_Test"
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"ghdl\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))

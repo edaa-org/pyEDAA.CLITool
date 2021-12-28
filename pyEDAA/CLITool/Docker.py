@@ -30,9 +30,9 @@
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
 from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction.Executable import Executable
+from pyTooling.CLIAbstraction            import Executable
 from pyTooling.CLIAbstraction.Argument   import (
-	CommandArgument,
+	ExecutableArgument, CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
 	ShortValuedFlagArgument, LongValuedFlagArgument,
 	LongTupleArgument,
@@ -71,3 +71,6 @@ class Docker(Executable):
 
 	@CLIOption()
 	class ValueImageName(StringArgument): ...
+
+	@CLIOption()
+	class Executable(ExecutableArgument): ...  # XXX: no argument here

@@ -69,7 +69,7 @@ class Analyze(TestCase, Helper):
 		tool[tool.FlagLibrary] = "lib_Test"
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))
 
 	def test_DeriveAnalyzer(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -83,4 +83,4 @@ class Analyze(TestCase, Helper):
 		derived[derived.FlagLibrary] = "lib_Test"
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--mb-comments\", \"--work=lib_Test\"]", repr(derived))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(derived))
