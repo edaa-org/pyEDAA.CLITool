@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +29,85 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
+"""This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
+from pyTooling.CLIAbstraction            import CLIOption
+from pyTooling.CLIAbstraction            import Executable
+from pyTooling.CLIAbstraction.Argument   import (
+	ExecutableArgument,
+	CommandArgument,
+	ShortFlagArgument, LongFlagArgument,
+	ShortValuedFlagArgument, LongValuedFlagArgument
+)
 
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
 
+class GHDL(Executable):
+	_executableNames = {
+		"Linux":   "ghdl",
+		"Windows": "ghdl.exe"
+	}
 
-class Helper:
-	_system = system()
+	@CLIOption()
+	class FlagHelp(LongFlagArgument, name="help"): ...
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	@CLIOption()
+	class FlagVersion(LongFlagArgument, name="version"): ...
+
+	@CLIOption()
+	class FlagVerbose(ShortFlagArgument, name="v"): ...
+
+	# Analyze options
+	@CLIOption()
+	class CommandAnalyze(CommandArgument, name="analyze"): ...
+
+	@CLIOption()
+	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
+
+	@CLIOption()
+	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
+
+	@CLIOption()
+	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
+
+	@CLIOption()
+	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
+
+	@CLIOption()
+	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
+
+	@CLIOption()
+	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+
+	@CLIOption()
+	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
+
+	@CLIOption()
+	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...
+
+	@CLIOption()
+	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
+
+	@CLIOption()
+	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"): ...
+
+	# TODO: list of files (path list)
+
+	# Elaborate options
+	@CLIOption()
+	class CommandElaborate(CommandArgument, name="elaborate"): ...
+
+	def DeriveForAnalyze(self):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandAnalyze] = True
+
+		for key in self.__cliParameters__:
+			if issubclass(key, ExecutableArgument):
+				continue
+
+			if self._NeedsParameterInitialization(key):
+				value = self.__cliParameters__[key].Value
+				tool.__cliParameters__[key] = key(value)
+			else:
+				tool.__cliParameters__[key] = key()
+
+		return tool

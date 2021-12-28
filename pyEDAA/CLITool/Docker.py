@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2021-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +28,49 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
+"""This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
+from pyTooling.CLIAbstraction            import CLIOption
+from pyTooling.CLIAbstraction            import Executable
+from pyTooling.CLIAbstraction.Argument   import (
+	ExecutableArgument, CommandArgument,
+	ShortFlagArgument, LongFlagArgument,
+	ShortValuedFlagArgument, LongValuedFlagArgument,
+	LongTupleArgument,
+	StringArgument
+)
 
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
 
+class Docker(Executable):
+	_executableNames = {
+		"Linux":   "docker",
+		"Windows": "docker.exe"
+	}
 
-class Helper:
-	_system = system()
+	# 'version' sub commands and options
+	@CLIOption()
+	class CommandVersion(CommandArgument, name="version"): ...
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	# 'container' sub commands and options
+	@CLIOption()
+	class CommandContainer(CommandArgument, name="container"): ...
+
+	@CLIOption()
+	class CommandRun(CommandArgument, name="run"): ...
+
+	@CLIOption()
+	class FlagContainerName(LongTupleArgument, name="name"): ...
+
+	@CLIOption()
+	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
+
+	@CLIOption()
+	class FlagMount(LongTupleArgument, name="mount"): ...
+
+	@CLIOption()
+	class FlagVolume(LongTupleArgument, name="volume"): ...
+
+	@CLIOption()
+	class ValueImageName(StringArgument): ...
+
+	@CLIOption()
+	class Executable(ExecutableArgument): ...  # XXX: no argument here
