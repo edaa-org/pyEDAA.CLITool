@@ -73,4 +73,7 @@ class Docker(Executable):
 	class ValueImageName(StringArgument): ...
 
 	@CLIOption()
+	class ValueCommand(StringArgument): ...
+
+	@CLIOption()
 	class Executable(ExecutableArgument): ...  # XXX: no argument here
