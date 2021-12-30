@@ -29,7 +29,7 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl``."""
-from os                   import environ as os_environ
+from os                   import getenv as os_getenv
 from pathlib              import Path
 from pytest               import mark
 from unittest             import TestCase
@@ -40,7 +40,7 @@ from .                    import Helper
 
 @mark.xfail      # XXX: workaround for problems in GHA
 class CommonOptions(TestCase, Helper):
-	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -59,7 +59,7 @@ class CommonOptions(TestCase, Helper):
 
 @mark.xfail      # XXX: workaround for problems in GHA
 class Analyze(TestCase, Helper):
-	_binaryDirectoryPath = Path(os_environ["GHDL_PREFIX"]) / "bin"
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
 	def test_AnalyzeFile(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
