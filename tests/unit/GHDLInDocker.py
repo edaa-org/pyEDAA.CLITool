@@ -43,7 +43,7 @@ class GHDLInDocker(Docker, GHDL):
 	def __init__(self, executablePath: Path = None, binaryDirectoryPath: Path = None, dryRun: bool = False):
 		super().__init__(executablePath, binaryDirectoryPath, dryRun)
 
-		self.__cliParameters__[Docker.Executable] = Docker.Executable(Path("ghdl"))
+		self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")
 
 
 class CommonOptions(TestCase, Helper):

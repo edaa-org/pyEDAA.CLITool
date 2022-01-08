@@ -74,21 +74,21 @@
    :target: https://GitHub.com/edaa-org/pyEDAA.CLITool/actions/workflows/Pipeline.yml
 
 .. # Codacy - quality
-.. |SHIELD:svg:CLITool-codacy-quality| image:: https://img.shields.io/codacy/grade/39d312bf98244961975559f141c3e000?longCache=true&style=flat-square&logo=codacy
+.. |SHIELD:svg:CLITool-codacy-quality| image:: https://img.shields.io/codacy/grade/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=codacy
    :alt: Codacy - Quality
    :height: 22
    :target: https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool
-.. |SHIELD:png:CLITool-codacy-quality| image:: https://raster.shields.io/codacy/grade/39d312bf98244961975559f141c3e000?longCache=true&style=flat-square&logo=codacy
+.. |SHIELD:png:CLITool-codacy-quality| image:: https://raster.shields.io/codacy/grade/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=codacy
    :alt: Codacy - Quality
    :height: 22
    :target: https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool
 
 .. # Codacy - coverage
-.. |SHIELD:svg:CLITool-codacy-coverage| image:: https://img.shields.io/codacy/coverage/39d312bf98244961975559f141c3e000?longCache=true&style=flat-square&logo=codacy
+.. |SHIELD:svg:CLITool-codacy-coverage| image:: https://img.shields.io/codacy/coverage/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=codacy
    :alt: Codacy - Line Coverage
    :height: 22
    :target: https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool
-.. |SHIELD:png:CLITool-codacy-coverage| image:: https://raster.shields.io/codacy/coverage/39d312bf98244961975559f141c3e000?longCache=true&style=flat-square&logo=codacy
+.. |SHIELD:png:CLITool-codacy-coverage| image:: https://raster.shields.io/codacy/coverage/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=codacy
    :alt: Codacy - Line Coverage
    :height: 22
    :target: https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool

@@ -31,14 +31,12 @@
 """Unit tests for executable ``ghdl``."""
 from os                   import getenv as os_getenv
 from pathlib              import Path
-from pytest               import mark
 from unittest             import TestCase
 
 from pyEDAA.CLITool.GHDL  import GHDL
 from .                    import Helper
 
 
-@mark.xfail      # XXX: workaround for problems in GHA
 class CommonOptions(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
@@ -57,7 +55,6 @@ class CommonOptions(TestCase, Helper):
 		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
 
 
-@mark.xfail      # XXX: workaround for problems in GHA
 class Analyze(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
@@ -82,7 +79,7 @@ class Analyze(TestCase, Helper):
 		tool[tool.FlagExplicit] = True
 		tool[tool.FlagMultiByteComments] = True
 
-		derived = tool.DeriveForAnalyze()
+		derived = tool.GetGHDLAsAnalyzer()
 		derived[derived.FlagLibrary] = "lib_Test"
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)

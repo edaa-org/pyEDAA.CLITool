@@ -1,1 +1,2 @@
 pyTooling.CLIAbstraction>=0.3.0
+pyVHDLModel>=0.14.2

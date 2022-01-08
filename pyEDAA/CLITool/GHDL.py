@@ -30,10 +30,10 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction            import Executable
+from pyVHDLModel import VHDLVersion
+
+from pyTooling.CLIAbstraction            import CLIOption, Executable
 from pyTooling.CLIAbstraction.Argument   import (
-	ExecutableArgument,
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
 	ShortValuedFlagArgument, LongValuedFlagArgument
@@ -45,6 +45,9 @@ class GHDL(Executable):
 		"Linux":   "ghdl",
 		"Windows": "ghdl.exe"
 	}
+
+	# XXX: overwrite __init__ and get backend variant
+	# XXX: check for compatible backends
 
 	@CLIOption()
 	class FlagHelp(LongFlagArgument, name="help"): ...
@@ -95,19 +98,44 @@ class GHDL(Executable):
 	@CLIOption()
 	class CommandElaborate(CommandArgument, name="elaborate"): ...
 
-	def DeriveForAnalyze(self):
-		tool = GHDL(executablePath=self._executablePath)
-
-		tool[tool.CommandAnalyze] = True
-
+	def _CopyParameters(self, tool: "GHDL") -> None:
 		for key in self.__cliParameters__:
-			if issubclass(key, ExecutableArgument):
-				continue
-
 			if self._NeedsParameterInitialization(key):
 				value = self.__cliParameters__[key].Value
 				tool.__cliParameters__[key] = key(value)
 			else:
 				tool.__cliParameters__[key] = key()
+
+	def _SetParameters(self, tool: "GHDL", std: VHDLVersion=None, ieee: str=None):
+		if std is not None:
+			tool[self.FlagVHDlStandard] = str(std)
+
+		if ieee is not None:
+			tool[self.FlagVHDlStandard] = ieee
+
+	def GetGHDLAsAnalyzer(self, std: VHDLVersion=None, ieee: str=None):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandAnalyze] = True
+		self._CopyParameters(tool)
+		self._SetParameters(tool, std, ieee)
+
+		return tool
+
+	def GetGHDLAsElaborator(self, std: VHDLVersion=None, ieee: str=None):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandElaborate] = True
+		self._CopyParameters(tool)
+		self._SetParameters(tool, std, ieee)
+
+		return tool
+
+	def GetGHDLAsSimulator(self, std: VHDLVersion=None, ieee: str=None):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandRun] = True
+		self._CopyParameters(tool)
+		self._SetParameters(tool, std, ieee)
 
 		return tool
