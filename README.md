@@ -101,6 +101,13 @@ print(f"Calling GHDL: {tool}")
 # Calling GHDL: "ghdl" "analyze" "--std=08" "-fsynopsys" "-frelaxed" "-fexplicit" "--work=lib_Test" "--mb-comments"
 ```
 
+# Consumers
+
+This layer is used by:
+
+* 🚧 pyEDAA.Workflow
+* 🚧 [Open Source Verification Bundle (OSVB)](https://umarcor.github.io/osvb)
+
 
 # References
 
