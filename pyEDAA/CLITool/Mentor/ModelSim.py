@@ -34,13 +34,10 @@ from enum import Enum
 
 from flags import Flags
 
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import (
-	ShortFlagArgument,
-	StringArgument, OptionalValuedFlagArgument, ShortTupleArgument
-)
-from pyEDAA.CLITool import ToolMixIn
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, StringArgument, OptionalValuedFlagArgument, ShortTupleArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
@@ -181,6 +178,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 	# class ArgSourceFile(PathArgument): ...
 
 
+@export
 class VHDLSimulator(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "vsim",

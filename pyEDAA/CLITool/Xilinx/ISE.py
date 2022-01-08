@@ -30,10 +30,10 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for ISE."""
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
 from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument
-from pyEDAA.CLITool import ToolMixIn
+from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
@@ -67,6 +67,7 @@ class Fuse(Executable, ToolMixIn):
 	class ArgTopLevel(StringArgument): ...
 
 
+@export
 class ISESimulator(Executable):
 	_executableNames = {
 		"Linux":   "isim",
@@ -86,6 +87,7 @@ class ISESimulator(Executable):
 	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
 
 
+@export
 class Xst(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "xst",
@@ -102,6 +104,7 @@ class Xst(Executable, ToolMixIn):
 	class SwitchReportFile(ShortTupleArgument, name="ofn"): ...
 
 
+@export
 class CoreGenerator(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "coregen",

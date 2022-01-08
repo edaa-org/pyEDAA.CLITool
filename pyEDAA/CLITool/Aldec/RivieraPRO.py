@@ -30,12 +30,13 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for Riviera-PRO."""
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument import ShortFlagArgument, ShortTupleArgument, StringArgument, PathArgument
-from pyEDAA.CLITool import ToolMixIn
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
+@export
 class VHDLLibraryTool(Executable, ToolMixIn):
 	"""Abstraction layer of Riviera-PRO's VHDL library management tool 'vlib'."""
 	_executableNames = {
@@ -67,6 +68,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 	class ArgSourceFile(PathArgument): ...
 
 
+@export
 class VHDLSimulator(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "vsim",

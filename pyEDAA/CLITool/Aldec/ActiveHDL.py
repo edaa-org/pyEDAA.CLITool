@@ -30,13 +30,10 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for Active-HDL."""
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument import (
-	LongFlagArgument, ShortTupleArgument,
-	StringArgument, PathArgument
-)
-from pyEDAA.CLITool import ToolMixIn
+from pyTooling.CLIAbstraction.Argument  import LongFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
@@ -78,6 +75,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 	# -incr                              switching compiler to fast incremental mode
 
 
+@export
 class VHDLSimulator(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "vsim",

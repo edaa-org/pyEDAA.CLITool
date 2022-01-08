@@ -30,12 +30,13 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for Diamond."""
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
 from pyTooling.CLIAbstraction.Argument  import ShortTupleArgument
-from pyEDAA.CLITool import ToolMixIn
+from pyEDAA.CLITool                     import ToolMixIn
 
 
+@export
 class Synth(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "synthesis",

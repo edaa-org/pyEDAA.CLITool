@@ -30,12 +30,13 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for Quartus."""
-from pyTooling.Decorators import export
+from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument import ShortFlagArgument, ShortValuedFlagArgument, LongValuedFlagArgument, StringArgument
-from pyEDAA.CLITool import ToolMixIn
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortValuedFlagArgument, LongValuedFlagArgument, StringArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
+@export
 class Map(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "quartus_map",
@@ -55,6 +56,7 @@ class Map(Executable, ToolMixIn):
 	class SwitchDevicePart(LongValuedFlagArgument, name="part"): ...
 
 
+@export
 class TclShell(Executable, ToolMixIn):
 	_executableNames = {
 		"Linux":   "quartus_sh",
