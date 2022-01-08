@@ -33,14 +33,24 @@
 from enum import Enum
 
 from flags import Flags
-from pyTooling.Decorators import export
 
-from pyEDAA.CLITool import ToolMixIn
-from pyTooling.CLIAbstraction            import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument import (
+from pyTooling.Decorators import export
+from pyTooling.CLIAbstraction           import CLIOption, Executable
+from pyTooling.CLIAbstraction.Argument  import (
 	ShortFlagArgument,
 	StringArgument, OptionalValuedFlagArgument, ShortTupleArgument
 )
+from pyEDAA.CLITool import ToolMixIn
+
+
+@export
+class OptionalModelSimMinusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="-{0} {1}"):
+	pass
+
+
+@export
+class OptionalModelSimPlusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="+{0} {1}"):
+	pass
 
 
 @export
@@ -78,16 +88,6 @@ class VHDLCompilerFSMVerbosityLevel(Enum):
 
 	def __str__(self):
 		return self.value
-
-
-@export
-class OptionalModelSimMinusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="-{0} {1}"):
-	pass
-
-
-@export
-class OptionalModelSimPlusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="+{0} {1}"):
-	pass
 
 
 @export
