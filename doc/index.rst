@@ -15,17 +15,20 @@
 
 .. only:: html
 
-   |  |SHIELD:svg:CLITool-github| |SHIELD:svg:CLITool-ghp-doc| |SHIELD:svg:CLITool-gitter|
-   |  |SHIELD:svg:CLITool-gha-test|
+   |  |SHIELD:svg:CLITool-github| |SHIELD:svg:CLITool-src-license| |SHIELD:svg:CLITool-ghp-doc| |SHIELD:svg:CLITool-doc-license| |SHIELD:svg:CLITool-gitter|
+   |  |SHIELD:svg:CLITool-pypi-tag| |SHIELD:svg:CLITool-pypi-status| |SHIELD:svg:CLITool-pypi-python|
+   |  |SHIELD:svg:CLITool-gha-test| |SHIELD:svg:CLITool-lib-status| |SHIELD:svg:CLITool-codacy-quality| |SHIELD:svg:CLITool-codacy-coverage| |SHIELD:svg:CLITool-codecov-coverage|
 
-.. Disabled shields: |SHIELD:svg:CLITool-src-license| |SHIELD:svg:CLITool-doc-license| |SHIELD:svg:CLITool-pypi-tag| |SHIELD:svg:CLITool-pypi-status| |SHIELD:svg:CLITool-pypi-python| |SHIELD:svg:CLITool-lib-status| |SHIELD:svg:CLITool-codacy-quality| |SHIELD:svg:CLITool-codacy-coverage| |SHIELD:svg:CLITool-codecov-coverage| |SHIELD:svg:CLITool-lib-dep| |SHIELD:svg:CLITool-req-status| |SHIELD:svg:CLITool-lib-rank|
+.. Disabled shields: |SHIELD:svg:CLITool-lib-dep| |SHIELD:svg:CLITool-req-status| |SHIELD:svg:CLITool-lib-rank|
 
 .. only:: latex
 
-   |SHIELD:png:CLITool-github| |SHIELD:png:CLITool-ghp-doc| |SHIELD:png:CLITool-gitter|
-   |SHIELD:png:CLITool-gha-test|
+   |SHIELD:png:CLITool-github| |SHIELD:png:CLITool-src-license| |SHIELD:png:CLITool-ghp-doc| |SHIELD:png:CLITool-doc-license| |SHIELD:svg:CLITool-gitter|
+   |SHIELD:png:CLITool-pypi-tag| |SHIELD:png:CLITool-pypi-status| |SHIELD:png:CLITool-pypi-python|
+   |SHIELD:png:CLITool-gha-test| |SHIELD:png:CLITool-lib-status| |SHIELD:png:CLITool-codacy-quality| |SHIELD:png:CLITool-codacy-coverage| |SHIELD:png:CLITool-codecov-coverage|
 
-.. Disabled shields: |SHIELD:png:CLITool-src-license| |SHIELD:png:CLITool-doc-license| |SHIELD:png:CLITool-pypi-tag| |SHIELD:png:CLITool-pypi-status| |SHIELD:png:CLITool-pypi-python| |SHIELD:png:CLITool-lib-status| |SHIELD:png:CLITool-codacy-quality| |SHIELD:png:CLITool-codacy-coverage| |SHIELD:png:CLITool-codecov-coverage| |SHIELD:png:CLITool-lib-dep| |SHIELD:png:CLITool-req-status| |SHIELD:png:CLITool-lib-rank|
+.. Disabled shields: |SHIELD:png:CLITool-lib-dep| |SHIELD:png:CLITool-req-status| |SHIELD:png:CLITool-lib-rank|
+
 
 The pyEDAA.CLITool Documentation
 ################################

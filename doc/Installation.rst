@@ -14,7 +14,7 @@ Installation from PyPI using PIP
 
 .. code-block:: bash
 
-   pip3 install pyTooling.CLITool
+   pip3 install pyEDAA.CLITool
 
 
 Updating from PyPI using PIP
@@ -22,7 +22,7 @@ Updating from PyPI using PIP
 
 .. code-block:: bash
 
-   pip3 install -U pyTooling.CLITool
+   pip3 install -U pyEDAA.CLITool
 
 
 Uninstallation using PIP
@@ -30,7 +30,7 @@ Uninstallation using PIP
 
 .. code-block:: bash
 
-   pip3 uninstall pyTooling.CLITool
+   pip3 uninstall pyEDAA.CLITool
 
 
 Installation from local directory using PIP
