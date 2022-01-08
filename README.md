@@ -45,10 +45,43 @@ Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to
 * Generate correctly escaped CLI options.
 
 
-# Use Cases
+# Supported Tools
 
-* *tbd*
-
+* Aldec
+  * 🚧 Active-HDL
+  * 🚧 Riviera-PRO
+* Altera
+  * 🚧 Quartus
+  * 🚧 ModelSim Altera (Student) Edition
+* Cadence
+  * 🚧 tbd
+* IntelFPGA
+  * 🚧 Quartus
+  * 🚧 ModelSim Altera (Student) Edition
+* Lattice
+  * 🚧 Diamond
+  * 🚧 Active-HDL Lattice Edition
+  * 🚧 ModelSim Lattice Edition
+* MentorGraphics
+  * ✅ ModelSim DE/SE/PE
+  * 🚧 QuestaSim
+* SiemensEDA
+  * 🚧 ModelSim DE/SE/PE
+  * 🚧 QuestaSim
+* Synopsys
+  * 🚧 tbd
+* Xilinx
+  * 🚧 ISE
+  * 🚧 Vivado
+  * 🚧 Vivado-SDK
+  * 🚧 Vitis
+* System Tools
+  * ✅ Git
+* Open Source
+  * ✅ GHDL
+  * ✅ GTKWave
+* Yosys
+  * 🚧 tbd
 
 # Examples
 
@@ -65,8 +98,15 @@ tool[tool.FlagMultiByteComments] = True
 tool[tool.FlagLibrary] = "lib_Test"
 
 print(f"Calling GHDL: {tool}")
-# "ghdl" "analyze" "--std=08" "-fsynopsys" "-frelaxed" "-fexplicit" "--work=lib_Test" "--mb-comments"
+# Calling GHDL: "ghdl" "analyze" "--std=08" "-fsynopsys" "-frelaxed" "-fexplicit" "--work=lib_Test" "--mb-comments"
 ```
+
+# Consumers
+
+This layer is used by:
+
+* 🚧 pyEDAA.Workflow
+* 🚧 [Open Source Verification Bundle (OSVB)](https://umarcor.github.io/osvb)
 
 
 # References
