@@ -44,6 +44,28 @@ Unified interfaces to execute EDA tools via CLI from Python, agnostic to any spe
 
     <br>
 
+
+.. _goals:
+
+Main Goals
+**********
+
+* Provide a pythonic solution to construct command line calls for EDA tools based on `pyTooling.CLIAbstraction <https://github.com/pyTooling/pyTooling.CLIAbstraction>`__
+* Launch CLI tools and connect to STDIn, STDOUT, STDERR for realtime output post-processing.
+
+
+.. _features:
+
+Features
+********
+
+* Support multiple native platforms: Linux, macOS, Windows.
+* Support nested platforms like MSYS2 with MinGW32, MinGW64, URCT64, Clang64, ...
+* Find CLI programs either in ``PATH`` or specify an exact installation location.
+* Generate CLI options in correct order.
+* Generate correctly escaped CLI options.
+
+
 .. _contributors:
 
 Contributors

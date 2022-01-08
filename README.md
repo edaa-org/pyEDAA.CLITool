@@ -27,10 +27,22 @@
   <a title="edaa-org.github.io/pyEDAA.CLITool" href="https://edaa-org.github.io/pyEDAA.CLITool"><img height="275px" src="doc/_static/work-in-progress.png"/></a>
 </p>
 
+Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
+
 
 # Main Goals
 
-Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
+* Provide a pythonic solution to construct command line calls for EDA tools based on [pyTooling.CLIAbstraction](https://github.com/pyTooling/pyTooling.CLIAbstraction)
+* Launch CLI tools and connect to STDIn, STDOUT, STDERR for realtime output post-processing.
+
+
+# Features
+
+* Support multiple native platforms: Linux, macOS, Windows.
+* Support nested platforms like MSYS2 with MinGW32, MinGW64, URCT64, Clang64, ...
+* Find CLI programs either in `PATH` or specify an exact installation location.
+* Generate CLI options in correct order.
+* Generate correctly escaped CLI options.
 
 
 # Use Cases
@@ -41,7 +53,19 @@ Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to
 # Examples
 
 ```python
-print(some.python.code.here())
+from pyEDAA.CLITool.GHDL import GHDL
+
+tool = GHDL()
+tool[tool.CommandAnalyze] = True
+tool[tool.FlagVHDLStandard] = "08"
+tool[tool.FlagSynopsys] = True
+tool[tool.FlagRelaxed] = True
+tool[tool.FlagExplicit] = True
+tool[tool.FlagMultiByteComments] = True
+tool[tool.FlagLibrary] = "lib_Test"
+
+print(f"Calling GHDL: {tool}")
+# "ghdl" "analyze" "--std=08" "-fsynopsys" "-frelaxed" "-fexplicit" "--work=lib_Test" "--mb-comments"
 ```
 
 
