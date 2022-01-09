@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +29,92 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
-
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+"""This module contains the CLI abstraction layer for Vivado."""
+from pyTooling.Decorators               import export
+from pyTooling.CLIAbstraction           import CLIOption, Executable
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, ShortValuedFlagArgument, StringArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
-class Helper:
-	_system = system()
+@export
+class XElab(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "xelab",
+		"Windows": "xelab.bat"
+	}
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	@CLIOption
+	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
+
+	@CLIOption
+	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
+
+	@CLIOption
+	class SwitchVerbose(ShortTupleArgument, name="verbose"): ...
+
+	@CLIOption
+	class SwitchDebug(ShortTupleArgument, name="debug"): ...
+
+	# class SwitchVHDL2008(ShortFlagArgument):
+	# 	_name =    "vhdl2008"
+	# 	_value =  None
+
+	@CLIOption
+	class SwitchOptimization(ShortValuedFlagArgument, name="O"): ...
+		# _pattern = "--{0}{1}"
+
+	@CLIOption
+	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
+
+	@CLIOption
+	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
+
+	@CLIOption
+	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+
+	@CLIOption
+	class SwitchSnapshot(ShortTupleArgument, name="s"): ...
+
+	@CLIOption
+	class ArgTopLevel(StringArgument): ...
+
+
+@export
+class XSim(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "xsim",
+		"Windows": "xsim.bat"
+	}
+
+	@CLIOption
+	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+
+	@CLIOption
+	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
+
+	@CLIOption
+	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
+
+	@CLIOption
+	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
+
+	@CLIOption
+	class SwitchSnapshot(StringArgument): ...
+
+
+@export
+class Synth(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "vivado",
+		"Windows": "vivado.bat"
+	}
+
+	@CLIOption
+	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+
+	@CLIOption
+	class SwitchSourceFile(ShortTupleArgument, name="source"): ...
+
+	@CLIOption
+	class SwitchMode(ShortTupleArgument, name="mode"): ...
+		# _value =  "batch"

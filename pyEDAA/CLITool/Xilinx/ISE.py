@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +29,93 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
-
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+"""This module contains the CLI abstraction layer for ISE."""
+from pyTooling.Decorators               import export
+from pyTooling.CLIAbstraction           import CLIOption, Executable
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
-class Helper:
-	_system = system()
+@export
+class Fuse(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "fuse",
+		"Windows": "fuse.exe"
+	}
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	@CLIOption
+	class FlagIncremental(ShortFlagArgument, name="incremental"): ...
+
+	# FlagIncremental = ShortFlagArgument(_name="incremntal")
+
+	@CLIOption
+	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
+
+	@CLIOption
+	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
+
+	@CLIOption
+	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
+
+	@CLIOption
+	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
+
+	@CLIOption
+	class SwitchOutputFile(ShortTupleArgument, name="o"): ...
+
+	@CLIOption
+	class ArgTopLevel(StringArgument): ...
+
+
+@export
+class ISESimulator(Executable):
+	_executableNames = {
+		"Linux":   "isim",
+		"Windows": "isim.exe"
+	}
+
+	@CLIOption
+	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+
+	@CLIOption
+	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
+
+	@CLIOption
+	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
+
+	@CLIOption
+	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
+
+
+@export
+class Xst(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "xst",
+		"Windows": "xst.exe"
+	}
+
+	@CLIOption
+	class SwitchIntStyle(ShortTupleArgument, name="intstyle"): ...
+
+	@CLIOption
+	class SwitchXstFile(ShortTupleArgument, name="ifn"): ...
+
+	@CLIOption
+	class SwitchReportFile(ShortTupleArgument, name="ofn"): ...
+
+
+@export
+class CoreGenerator(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "coregen",
+		"Windows": "coregen.exe"
+	}
+
+	@CLIOption
+	class FlagRegenerate(ShortFlagArgument, name="r"): ...
+
+	@CLIOption
+	class SwitchProjectFile(ShortTupleArgument, name="p"): ...
+
+	@CLIOption
+	class SwitchBatchFile(ShortTupleArgument, name="b"): ...

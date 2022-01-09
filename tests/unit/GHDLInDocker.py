@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +28,61 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
-
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
+"""Unit tests for executable ``ghdl`` inside a container run via Docker."""
 from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+
+from pytest                 import mark
+from unittest               import TestCase
+
+from pyEDAA.CLITool.GHDL    import GHDL
+from pyEDAA.CLITool.Docker  import Docker
+from .                      import Helper
 
 
-class Helper:
-	_system = system()
+class GHDLInDocker(Docker, GHDL):
+	def __init__(self, executablePath: Path = None, binaryDirectoryPath: Path = None, dryRun: bool = False):
+		super().__init__(executablePath, binaryDirectoryPath, dryRun)
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+		self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")
+
+
+class CommonOptions(TestCase, Helper):
+	@mark.xfail
+	def test_Help(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[GHDL.FlagHelp] = True
+		tool[Docker.CommandContainer] = True
+		tool[Docker.CommandRun] = True
+		tool[Docker.FlagRemoveContainer] = True
+		tool[Docker.ValueImageName] = "ghdl:latest"
+
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
+
+	@mark.xfail
+	def test_Version(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[Docker.CommandContainer] = True
+		tool[Docker.CommandRun] = True
+		tool[Docker.FlagRemoveContainer] = True
+		tool[Docker.ValueImageName] = "ghdl:latest"
+		tool[GHDL.FlagVersion] = True
+
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
+
+
+class Analyze(TestCase, Helper):
+	@mark.xfail
+	def test_AnalyzeFile(self):
+		tool = GHDLInDocker(dryRun=True)
+		tool[tool.CommandAnalyze] = True
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+		tool[tool.FlagLibrary] = "lib_Test"
+
+		executable = self.getExecutablePath("docker")
+		self.assertEqual(f"[\"{executable}\", \"ghdl\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))

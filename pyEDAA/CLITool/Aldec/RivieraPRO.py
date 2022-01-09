@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universit�t Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +29,64 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
-
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+"""This module contains the CLI abstraction layer for Riviera-PRO."""
+from pyTooling.Decorators               import export
+from pyTooling.CLIAbstraction           import CLIOption, Executable
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
-class Helper:
-	_system = system()
+@export
+class VHDLLibraryTool(Executable, ToolMixIn):
+	"""Abstraction layer of Riviera-PRO's VHDL library management tool 'vlib'."""
+	_executableNames = {
+		"Linux":   "vlib",
+		"Windows": "vlib.exe"
+	}
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	@CLIOption
+	class SwitchLibraryName(StringArgument): ...
+
+
+class VHDLCompiler(Executable, ToolMixIn):
+	"""Abstraction layer of Riviera-PRO's VHDL compiler 'vcom'."""
+	_executableNames = {
+		"Linux":   "vcom",
+		"Windows": "vcom.exe"
+	}
+
+	# class FlagNoRangeCheck(metaclass=LongFlagArgument):
+	# 	_name =   "norangecheck"
+
+	@CLIOption
+	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
+
+	@CLIOption
+	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+
+	@CLIOption
+	class ArgSourceFile(PathArgument): ...
+
+
+@export
+class VHDLSimulator(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "vsim",
+		"Windows": "vsim.exe"
+	}
+
+	@CLIOption
+	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+		"""Specify a Tcl batch script for the batch mode."""
+
+	@CLIOption
+	class FlagCommandLineMode(ShortFlagArgument, name="c"):
+		"""Run simulation in command line mode."""
+
+	@CLIOption
+	class SwitchTimeResolution(ShortTupleArgument, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
+		"""Set simulation time resolution."""
+
+	@CLIOption
+	class SwitchTopLevel(StringArgument):
+		"""The top-level for simulation."""

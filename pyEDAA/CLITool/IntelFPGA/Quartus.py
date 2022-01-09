@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +29,39 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
-
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+"""This module contains the CLI abstraction layer for Quartus."""
+from pyTooling.Decorators               import export
+from pyTooling.CLIAbstraction           import CLIOption, Executable
+from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortValuedFlagArgument, LongValuedFlagArgument, StringArgument
+from pyEDAA.CLITool                     import ToolMixIn
 
 
-class Helper:
-	_system = system()
+@export
+class Map(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "quartus_map",
+		"Windows": "quartus_map.exe"
+	}
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	@CLIOption
+	class ArgProjectName(StringArgument): ...
+
+	@CLIOption
+	class SwitchArgumentFile(ShortValuedFlagArgument, name="f"): ...
+
+	@CLIOption
+	class SwitchDeviceFamily(LongValuedFlagArgument, name="family"): ...
+
+	@CLIOption
+	class SwitchDevicePart(LongValuedFlagArgument, name="part"): ...
+
+
+@export
+class TclShell(Executable, ToolMixIn):
+	_executableNames = {
+		"Linux":   "quartus_sh",
+		"Windows": "quartus_sh.exe"
+	}
+
+	@CLIOption
+	class SwitchShell(ShortFlagArgument, name="s"): ...

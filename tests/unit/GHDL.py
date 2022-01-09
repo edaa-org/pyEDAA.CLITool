@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -28,25 +28,59 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""
-Helper classes for unit tests.
+"""Unit tests for executable ``ghdl``."""
+from os                   import getenv as os_getenv
+from pathlib              import Path
+from unittest             import TestCase
 
-:copyright: Copyright 2007-2021 Patrick Lehmann - Bötzingen, Germany
-:license: Apache License, Version 2.0
-"""
-from pathlib import Path
-from platform import system
-from sys import platform as sys_platform
+from pyEDAA.CLITool.GHDL  import GHDL
+from .                    import Helper
 
 
-class Helper:
-	_system = system()
+class CommonOptions(TestCase, Helper):
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
-	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
-		extensions = ".exe" if cls._system == "Windows" else ""
-		programName = f"{programName}{extensions}"
-		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
-		else:
-			return programName
+	def test_Help(self):
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.FlagHelp] = True
+
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--help\"]", repr(tool))
+
+	def test_Version(self):
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.FlagVersion] = True
+
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
+
+
+class Analyze(TestCase, Helper):
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
+
+	def test_AnalyzeFile(self):
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.CommandAnalyze] = True
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+		tool[tool.FlagLibrary] = "lib_Test"
+
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))
+
+	def test_DeriveAnalyzer(self):
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+
+		derived = tool.GetGHDLAsAnalyzer()
+		derived[derived.FlagLibrary] = "lib_Test"
+
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(derived))
