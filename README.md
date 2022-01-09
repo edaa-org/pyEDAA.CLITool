@@ -52,36 +52,42 @@ Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to
   * 🚧 Riviera-PRO
 * Altera
   * 🚧 Quartus
-  * 🚧 ModelSim Altera (Student) Edition
+  * 🚫 ModelSim Altera (Student) Edition
 * Cadence
-  * 🚧 tbd
+  * 🙋 need a list of tools
 * IntelFPGA
   * 🚧 Quartus
-  * 🚧 ModelSim Altera (Student) Edition
+  * 🚫 ModelSim Altera (Student) Edition
 * Lattice
   * 🚧 Diamond
-  * 🚧 Active-HDL Lattice Edition
-  * 🚧 ModelSim Lattice Edition
+  * 🚫 Active-HDL Lattice Edition
+  * 🚫 ModelSim Lattice Edition
 * MentorGraphics
   * ✅ ModelSim DE/SE/PE
-  * 🚧 QuestaSim
+  * 🚫 QuestaSim
 * SiemensEDA
-  * 🚧 ModelSim DE/SE/PE
-  * 🚧 QuestaSim
+  * 🚫 ModelSim DE/SE/PE
+  * 🚫 QuestaSim
 * Synopsys
-  * 🚧 tbd
+  * 🙋 need a list of tools
 * Xilinx
   * 🚧 ISE
   * 🚧 Vivado
-  * 🚧 Vivado-SDK
-  * 🚧 Vitis
+  * 🚫 Vivado-SDK
+  * 🚫 Vitis
 * System Tools
   * ✅ Git
 * Open Source
   * ✅ GHDL
   * ✅ GTKWave
 * Yosys
-  * 🚧 tbd
+  * 🙋 need a list of tools
+
+**Legend:**  
+✅ &rarr; implemented and tested  
+🚧 &rarr; under test  
+🚫 &rarr; planned but not yet implemented &rArr; accepting PRs  
+🙋 &rarr; need help
 
 # Examples
 
