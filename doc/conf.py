@@ -158,8 +158,22 @@ latex_documents = [
 # Extensions
 # ==============================================================================
 extensions = [
+# Standard Sphinx extensions
+	"sphinx.ext.autodoc",
 	'sphinx.ext.extlinks',
 	'sphinx.ext.intersphinx',
+	'sphinx.ext.inheritance_diagram',
+	'sphinx.ext.todo',
+	'sphinx.ext.graphviz',
+	'sphinx.ext.mathjax',
+	'sphinx.ext.ifconfig',
+	'sphinx.ext.viewcode',
+# SphinxContrib extensions
+	'sphinxcontrib.mermaid',
+# Other extensions
+	'autoapi.sphinx',
+	'sphinx_fontawesome',
+	'sphinx_autodoc_typehints',
 ]
 
 
@@ -178,4 +192,28 @@ extlinks = {
 	'ghissue': ('https://GitHub.com/edaa-org/pyEDAA.CLITool/issues/%s', 'issue #'),
 	'ghpull':  ('https://GitHub.com/edaa-org/pyEDAA.CLITool/pull/%s', 'pull request #'),
 	'ghsrc':   ('https://GitHub.com/edaa-org/pyEDAA.CLITool/blob/main/%s', ''),
+}
+
+
+# ==============================================================================
+# Sphinx.Ext.Graphviz
+# ==============================================================================
+graphviz_output_format = "svg"
+
+
+
+# ==============================================================================
+# Sphinx.Ext.ToDo
+# ==============================================================================
+# If true, `todo` and `todoList` produce output, else they produce nothing.
+todo_include_todos = True
+todo_link_only = True
+
+
+
+# ==============================================================================
+# AutoAPI.Sphinx
+# ==============================================================================
+autoapi_modules = {
+  'pyEDAA.CLITool':  {'output': "pyEDAA.CLITool", "override": True}
 }
