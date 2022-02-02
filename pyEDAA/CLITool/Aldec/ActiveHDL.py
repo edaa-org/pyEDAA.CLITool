@@ -46,7 +46,8 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 	}
 
 	@CLIOption()
-	class ValueLibraryName(StringArgument): ...
+	class ValueLibraryName(StringArgument):
+		"""Name of the VHDL library."""
 
 
 @export
@@ -96,4 +97,5 @@ class VHDLSimulator(Executable, ToolMixIn):
 	}
 
 	@CLIOption()
-	class SwitchBatchCommand(ShortTupleArgument, name="do"): ...
+	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+		"""Tcl command(s) to execute in the simulator."""
