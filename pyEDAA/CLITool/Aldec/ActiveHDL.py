@@ -38,33 +38,44 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class VHDLLibraryTool(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's VHDL library management tool ``vlib``."""
+
 	_executableNames = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class ValueLibraryName(StringArgument): ...
 
 
 @export
 class VHDLCompiler(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's VHDL compiler ``vcom``."""
+
 	_executableNames = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagNoRangeCheck(LongFlagArgument, name="norangecheck"): ...
 
-	@CLIOption
-	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
+	@CLIOption()
+	class SwitchVHDLVersion(StringArgument, pattern="-{0}"):
+		"""Option to set the VHDL language revision."""
 
-	@CLIOption
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+	@CLIOption()
+	class SwitchVHDLLibrary(ShortTupleArgument, name="work"):
+		"""
+		Option to set the VHDL library the design file is compiled into.
 
-	@CLIOption
-	class ArgSourceFile(PathArgument): ...
+		Also known as *working library*.
+		"""
+
+	@CLIOption()
+	class ArgSourceFile(PathArgument):
+		"""The path to a VHDL source file."""
 
 	# -reorder                      enables automatic file ordering
 	# -O[0 | 1 | 2 | 3]             set optimization level
@@ -77,10 +88,12 @@ class VHDLCompiler(Executable, ToolMixIn):
 
 @export
 class VHDLSimulator(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's simulator ``vsim``."""
+
 	_executableNames = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchBatchCommand(ShortTupleArgument, name="do"): ...

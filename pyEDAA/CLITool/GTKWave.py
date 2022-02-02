@@ -8,8 +8,8 @@ class GTKWave(Executable):
 		"Windows": "gtkwave.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagDumpFile(LongValuedFlagArgument, name="dump"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagSaveFile(LongValuedFlagArgument, name="save"): ...

@@ -43,39 +43,39 @@ class XElab(Executable, ToolMixIn):
 		"Windows": "xelab.bat"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchVerbose(ShortTupleArgument, name="verbose"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchDebug(ShortTupleArgument, name="debug"): ...
 
 	# class SwitchVHDL2008(ShortFlagArgument):
 	# 	_name =    "vhdl2008"
 	# 	_value =  None
 
-	@CLIOption
+	@CLIOption()
 	class SwitchOptimization(ShortValuedFlagArgument, name="O"): ...
 		# _pattern = "--{0}{1}"
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchLogFile(ShortTupleArgument, name="log"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchSnapshot(ShortTupleArgument, name="s"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgTopLevel(StringArgument): ...
 
 
@@ -86,19 +86,19 @@ class XSim(Executable, ToolMixIn):
 		"Windows": "xsim.bat"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchLogFile(ShortTupleArgument, name="log"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchSnapshot(StringArgument): ...
 
 
@@ -109,12 +109,12 @@ class Synth(Executable, ToolMixIn):
 		"Windows": "vivado.bat"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchLogFile(ShortTupleArgument, name="log"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchSourceFile(ShortTupleArgument, name="source"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchMode(ShortTupleArgument, name="mode"): ...
 		# _value =  "batch"

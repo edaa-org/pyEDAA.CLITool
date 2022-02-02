@@ -38,18 +38,20 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class VHDLLibraryTool(Executable, ToolMixIn):
-	"""Abstraction layer of Riviera-PRO's VHDL library management tool 'vlib'."""
+	"""Abstraction of Riviera-PRO's VHDL library management tool ``vlib``."""
+
 	_executableNames = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchLibraryName(StringArgument): ...
 
 
 class VHDLCompiler(Executable, ToolMixIn):
-	"""Abstraction layer of Riviera-PRO's VHDL compiler 'vcom'."""
+	"""Abstraction of Riviera-PRO's VHDL compiler ``vcom``."""
+
 	_executableNames = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
@@ -58,35 +60,37 @@ class VHDLCompiler(Executable, ToolMixIn):
 	# class FlagNoRangeCheck(metaclass=LongFlagArgument):
 	# 	_name =   "norangecheck"
 
-	@CLIOption
+	@CLIOption()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgSourceFile(PathArgument): ...
 
 
 @export
 class VHDLSimulator(Executable, ToolMixIn):
+	"""Abstraction of Riviera-PRO's HDL simulator ``vsim``."""
+
 	_executableNames = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchBatchCommand(ShortTupleArgument, name="do"):
 		"""Specify a Tcl batch script for the batch mode."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagCommandLineMode(ShortFlagArgument, name="c"):
 		"""Run simulation in command line mode."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTimeResolution(ShortTupleArgument, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
 		"""Set simulation time resolution."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTopLevel(StringArgument):
 		"""The top-level for simulation."""

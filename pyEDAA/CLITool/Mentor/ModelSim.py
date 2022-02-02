@@ -57,7 +57,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class ValueLibraryName(StringArgument): ...
 
 
@@ -94,87 +94,87 @@ class VHDLCompiler(Executable, ToolMixIn):
 		"Windows": "vcom.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagTime(ShortFlagArgument, name="time"):
 		"""Print the compilation wall clock time."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagExplicit(ShortFlagArgument, name="explicit"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagQuietMode(ShortFlagArgument, name="quiet"):
 		"""Do not report 'Loading...' messages."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchModelSimIniFile(ShortTupleArgument, name="modelsimini"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchCoverage(OptionalModelSimPlusArgument, name="cover"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableFocusedExpressionCoverage(ShortFlagArgument, name="coverfec"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableFocusedExpressionCoverage(ShortFlagArgument, name="nocoverfec"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableRapidExpressionCoverage(ShortFlagArgument, name="coverrec"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableRapidExpressionCoverage(ShortFlagArgument, name="nocoverrec"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableRecognitionOfImplicitFSMResetTransitions(ShortFlagArgument, name="fsmresettrans"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableRecognitionOfImplicitFSMResetTransitions(ShortFlagArgument, name="nofsmresettrans"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableRecognitionOfSingleBitFSMState(ShortFlagArgument, name="fsmsingle"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableRecognitionOfSingleBitFSMState(ShortFlagArgument, name="nofsmsingle"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableRecognitionOfImplicitFSMTransitions(ShortFlagArgument, name="fsmimplicittrans"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableRecognitionOfImplicitFSMTransitions(ShortFlagArgument, name="nofsmimplicittrans"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchFSMVerbosityLevel(OptionalModelSimMinusArgument, name="fsmverbose"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsNote(ShortTupleArgument, name="note"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsError(ShortTupleArgument, name="error"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsWarning(ShortTupleArgument, name="warning"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsFatal(ShortTupleArgument, name="fatal"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagRelaxLanguageChecks(ShortFlagArgument, name="permissive"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagForceLanguageChecks(ShortFlagArgument, name="pedanticerrors"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgLogFile(ShortTupleArgument, name="l"): ...			# what's the difference to -logfile ?
 
-	@CLIOption
+	@CLIOption()
 	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
 
-	# @CLIOption
+	# @CLIOption()
 	# class ArgSourceFile(PathArgument): ...
 
 
@@ -185,100 +185,100 @@ class VHDLSimulator(Executable, ToolMixIn):
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagQuietMode(ShortFlagArgument, name="quiet"):
 		"""Run simulation in quiet mode. (Don't show 'Loading...' messages."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagBatchMode(ShortFlagArgument, name="batch"):
 		"""Run simulation in batch mode."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagGuiMode(ShortFlagArgument, name="gui"):
 		"""Run simulation in GUI mode."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchBatchCommand(ShortTupleArgument, name="do"):
 		"""Specify a Tcl batch script for the batch mode."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagCommandLineMode(ShortFlagArgument, name="c"):
 		"""Run simulation in command line mode."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchModelSimIniFile(ShortTupleArgument, name="modelsimini"):
 		"""Specify the used 'modelsim.ini' file."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableOptimization(ShortFlagArgument, name="vopt"):
 		"""Enabled optimization while elaborating the design."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableOptimization(ShortFlagArgument, name="novopt"):
 		"""Disabled optimization while elaborating the design."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableOptimizationVerbosity(ShortFlagArgument, name="vopt_verbose"):
 		"""Enabled optimization while elaborating the design."""
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableKeepAssertionCountsForCoverage(ShortFlagArgument, name="assertcover"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableKeepAssertionCountsForCoverage(ShortFlagArgument, name="noassertcover"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableCoverage(ShortFlagArgument, name="coverage"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisableCoverage(ShortFlagArgument, name="nocoverage"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnablePSL(ShortFlagArgument, name="psl"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagDisablePSL(ShortFlagArgument, name="nopsl"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagEnableFSMDebugging(ShortFlagArgument, name="fsmdebug"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsNote(ShortTupleArgument, name="note"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsError(ShortTupleArgument, name="error"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsWarning(ShortTupleArgument, name="warning"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagReportAsFatal(ShortTupleArgument, name="fatal"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagRelaxLanguageChecks(ShortFlagArgument, name="permissive"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagForceLanguageChecks(ShortFlagArgument, name="pedanticerrors"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTimeResolution(ShortTupleArgument, name="t"):
 		"""Set simulation time resolution."""
 		# -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
 
-	@CLIOption
+	@CLIOption()
 	class ArgLogFile(ShortTupleArgument, name="l"): ...
 		# what's the difference to -logfile ?
 
-	@CLIOption
+	@CLIOption()
 	class ArgKeepStdOut(ShortFlagArgument, name="keepstdout"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgVHDLLibraryName(ShortTupleArgument, name="lib"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgOnFinishMode(ShortTupleArgument, name="onfinish"):
 		"""Customize the kernel shutdown behavior at the end of simulation; Valid modes: ask, stop, exit, final (Default: ask)."""
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTopLevel(StringArgument):
 		"""The top-level for simulation."""

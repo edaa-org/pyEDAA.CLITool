@@ -43,27 +43,27 @@ class Fuse(Executable, ToolMixIn):
 		"Windows": "fuse.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagIncremental(ShortFlagArgument, name="incremental"): ...
 
 	# FlagIncremental = ShortFlagArgument(_name="incremntal")
 
-	@CLIOption
+	@CLIOption()
 	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchOutputFile(ShortTupleArgument, name="o"): ...
 
-	@CLIOption
+	@CLIOption()
 	class ArgTopLevel(StringArgument): ...
 
 
@@ -74,16 +74,16 @@ class ISESimulator(Executable):
 		"Windows": "isim.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchLogFile(ShortTupleArgument, name="log"): ...
 
-	@CLIOption
+	@CLIOption()
 	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
 
 
@@ -94,13 +94,13 @@ class Xst(Executable, ToolMixIn):
 		"Windows": "xst.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchIntStyle(ShortTupleArgument, name="intstyle"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchXstFile(ShortTupleArgument, name="ifn"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchReportFile(ShortTupleArgument, name="ofn"): ...
 
 
@@ -111,11 +111,11 @@ class CoreGenerator(Executable, ToolMixIn):
 		"Windows": "coregen.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class FlagRegenerate(ShortFlagArgument, name="r"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchProjectFile(ShortTupleArgument, name="p"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchBatchFile(ShortTupleArgument, name="b"): ...

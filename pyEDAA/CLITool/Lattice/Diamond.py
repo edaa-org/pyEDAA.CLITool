@@ -43,5 +43,5 @@ class Synth(Executable, ToolMixIn):
 		"Windows": "synthesis.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchProjectFile(ShortTupleArgument, name="f"): ...

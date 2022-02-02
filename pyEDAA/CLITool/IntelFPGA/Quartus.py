@@ -43,16 +43,16 @@ class Map(Executable, ToolMixIn):
 		"Windows": "quartus_map.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class ArgProjectName(StringArgument): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchArgumentFile(ShortValuedFlagArgument, name="f"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchDeviceFamily(LongValuedFlagArgument, name="family"): ...
 
-	@CLIOption
+	@CLIOption()
 	class SwitchDevicePart(LongValuedFlagArgument, name="part"): ...
 
 
@@ -63,5 +63,5 @@ class TclShell(Executable, ToolMixIn):
 		"Windows": "quartus_sh.exe"
 	}
 
-	@CLIOption
+	@CLIOption()
 	class SwitchShell(ShortFlagArgument, name="s"): ...
