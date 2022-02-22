@@ -33,10 +33,10 @@
 from pyVHDLModel import VHDLVersion
 
 from pyTooling.CLIAbstraction            import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument   import (
+from pyTooling.CLIAbstraction.Argument import (
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument
+	ShortValuedFlagArgument, LongValuedFlagArgument, PathArgument
 )
 
 
@@ -50,53 +50,77 @@ class GHDL(Executable):
 	# XXX: check for compatible backends
 
 	@CLIOption()
-	class FlagHelp(LongFlagArgument, name="help"): ...
+	class FlagHelp(LongFlagArgument, name="help"):
+		"""Print help page(s)."""
 
 	@CLIOption()
-	class FlagVersion(LongFlagArgument, name="version"): ...
+	class FlagVersion(LongFlagArgument, name="version"):
+		"""Print version information."""
 
 	@CLIOption()
-	class FlagVerbose(ShortFlagArgument, name="v"): ...
+	class FlagVerbose(ShortFlagArgument, name="v"):
+		"""Run in verbose mode (print more messages)."""
 
 	# Analyze options
 	@CLIOption()
-	class CommandAnalyze(CommandArgument, name="analyze"): ...
+	class CommandAnalyze(CommandArgument, name="analyze"):
+		"""Analyze VHDL source file(s)."""
 
 	@CLIOption()
-	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
+	class FlagVHDlStandard(LongValuedFlagArgument, name="std"):
+		"""Set the used VHDL standard version."""
 
 	@CLIOption()
-	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
+	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"):
+		"""Set the used VHDL flavor."""
 
 	@CLIOption()
-	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
+	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"):
+		"""Set used VHDL flavor to *Synopsys* and make Synopsys packages visible in library ``ìeee``."""
 
 	@CLIOption()
-	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
+	class FlagRelaxed(ShortFlagArgument, name="frelaxed"):
+		"""Relax some LRM rules."""
 
 	@CLIOption()
 	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
 
 	@CLIOption()
-	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+	class FlagLibrary(LongValuedFlagArgument, name="work"):
+		"""Set working library."""
 
 	@CLIOption()
-	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
+	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"):
+		"""Set working directory."""
 
 	@CLIOption()
-	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...
+	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"):
+		"""Allow multi-byte comments."""
 
 	@CLIOption()
-	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
+	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"):
+		"""Enable synthesis binding rule."""
 
 	@CLIOption()
-	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"): ...
+	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"):
+		"""Add search path."""
+
+	@CLIOption()
+	class OptionPath(PathArgument):
+		"""Add VHDL file to analyze."""
 
 	# TODO: list of files (path list)
 
 	# Elaborate options
 	@CLIOption()
-	class CommandElaborate(CommandArgument, name="elaborate"): ...
+	class CommandElaborate(CommandArgument, name="elaborate"):
+		"""Elaborate design."""
+
+
+
+
+
+
 
 	def _CopyParameters(self, tool: "GHDL") -> None:
 		for key in self.__cliParameters__:
@@ -106,14 +130,14 @@ class GHDL(Executable):
 			else:
 				tool.__cliParameters__[key] = key()
 
-	def _SetParameters(self, tool: "GHDL", std: VHDLVersion=None, ieee: str=None):
+	def _SetParameters(self, tool: "GHDL", std: VHDLVersion = None, ieee: str = None):
 		if std is not None:
 			tool[self.FlagVHDlStandard] = str(std)
 
 		if ieee is not None:
 			tool[self.FlagVHDlStandard] = ieee
 
-	def GetGHDLAsAnalyzer(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandAnalyze] = True
@@ -122,7 +146,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsElaborator(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandElaborate] = True
@@ -131,7 +155,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsSimulator(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandRun] = True
