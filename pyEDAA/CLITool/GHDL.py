@@ -30,13 +30,16 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
+from typing import Union, Iterable
+
 from pyVHDLModel import VHDLVersion
 
 from pyTooling.CLIAbstraction            import CLIOption, Executable
 from pyTooling.CLIAbstraction.Argument import (
 	CommandArgument,
 	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument, PathArgument
+	ShortValuedFlagArgument, LongValuedFlagArgument,
+	PathListArgument, StringArgument
 )
 
 
@@ -61,14 +64,46 @@ class GHDL(Executable):
 	class FlagVerbose(ShortFlagArgument, name="v"):
 		"""Run in verbose mode (print more messages)."""
 
-	# Analyze options
 	@CLIOption()
 	class CommandAnalyze(CommandArgument, name="analyze"):
 		"""Analyze VHDL source file(s)."""
 
 	@CLIOption()
+	class CommandElaborate(CommandArgument, name="elaborate"):
+		"""Elaborate design."""
+
+	@CLIOption()
+	class CommandRun(CommandArgument, name="run"):
+		"""Simulate design."""
+
+	# Analyze and elaborate options
+	@CLIOption()
 	class FlagVHDlStandard(LongValuedFlagArgument, name="std"):
 		"""Set the used VHDL standard version."""
+		_value: VHDLVersion
+
+		def __init__(self, value: VHDLVersion):
+			if value is None:
+				raise ValueError(f"")  # XXX: add message
+
+			self._value = value
+
+		@property
+		def Value(self) -> VHDLVersion:
+			return self._value
+
+		@Value.setter
+		def Value(self, value: VHDLVersion) -> None:
+			if value is None:
+				raise ValueError(f"")  # XXX: add message
+
+			self._value = value
+
+		def AsArgument(self) -> Union[str, Iterable[str]]:
+			if self._name is None:
+				raise ValueError(f"")  # XXX: add message
+
+			return self._pattern.format(self._name, str(self._value)[-2:])
 
 	@CLIOption()
 	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"):
@@ -106,21 +141,16 @@ class GHDL(Executable):
 		"""Add search path."""
 
 	@CLIOption()
-	class OptionPath(PathArgument):
+	class OptionPath(PathListArgument):
 		"""Add VHDL file to analyze."""
 
-	# TODO: list of files (path list)
-
-	# Elaborate options
 	@CLIOption()
-	class CommandElaborate(CommandArgument, name="elaborate"):
-		"""Elaborate design."""
+	class OptionTopLevel(StringArgument):
+		"""Specify the toplevel design unit."""
 
-
-
-
-
-
+	@CLIOption()
+	class OptionArchitecture(StringArgument):
+		"""Specify the architecture name, if the toplevel design unit is an entity."""
 
 	def _CopyParameters(self, tool: "GHDL") -> None:
 		for key in self.__cliParameters__:
