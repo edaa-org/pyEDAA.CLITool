@@ -1,0 +1,7 @@
+IntelFPGA
+#########
+
+.. toctree::
+   :hidden:
+
+   Quartus

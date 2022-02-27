@@ -114,7 +114,7 @@ License
    :hidden:
 
    Tutorial
-   Tools
+   Tools/index
 
 
 .. raw:: latex

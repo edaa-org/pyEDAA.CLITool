@@ -61,8 +61,8 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 	}
 
 	@CLIArgument()
-	class ValueLibraryName(StringArgument): ...
-
+	class ValueLibraryName(StringArgument):
+		"""VHDL library name to create."""
 
 @export
 class VHDLCompilerCoverageOptions(Flags):

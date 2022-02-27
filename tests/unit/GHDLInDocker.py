@@ -77,7 +77,7 @@ class Analyze(TestCase, Helper):
 	def test_AnalyzeFile(self):
 		tool = GHDLInDocker(dryRun=True)
 		tool[tool.CommandAnalyze] = True
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True

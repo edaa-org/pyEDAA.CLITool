@@ -1,0 +1,7 @@
+Lattice
+#######
+
+.. toctree::
+   :hidden:
+
+   Diamond

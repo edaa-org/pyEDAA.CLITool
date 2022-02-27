@@ -61,7 +61,7 @@ class Analyze(TestCase, Helper):
 	def test_AnalyzeFile(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandAnalyze] = True
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True
@@ -73,7 +73,7 @@ class Analyze(TestCase, Helper):
 
 	def test_DeriveAnalyzer(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True

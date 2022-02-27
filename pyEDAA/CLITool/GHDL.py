@@ -47,8 +47,9 @@ from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag
 @export
 class GHDL(Executable):
 	_executableNames = {
+		"Windows": "ghdl.exe",
 		"Linux":   "ghdl",
-		"Windows": "ghdl.exe"
+		"Darwin":  "ghdl"
 	}
 
 	# XXX: overwrite __init__ and get backend variant
@@ -63,7 +64,7 @@ class GHDL(Executable):
 		"""Print version information."""
 
 	@CLIArgument()
-	class CommandAnalyze(CommandArgument, name="syntax"):
+	class CommandSyntax(CommandArgument, name="syntax"):
 		"""Check syntax."""
 
 	@CLIArgument()
@@ -116,7 +117,7 @@ class GHDL(Executable):
 
 	# Analyze and elaborate options
 	@CLIArgument()
-	class FlagVHDlStandard(LongValuedFlag, name="std"):
+	class FlagVHDLStandard(LongValuedFlag, name="std"):
 		"""Set the used VHDL standard version."""
 		_value: VHDLVersion
 
@@ -180,8 +181,7 @@ class GHDL(Executable):
 
 	@CLIArgument()
 	class FlagTimeResolution(LongValuedFlag, name="time-resolution"):
-		"""
-		Set base time resolution.
+		"""Set base time resolution.
 
 		Allowed values are ``auto`` (default), ``fs``, ``ps``, ``ns``, ``us``, ``ms`` or ``sec``.
 		"""
@@ -244,8 +244,7 @@ class GHDL(Executable):
 
 	@CLIArgument()
 	class FlagAsserts(ShortValuedFlag, name="asserts"):
-		"""
-		Select how assertions are handled.
+		"""Select how assertions are handled.
 
 		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables
 		only at the start of simulation.
@@ -253,8 +252,7 @@ class GHDL(Executable):
 
 	@CLIArgument()
 	class FlagIEEEAsserts(ShortValuedFlag, name="ieee-asserts"):
-		"""
-		Select how assertions are handled.
+		"""Select how assertions are handled.
 
 		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables
 		only at the start of simulation.
@@ -262,8 +260,7 @@ class GHDL(Executable):
 
 	@CLIArgument()
 	class FlagStopTime(ShortValuedFlag, name="stop-time"):
-		"""
-		Stop the simulation after a given simulation time.
+		"""Stop the simulation after a given simulation time.
 
 		The time is expressed as a time value, without any spaces. The time is the simulation time, not the real execution time.
 		"""
@@ -286,15 +283,13 @@ class GHDL(Executable):
 
 	@CLIArgument()
 	class FlagWriteWaveformOptionsFile(ShortValuedFlag, name="write-wave-opt"):
-		"""
-		If the wavefile option file doesn’t exist, creates it with all the signals of the design.
+		"""If the wavefile option file doesn’t exist, creates it with all the signals of the design.
 		Otherwise, it throws an error, because it won’t erase an existing file.
 		"""
 
 	@CLIArgument()
 	class FlagGHWWaveformFile(ShortValuedFlag, name="wave"):
-		"""
-		Write the waveforms into a GHDL Waveform (``*.ghw``) file.
+		"""Write the waveforms into a GHDL Waveform (``*.ghw``) file.
 
 		Contrary to VCD files, any VHDL type can be dumped into a GHW file.
 		"""
@@ -309,10 +304,10 @@ class GHDL(Executable):
 
 	def _SetParameters(self, tool: "GHDL", std: VHDLVersion = None, ieee: str = None):
 		if std is not None:
-			tool[self.FlagVHDlStandard] = str(std)
+			tool[self.FlagVHDLStandard] = str(std)
 
 		if ieee is not None:
-			tool[self.FlagVHDlStandard] = ieee
+			tool[self.FlagVHDLStandard] = ieee
 
 	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)

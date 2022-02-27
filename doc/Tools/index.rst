@@ -65,3 +65,16 @@ Supported Tools
 🚧 |rarr| under test |br|
 🚫 |rarr| planned but not yet implemented |rArr| accepting PRs |br|
 🙋 |rarr| need help
+
+.. toctree::
+   :hidden:
+
+   Aldec/index
+   Cadence/index
+   IntelFPGA/index
+   Lattice/index
+   SiemensEDA/index
+   Synopsys/index
+   SystemTools/index
+   OpenSource/index
+   Yosys/index
