@@ -60,7 +60,7 @@ Features
 ********
 
 * Support multiple native platforms: Linux, macOS, Windows.
-* Support nested platforms like MSYS2 with MinGW32, MinGW64, URCT64, Clang64, ...
+* Support nested platforms like MSYS2 with MinGW32, MinGW64, UCRT64, Clang64, ...
 * Find CLI programs either in ``PATH`` or specify an exact installation location.
 * Generate CLI options in correct order.
 * Generate correctly escaped CLI options.
