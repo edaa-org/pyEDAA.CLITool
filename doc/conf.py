@@ -171,9 +171,9 @@ extensions = [
 # SphinxContrib extensions
 	'sphinxcontrib.mermaid',
 # Other extensions
-	'autoapi.sphinx',
 	'sphinx_fontawesome',
 	'sphinx_autodoc_typehints',
+	'autoapi.sphinx',
 ]
 
 
@@ -183,6 +183,22 @@ extensions = [
 intersphinx_mapping = {
 	'python':   ('https://docs.python.org/3', None),
 }
+
+
+# ==============================================================================
+# Sphinx.Ext.AutoDoc
+# ==============================================================================
+# see: https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#configuration
+autodoc_default_options = {
+	"private-members": True,
+	"special-members": True,
+	"inherited-members": True,
+	"exclude-members": "__weakref__"
+}
+#autodoc_class_signature = "separated"
+autodoc_member_order = "bysource"       # alphabetical, groupwise, bysource
+autodoc_typehints = "both"
+#autoclass_content = "both"
 
 
 # ==============================================================================

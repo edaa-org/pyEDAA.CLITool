@@ -31,8 +31,10 @@
 #
 """This module contains the CLI abstraction layer for Quartus."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortValuedFlagArgument, LongValuedFlagArgument, StringArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument
+from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag, LongValuedFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -43,17 +45,17 @@ class Map(Executable, ToolMixIn):
 		"Windows": "quartus_map.exe"
 	}
 
-	@CLIOption()
+	@CLIArgument()
 	class ArgProjectName(StringArgument): ...
 
-	@CLIOption()
-	class SwitchArgumentFile(ShortValuedFlagArgument, name="f"): ...
+	@CLIArgument()
+	class SwitchArgumentFile(ShortValuedFlag, name="f"): ...
 
-	@CLIOption()
-	class SwitchDeviceFamily(LongValuedFlagArgument, name="family"): ...
+	@CLIArgument()
+	class SwitchDeviceFamily(LongValuedFlag, name="family"): ...
 
-	@CLIOption()
-	class SwitchDevicePart(LongValuedFlagArgument, name="part"): ...
+	@CLIArgument()
+	class SwitchDevicePart(LongValuedFlag, name="part"): ...
 
 
 @export
@@ -63,5 +65,5 @@ class TclShell(Executable, ToolMixIn):
 		"Windows": "quartus_sh.exe"
 	}
 
-	@CLIOption()
-	class SwitchShell(ShortFlagArgument, name="s"): ...
+	@CLIArgument()
+	class SwitchShell(ShortFlag, name="s"): ...

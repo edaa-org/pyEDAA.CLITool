@@ -31,8 +31,10 @@
 #
 """This module contains the CLI abstraction layer for Riviera-PRO."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument, PathArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -45,7 +47,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption()
+	@CLIArgument()
 	class SwitchLibraryName(StringArgument): ...
 
 
@@ -60,13 +62,13 @@ class VHDLCompiler(Executable, ToolMixIn):
 	# class FlagNoRangeCheck(metaclass=LongFlagArgument):
 	# 	_name =   "norangecheck"
 
-	@CLIOption()
+	@CLIArgument()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
 
-	@CLIOption()
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+	@CLIArgument()
+	class SwitchVHDLLibrary(ShortTupleFlag, name="work"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class ArgSourceFile(PathArgument): ...
 
 
@@ -79,18 +81,18 @@ class VHDLSimulator(Executable, ToolMixIn):
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption()
-	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+	@CLIArgument()
+	class SwitchBatchCommand(ShortTupleFlag, name="do"):
 		"""Specify a Tcl batch script for the batch mode."""
 
-	@CLIOption()
-	class FlagCommandLineMode(ShortFlagArgument, name="c"):
+	@CLIArgument()
+	class FlagCommandLineMode(ShortFlag, name="c"):
 		"""Run simulation in command line mode."""
 
-	@CLIOption()
-	class SwitchTimeResolution(ShortTupleArgument, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
+	@CLIArgument()
+	class SwitchTimeResolution(ShortTupleFlag, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
 		"""Set simulation time resolution."""
 
-	@CLIOption()
+	@CLIArgument()
 	class SwitchTopLevel(StringArgument):
 		"""The top-level for simulation."""

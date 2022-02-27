@@ -1,5 +1,5 @@
-from pyTooling.CLIAbstraction            import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument   import LongValuedFlagArgument
+from pyTooling.CLIAbstraction            import CLIArgument, Executable
+from pyTooling.CLIAbstraction.ValuedFlag import LongValuedFlag
 
 
 class GTKWave(Executable):
@@ -8,8 +8,8 @@ class GTKWave(Executable):
 		"Windows": "gtkwave.exe"
 	}
 
-	@CLIOption()
-	class FlagDumpFile(LongValuedFlagArgument, name="dump"): ...
+	@CLIArgument()
+	class FlagDumpFile(LongValuedFlag, name="dump"): ...
 
-	@CLIOption()
-	class FlagSaveFile(LongValuedFlagArgument, name="save"): ...
+	@CLIArgument()
+	class FlagSaveFile(LongValuedFlag, name="save"): ...

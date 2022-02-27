@@ -29,15 +29,15 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIOption
+from pyTooling.CLIAbstraction            import CLIArgument
 from pyTooling.CLIAbstraction            import Executable
 from pyTooling.CLIAbstraction.Argument   import (
-	ExecutableArgument, CommandArgument,
-	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument,
-	LongTupleArgument,
-	StringArgument
+	ExecutableArgument, StringArgument
 )
+from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag
+from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag, LongValuedFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag, LongFlag
+from pyTooling.CLIAbstraction.Command import CommandArgument
 
 
 class Docker(Executable):
@@ -47,33 +47,33 @@ class Docker(Executable):
 	}
 
 	# 'version' sub commands and options
-	@CLIOption()
+	@CLIArgument()
 	class CommandVersion(CommandArgument, name="version"): ...
 
 	# 'container' sub commands and options
-	@CLIOption()
+	@CLIArgument()
 	class CommandContainer(CommandArgument, name="container"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class CommandRun(CommandArgument, name="run"): ...
 
-	@CLIOption()
-	class FlagContainerName(LongTupleArgument, name="name"): ...
+	@CLIArgument()
+	class FlagContainerName(LongTupleFlag, name="name"): ...
 
-	@CLIOption()
-	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
+	@CLIArgument()
+	class FlagRemoveContainer(LongFlag, name="rm"): ...
 
-	@CLIOption()
-	class FlagMount(LongTupleArgument, name="mount"): ...
+	@CLIArgument()
+	class FlagMount(LongTupleFlag, name="mount"): ...
 
-	@CLIOption()
-	class FlagVolume(LongTupleArgument, name="volume"): ...
+	@CLIArgument()
+	class FlagVolume(LongTupleFlag, name="volume"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class ValueImageName(StringArgument): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class ValueCommand(StringArgument): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class Executable(ExecutableArgument): ...  # XXX: no argument here

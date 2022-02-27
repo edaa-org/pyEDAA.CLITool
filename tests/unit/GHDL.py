@@ -42,17 +42,17 @@ class CommonOptions(TestCase, Helper):
 
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagHelp] = True
+		tool[tool.CommandHelp] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"--help\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"help\"]", repr(tool))
 
 	def test_Version(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagVersion] = True
+		tool[tool.CommandVersion] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"version\"]", repr(tool))
 
 
 class Analyze(TestCase, Helper):

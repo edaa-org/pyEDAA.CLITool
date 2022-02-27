@@ -31,8 +31,8 @@
 #
 """This module contains the CLI abstraction layer for Diamond."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortTupleArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -43,5 +43,5 @@ class Synth(Executable, ToolMixIn):
 		"Windows": "synthesis.exe"
 	}
 
-	@CLIOption()
-	class SwitchProjectFile(ShortTupleArgument, name="f"): ...
+	@CLIArgument()
+	class SwitchProjectFile(ShortTupleFlag, name="f"): ...

@@ -31,8 +31,10 @@
 #
 """This module contains the CLI abstraction layer for Active-HDL."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import LongFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument, PathArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.Flag import LongFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -45,7 +47,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption()
+	@CLIArgument()
 	class ValueLibraryName(StringArgument):
 		"""Name of the VHDL library."""
 
@@ -59,22 +61,22 @@ class VHDLCompiler(Executable, ToolMixIn):
 		"Windows": "vcom.exe"
 	}
 
-	@CLIOption()
-	class FlagNoRangeCheck(LongFlagArgument, name="norangecheck"): ...
+	@CLIArgument()
+	class FlagNoRangeCheck(LongFlag, name="norangecheck"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"):
 		"""Option to set the VHDL language revision."""
 
-	@CLIOption()
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"):
+	@CLIArgument()
+	class SwitchVHDLLibrary(ShortTupleFlag, name="work"):
 		"""
 		Option to set the VHDL library the design file is compiled into.
 
 		Also known as *working library*.
 		"""
 
-	@CLIOption()
+	@CLIArgument()
 	class ArgSourceFile(PathArgument):
 		"""The path to a VHDL source file."""
 
@@ -96,6 +98,6 @@ class VHDLSimulator(Executable, ToolMixIn):
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption()
-	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+	@CLIArgument()
+	class SwitchBatchCommand(ShortTupleFlag, name="do"):
 		"""Tcl command(s) to execute in the simulator."""
