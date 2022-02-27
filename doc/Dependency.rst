@@ -3,31 +3,31 @@
 Dependency
 ##########
 
-.. |img-CLIAbstraction-lib-status| image:: https://img.shields.io/librariesio/release/pypi/pyTooling.CLIAbstraction
+.. |img-CLITool-lib-status| image:: https://img.shields.io/librariesio/release/pypi/pyEDAA.CLITool
    :alt: Libraries.io status for latest release
    :height: 22
-   :target: https://libraries.io/github/pyTooling/pyTooling.CLIAbstraction
-.. |img-CLIAbstraction-req-status| image:: https://img.shields.io/requires/github/pyTooling/pyTooling.CLIAbstraction
+   :target: https://libraries.io/github/edaa-org/pyEDAA.CLITool
+.. |img-CLITool-req-status| image:: https://img.shields.io/requires/github/pyEDAA/pyEDAA.CLITool
    :alt: Requires.io
    :height: 22
-   :target: https://requires.io/github/pyTooling/pyTooling.CLIAbstraction/requirements/?branch=main
+   :target: https://requires.io/github/edaa-org/pyEDAA.CLITool/requirements/?branch=main
 
 +------------------------------------------+------------------------------------------+
 | `Libraries.io <https://libraries.io/>`_  | `Requires.io <https://requires.io/>`_    |
 +==========================================+==========================================+
-| |img-CLIAbstraction-lib-status|          | |img-CLIAbstraction-req-status|          |
+| |img-CLITool-lib-status|                 | |img-CLITool-req-status|                 |
 +------------------------------------------+------------------------------------------+
 
 
 .. _dependency-package:
 
-pyTooling.CLITool Package
-*************************
+pyEDAA.CLITool Package
+**********************
 
 +---------------------------------------------------------------+-------------+-------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **Package**                                                   | **Version** | **License**                                                                               | **Dependencies**                                                                                                                                       |
 +===============================================================+=============+===========================================================================================+========================================================================================================================================================+
-| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__        | ≥1.9.2      | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__    | *None*                                                                                                                                                 |
+| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__        | ≥1.9.4      | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__    | *None*                                                                                                                                                 |
 +---------------------------------------------------------------+-------------+-------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `pyAttributes <https://GitHub.com/pyTooling/pyAttributes>`__  | ≥2.5.0      | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__    | * `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__ (`Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__)      |
 |                                                               |             |                                                                                           | * `argcomplete <https://GitHub.com/kislyuk/argcomplete>`__ (`Apache License, 2.0 <https://GitHub.com/kislyuk/argcomplete/blob/develop/LICENSE.rst>`__) |
@@ -96,7 +96,7 @@ the mandatory dependencies too.
 +-------------------------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **Package**                                                                                     | **Version**  | **License**                                                                                              | **Dependencies**                                                                                                                                     |
 +=================================================================================================+==============+==========================================================================================================+======================================================================================================================================================+
-| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__                                          | ≥1.9.2       | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.md>`__                    | *None*                                                                                                                                               |
+| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__                                          | ≥1.9.4       | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.md>`__                    | *None*                                                                                                                                               |
 +-------------------------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `Sphinx <https://GitHub.com/sphinx-doc/sphinx>`__                                               | ≥4.3.0       | `BSD 3-Clause <https://GitHub.com/sphinx-doc/sphinx/blob/master/LICENSE>`__                              | *Not yet evaluated.*                                                                                                                                 |
 +-------------------------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -132,7 +132,7 @@ install the mandatory dependencies too.
 +----------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **Package**                                                                | **Version**  | **License**                                                                                              | **Dependencies**                                                                                                                                     |
 +============================================================================+==============+==========================================================================================================+======================================================================================================================================================+
-| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__                     | ≥1.9.2       | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.md>`__                    | *None*                                                                                                                                               |
+| `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__                     | ≥1.9.4       | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.md>`__                    | *None*                                                                                                                                               |
 +----------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
 | `wheel <https://GitHub.com/pypa/wheel>`__                                  | any          | `MIT <https://github.com/pypa/wheel/blob/main/LICENSE.txt>`__                                            | *Not yet evaluated.*                                                                                                                                 |
 +----------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+

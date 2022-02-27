@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -30,14 +30,19 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
+from typing import Union, Iterable
+
 from pyVHDLModel import VHDLVersion
 
-from pyTooling.CLIAbstraction            import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument   import (
-	CommandArgument,
-	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument
+from pyTooling.CLIAbstraction            import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument import (
+	PathListArgument, StringArgument
 )
+from pyTooling.CLIAbstraction.KeyValueFlag import ShortKeyValueFlag
+from pyTooling.CLIAbstraction.BooleanFlag import LongBooleanFlag
+from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag, LongValuedFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag, LongFlag
+from pyTooling.CLIAbstraction.Command import CommandArgument
 
 
 class GHDL(Executable):
@@ -49,54 +54,250 @@ class GHDL(Executable):
 	# XXX: overwrite __init__ and get backend variant
 	# XXX: check for compatible backends
 
-	@CLIOption()
-	class FlagHelp(LongFlagArgument, name="help"): ...
+	@CLIArgument()
+	class CommandHelp(CommandArgument, name="help"):
+		"""Print help page(s)."""
 
-	@CLIOption()
-	class FlagVersion(LongFlagArgument, name="version"): ...
+	@CLIArgument()
+	class CommandVersion(CommandArgument, name="version"):
+		"""Print version information."""
 
-	@CLIOption()
-	class FlagVerbose(ShortFlagArgument, name="v"): ...
+	@CLIArgument()
+	class CommandAnalyze(CommandArgument, name="syntax"):
+		"""Check syntax."""
 
-	# Analyze options
-	@CLIOption()
-	class CommandAnalyze(CommandArgument, name="analyze"): ...
+	@CLIArgument()
+	class CommandElaborationOrder(CommandArgument, name="elab-order"):
+		"""Display (elaboration) ordered source files."""
 
-	@CLIOption()
-	class FlagVHDlStandard(LongValuedFlagArgument, name="std"): ...
+	@CLIArgument()
+	class CommandAnalyze(CommandArgument, name="analyze"):
+		"""Analyze VHDL source file(s)."""
 
-	@CLIOption()
-	class FlagIEEEFlavor(LongValuedFlagArgument, name="ieee"): ...
+	@CLIArgument()
+	class CommandElaborate(CommandArgument, name="elaborate"):
+		"""Elaborate design."""
 
-	@CLIOption()
-	class FlagSynopsys(ShortFlagArgument, name="fsynopsys"): ...
+	@CLIArgument()
+	class CommandElaborationAndRun(CommandArgument, name="elab-run"):
+		"""Elaborate and simulate design."""
 
-	@CLIOption()
-	class FlagRelaxed(ShortFlagArgument, name="frelaxed"): ...
+	@CLIArgument()
+	class CommandRun(CommandArgument, name="run"):
+		"""Simulate design."""
 
-	@CLIOption()
-	class FlagExplicit(ShortFlagArgument, name="fexplicit"): ...
+	@CLIArgument()
+	class CommandBind(CommandArgument, name="bind"):
+		"""Bind design unit."""
 
-	@CLIOption()
-	class FlagLibrary(LongValuedFlagArgument, name="work"): ...
+	@CLIArgument()
+	class CommandLink(CommandArgument, name="link"):
+		"""Link design unit."""
 
-	@CLIOption()
-	class FlagWorkingDirectory(LongValuedFlagArgument, name="workdir"): ...
+	@CLIArgument()
+	class CommandListLink(CommandArgument, name="list-link"):
+		"""List objects file to link a design unit."""
 
-	@CLIOption()
-	class FlagMultiByteComments(LongFlagArgument, name="mb-comments"): ...
+	@CLIArgument()
+	class CommandCompile(CommandArgument, name="compile"):
+		"""Generate whole sequence to elaborate design from files."""
 
-	@CLIOption()
-	class FlagSyntesisBindingRule(LongFlagArgument, name="syn-binding"): ...
+	@CLIArgument()
+	class CommandGenerateDependencies(CommandArgument, name="gen-depends"):
+		"""Generate dependencies of design."""
 
-	@CLIOption()
-	class FlagSearchPath(ShortValuedFlagArgument, name="P", pattern="-{0}{1}"): ...
+	@CLIArgument()
+	class CommandSynthesize(CommandArgument, name="synth"):
+		"""Synthesis from design unit."""
 
-	# TODO: list of files (path list)
+	@CLIArgument()
+	class FlagVerbose(ShortFlag, name="v"):
+		"""Run in verbose mode (print more messages)."""
 
-	# Elaborate options
-	@CLIOption()
-	class CommandElaborate(CommandArgument, name="elaborate"): ...
+	# Analyze and elaborate options
+	@CLIArgument()
+	class FlagVHDlStandard(LongValuedFlag, name="std"):
+		"""Set the used VHDL standard version."""
+		_value: VHDLVersion
+
+		def __init__(self, value: VHDLVersion):
+			if value is None:
+				raise ValueError(f"")  # XXX: add message
+
+			self._value = value
+
+		@property
+		def Value(self) -> VHDLVersion:
+			return self._value
+
+		@Value.setter
+		def Value(self, value: VHDLVersion) -> None:
+			if value is None:
+				raise ValueError(f"")  # XXX: add message
+
+			self._value = value
+
+		def AsArgument(self) -> Union[str, Iterable[str]]:
+			if self._name is None:
+				raise ValueError(f"")  # XXX: add message
+
+			return self._pattern.format(self._name, str(self._value)[-2:])
+
+	@CLIArgument()
+	class FlagIEEEFlavor(LongValuedFlag, name="ieee"):
+		"""Set the used VHDL flavor."""
+
+	@CLIArgument()
+	class FlagSynopsys(ShortFlag, name="fsynopsys"):
+		"""Set used VHDL flavor to *Synopsys* and make Synopsys packages visible in library ``ìeee``."""
+
+	@CLIArgument()
+	class FlagRelaxed(ShortFlag, name="frelaxed"):
+		"""Relax some LRM rules."""
+
+	@CLIArgument()
+	class FlagExplicit(ShortFlag, name="fexplicit"): ...
+
+	@CLIArgument()
+	class FlagLibrary(LongValuedFlag, name="work"):
+		"""Set working library."""
+
+	@CLIArgument()
+	class FlagWorkingDirectory(LongValuedFlag, name="workdir"):
+		"""Set working directory."""
+
+	@CLIArgument()
+	class FlagMultiByteComments(LongFlag, name="mb-comments"):
+		"""Allow multi-byte comments."""
+
+	@CLIArgument()
+	class FlagSyntesisBindingRule(LongFlag, name="syn-binding"):
+		"""Enable synthesis binding rule."""
+
+	@CLIArgument()
+	class FlagSearchPath(ShortValuedFlag, name="P", pattern="-{0}{1}"):
+		"""Add search path."""
+
+	@CLIArgument()
+	class FlagTimeResolution(LongValuedFlag, name="time-resolution"):
+		"""
+		Set base time resolution.
+
+		Allowed values are ``auto`` (default), ``fs``, ``ps``, ``ns``, ``us``, ``ms`` or ``sec``.
+		"""
+
+	@CLIArgument()
+	class FlagVitalChecks(LongBooleanFlag, name="vital-checks", pattern="-{0}", falsePattern="--no-{0}"):
+		"""Check VITAL restrictions."""
+
+	@CLIArgument()
+	class FlagWarnUnboundComponents(ShortFlag, name="binding", pattern="-W{0}"):
+		"""Warns for unbound components."""
+
+	@CLIArgument()
+	class FlagWarnReservedWords(ShortFlag, name="reserved", pattern="-W{0}"):
+		"""Warns if VHDL'93 reserved words are used in VHDL'87."""
+
+	@CLIArgument()
+	class FlagWarnRedefinedDesignUnits(ShortFlag, name="library", pattern="-W{0}"):
+		"""Warns for redefined design unit."""
+
+	@CLIArgument()
+	class FlagWarnNonVitalGenericNames(ShortFlag, name="vital-generic", pattern="-W{0}"):
+		"""Warns of non-vital generic names."""
+
+	@CLIArgument()
+	class FlagWarnElaborationChecks(ShortFlag, name="delayed-checks", pattern="-W{0}"):
+		"""Warns for checks performed at elaboration."""
+
+	@CLIArgument()
+	class FlagWarnUnnecessaryPackageBody(ShortFlag, name="body", pattern="-W{0}"):
+		"""Warns for unnecessary package body."""
+
+	@CLIArgument()
+	class FlagWarnOthersSpecifications(ShortFlag, name="specs", pattern="-W{0}"):
+		"""Warns if an all/others specification does not apply."""
+
+	@CLIArgument()
+	class FlagSyntesisBindingRule(ShortFlag, name="unused", pattern="-W{0}"):
+		"""Warns for unused subprograms."""
+
+	@CLIArgument()
+	class FlagSyntesisBindingRule(ShortFlag, name="error", pattern="-W{0}"):
+		"""Turns warnings into errors."""
+
+	@CLIArgument()
+	class OptionPath(PathListArgument):
+		"""Add VHDL file to analyze."""
+
+	@CLIArgument()
+	class OptionTopLevel(StringArgument):
+		"""Specify the toplevel design unit."""
+
+	@CLIArgument()
+	class OptionArchitecture(StringArgument):
+		"""Specify the architecture name, if the toplevel design unit is an entity."""
+
+	@CLIArgument()
+	class FlagGenerics(ShortKeyValueFlag, pattern="-{0}{1}={2}"):
+		"""Set a generic value."""
+
+	@CLIArgument()
+	class FlagAsserts(ShortValuedFlag, name="asserts"):
+		"""
+		Select how assertions are handled.
+
+		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables
+		only at the start of simulation.
+		"""
+
+	@CLIArgument()
+	class FlagIEEEAsserts(ShortValuedFlag, name="ieee-asserts"):
+		"""
+		Select how assertions are handled.
+
+		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables
+		only at the start of simulation.
+		"""
+
+	@CLIArgument()
+	class FlagStopTime(ShortValuedFlag, name="stop-time"):
+		"""
+		Stop the simulation after a given simulation time.
+
+		The time is expressed as a time value, without any spaces. The time is the simulation time, not the real execution time.
+		"""
+
+	@CLIArgument()
+	class FlagMaxDeltaCycles(ShortValuedFlag, name="stop-delta"):
+		"""Stop the simulation after N delta cycles in the same current time."""
+
+	@CLIArgument()
+	class FlagDisplayDeltaCycles(ShortValuedFlag, name="disp-time"):
+		"""Display the time and delta cycle number as simulation advances."""
+
+	@CLIArgument()
+	class FlagUnbufferedIO(ShortValuedFlag, name="unbuffered"):
+		"""Disable buffering on STDOUT, STDERR and files opened in write or append mode (TEXTIO)."""
+
+	@CLIArgument()
+	class FlagReadWaveformOptionsFile(ShortValuedFlag, name="read-wave-opt"):
+		"""Filter signals to be dumped to the waveform file according to the wavefile option file provided."""
+
+	@CLIArgument()
+	class FlagWriteWaveformOptionsFile(ShortValuedFlag, name="write-wave-opt"):
+		"""
+		If the wavefile option file doesn’t exist, creates it with all the signals of the design.
+		Otherwise, it throws an error, because it won’t erase an existing file.
+		"""
+
+	@CLIArgument()
+	class FlagGHWWaveformFile(ShortValuedFlag, name="wave"):
+		"""
+		Write the waveforms into a GHDL Waveform (``*.ghw``) file.
+
+		Contrary to VCD files, any VHDL type can be dumped into a GHW file.
+		"""
 
 	def _CopyParameters(self, tool: "GHDL") -> None:
 		for key in self.__cliParameters__:
@@ -106,14 +307,14 @@ class GHDL(Executable):
 			else:
 				tool.__cliParameters__[key] = key()
 
-	def _SetParameters(self, tool: "GHDL", std: VHDLVersion=None, ieee: str=None):
+	def _SetParameters(self, tool: "GHDL", std: VHDLVersion = None, ieee: str = None):
 		if std is not None:
 			tool[self.FlagVHDlStandard] = str(std)
 
 		if ieee is not None:
 			tool[self.FlagVHDlStandard] = ieee
 
-	def GetGHDLAsAnalyzer(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandAnalyze] = True
@@ -122,7 +323,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsElaborator(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandElaborate] = True
@@ -131,7 +332,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsSimulator(self, std: VHDLVersion=None, ieee: str=None):
+	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None):
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandRun] = True

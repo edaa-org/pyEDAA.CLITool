@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -31,8 +31,8 @@
 #
 """This module contains the CLI abstraction layer for Diamond."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortTupleArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -43,5 +43,5 @@ class Synth(Executable, ToolMixIn):
 		"Windows": "synthesis.exe"
 	}
 
-	@CLIOption
-	class SwitchProjectFile(ShortTupleArgument, name="f"): ...
+	@CLIArgument()
+	class SwitchProjectFile(ShortTupleFlag, name="f"): ...

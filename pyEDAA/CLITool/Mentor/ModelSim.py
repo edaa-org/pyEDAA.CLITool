@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -35,18 +35,21 @@ from enum import Enum
 from flags import Flags
 
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, StringArgument, OptionalValuedFlagArgument, ShortTupleArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.OptionalValuedFlag import OptionalValuedFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
-class OptionalModelSimMinusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="-{0} {1}"):
+class OptionalModelSimMinusArgument(OptionalValuedFlag, pattern="-{0}", patternWithValue="-{0} {1}"):
 	pass
 
 
 @export
-class OptionalModelSimPlusArgument(OptionalValuedFlagArgument, pattern="-{0}", patternWithValue="+{0} {1}"):
+class OptionalModelSimPlusArgument(OptionalValuedFlag, pattern="-{0}", patternWithValue="+{0} {1}"):
 	pass
 
 
@@ -57,7 +60,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
+	@CLIArgument()
 	class ValueLibraryName(StringArgument): ...
 
 
@@ -94,87 +97,87 @@ class VHDLCompiler(Executable, ToolMixIn):
 		"Windows": "vcom.exe"
 	}
 
-	@CLIOption
-	class FlagTime(ShortFlagArgument, name="time"):
+	@CLIArgument()
+	class FlagTime(ShortFlag, name="time"):
 		"""Print the compilation wall clock time."""
 
-	@CLIOption
-	class FlagExplicit(ShortFlagArgument, name="explicit"): ...
+	@CLIArgument()
+	class FlagExplicit(ShortFlag, name="explicit"): ...
 
-	@CLIOption
-	class FlagQuietMode(ShortFlagArgument, name="quiet"):
+	@CLIArgument()
+	class FlagQuietMode(ShortFlag, name="quiet"):
 		"""Do not report 'Loading...' messages."""
 
-	@CLIOption
-	class SwitchModelSimIniFile(ShortTupleArgument, name="modelsimini"): ...
+	@CLIArgument()
+	class SwitchModelSimIniFile(ShortTupleFlag, name="modelsimini"): ...
 
-	@CLIOption
-	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
+	@CLIArgument()
+	class FlagRangeCheck(ShortFlag, name="rangecheck"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchCoverage(OptionalModelSimPlusArgument, name="cover"): ...
 
-	@CLIOption
-	class FlagEnableFocusedExpressionCoverage(ShortFlagArgument, name="coverfec"): ...
+	@CLIArgument()
+	class FlagEnableFocusedExpressionCoverage(ShortFlag, name="coverfec"): ...
 
-	@CLIOption
-	class FlagDisableFocusedExpressionCoverage(ShortFlagArgument, name="nocoverfec"): ...
+	@CLIArgument()
+	class FlagDisableFocusedExpressionCoverage(ShortFlag, name="nocoverfec"): ...
 
-	@CLIOption
-	class FlagEnableRapidExpressionCoverage(ShortFlagArgument, name="coverrec"): ...
+	@CLIArgument()
+	class FlagEnableRapidExpressionCoverage(ShortFlag, name="coverrec"): ...
 
-	@CLIOption
-	class FlagDisableRapidExpressionCoverage(ShortFlagArgument, name="nocoverrec"): ...
+	@CLIArgument()
+	class FlagDisableRapidExpressionCoverage(ShortFlag, name="nocoverrec"): ...
 
-	@CLIOption
-	class FlagEnableRecognitionOfImplicitFSMResetTransitions(ShortFlagArgument, name="fsmresettrans"): ...
+	@CLIArgument()
+	class FlagEnableRecognitionOfImplicitFSMResetTransitions(ShortFlag, name="fsmresettrans"): ...
 
-	@CLIOption
-	class FlagDisableRecognitionOfImplicitFSMResetTransitions(ShortFlagArgument, name="nofsmresettrans"): ...
+	@CLIArgument()
+	class FlagDisableRecognitionOfImplicitFSMResetTransitions(ShortFlag, name="nofsmresettrans"): ...
 
-	@CLIOption
-	class FlagEnableRecognitionOfSingleBitFSMState(ShortFlagArgument, name="fsmsingle"): ...
+	@CLIArgument()
+	class FlagEnableRecognitionOfSingleBitFSMState(ShortFlag, name="fsmsingle"): ...
 
-	@CLIOption
-	class FlagDisableRecognitionOfSingleBitFSMState(ShortFlagArgument, name="nofsmsingle"): ...
+	@CLIArgument()
+	class FlagDisableRecognitionOfSingleBitFSMState(ShortFlag, name="nofsmsingle"): ...
 
-	@CLIOption
-	class FlagEnableRecognitionOfImplicitFSMTransitions(ShortFlagArgument, name="fsmimplicittrans"): ...
+	@CLIArgument()
+	class FlagEnableRecognitionOfImplicitFSMTransitions(ShortFlag, name="fsmimplicittrans"): ...
 
-	@CLIOption
-	class FlagDisableRecognitionOfImplicitFSMTransitions(ShortFlagArgument, name="nofsmimplicittrans"): ...
+	@CLIArgument()
+	class FlagDisableRecognitionOfImplicitFSMTransitions(ShortFlag, name="nofsmimplicittrans"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchFSMVerbosityLevel(OptionalModelSimMinusArgument, name="fsmverbose"): ...
 
-	@CLIOption
-	class FlagReportAsNote(ShortTupleArgument, name="note"): ...
+	@CLIArgument()
+	class FlagReportAsNote(ShortTupleFlag, name="note"): ...
 
-	@CLIOption
-	class FlagReportAsError(ShortTupleArgument, name="error"): ...
+	@CLIArgument()
+	class FlagReportAsError(ShortTupleFlag, name="error"): ...
 
-	@CLIOption
-	class FlagReportAsWarning(ShortTupleArgument, name="warning"): ...
+	@CLIArgument()
+	class FlagReportAsWarning(ShortTupleFlag, name="warning"): ...
 
-	@CLIOption
-	class FlagReportAsFatal(ShortTupleArgument, name="fatal"): ...
+	@CLIArgument()
+	class FlagReportAsFatal(ShortTupleFlag, name="fatal"): ...
 
-	@CLIOption
-	class FlagRelaxLanguageChecks(ShortFlagArgument, name="permissive"): ...
+	@CLIArgument()
+	class FlagRelaxLanguageChecks(ShortFlag, name="permissive"): ...
 
-	@CLIOption
-	class FlagForceLanguageChecks(ShortFlagArgument, name="pedanticerrors"): ...
+	@CLIArgument()
+	class FlagForceLanguageChecks(ShortFlag, name="pedanticerrors"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
 
-	@CLIOption
-	class ArgLogFile(ShortTupleArgument, name="l"): ...			# what's the difference to -logfile ?
+	@CLIArgument()
+	class ArgLogFile(ShortTupleFlag, name="l"): ...			# what's the difference to -logfile ?
 
-	@CLIOption
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+	@CLIArgument()
+	class SwitchVHDLLibrary(ShortTupleFlag, name="work"): ...
 
-	# @CLIOption
+	# @CLIArgument()
 	# class ArgSourceFile(PathArgument): ...
 
 
@@ -185,100 +188,100 @@ class VHDLSimulator(Executable, ToolMixIn):
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
-	class FlagQuietMode(ShortFlagArgument, name="quiet"):
+	@CLIArgument()
+	class FlagQuietMode(ShortFlag, name="quiet"):
 		"""Run simulation in quiet mode. (Don't show 'Loading...' messages."""
 
-	@CLIOption
-	class FlagBatchMode(ShortFlagArgument, name="batch"):
+	@CLIArgument()
+	class FlagBatchMode(ShortFlag, name="batch"):
 		"""Run simulation in batch mode."""
 
-	@CLIOption
-	class FlagGuiMode(ShortFlagArgument, name="gui"):
+	@CLIArgument()
+	class FlagGuiMode(ShortFlag, name="gui"):
 		"""Run simulation in GUI mode."""
 
-	@CLIOption
-	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+	@CLIArgument()
+	class SwitchBatchCommand(ShortTupleFlag, name="do"):
 		"""Specify a Tcl batch script for the batch mode."""
 
-	@CLIOption
-	class FlagCommandLineMode(ShortFlagArgument, name="c"):
+	@CLIArgument()
+	class FlagCommandLineMode(ShortFlag, name="c"):
 		"""Run simulation in command line mode."""
 
-	@CLIOption
-	class SwitchModelSimIniFile(ShortTupleArgument, name="modelsimini"):
+	@CLIArgument()
+	class SwitchModelSimIniFile(ShortTupleFlag, name="modelsimini"):
 		"""Specify the used 'modelsim.ini' file."""
 
-	@CLIOption
-	class FlagEnableOptimization(ShortFlagArgument, name="vopt"):
+	@CLIArgument()
+	class FlagEnableOptimization(ShortFlag, name="vopt"):
 		"""Enabled optimization while elaborating the design."""
 
-	@CLIOption
-	class FlagDisableOptimization(ShortFlagArgument, name="novopt"):
+	@CLIArgument()
+	class FlagDisableOptimization(ShortFlag, name="novopt"):
 		"""Disabled optimization while elaborating the design."""
 
-	@CLIOption
-	class FlagEnableOptimizationVerbosity(ShortFlagArgument, name="vopt_verbose"):
+	@CLIArgument()
+	class FlagEnableOptimizationVerbosity(ShortFlag, name="vopt_verbose"):
 		"""Enabled optimization while elaborating the design."""
 
-	@CLIOption
-	class FlagEnableKeepAssertionCountsForCoverage(ShortFlagArgument, name="assertcover"): ...
+	@CLIArgument()
+	class FlagEnableKeepAssertionCountsForCoverage(ShortFlag, name="assertcover"): ...
 
-	@CLIOption
-	class FlagDisableKeepAssertionCountsForCoverage(ShortFlagArgument, name="noassertcover"): ...
+	@CLIArgument()
+	class FlagDisableKeepAssertionCountsForCoverage(ShortFlag, name="noassertcover"): ...
 
-	@CLIOption
-	class FlagEnableCoverage(ShortFlagArgument, name="coverage"): ...
+	@CLIArgument()
+	class FlagEnableCoverage(ShortFlag, name="coverage"): ...
 
-	@CLIOption
-	class FlagDisableCoverage(ShortFlagArgument, name="nocoverage"): ...
+	@CLIArgument()
+	class FlagDisableCoverage(ShortFlag, name="nocoverage"): ...
 
-	@CLIOption
-	class FlagEnablePSL(ShortFlagArgument, name="psl"): ...
+	@CLIArgument()
+	class FlagEnablePSL(ShortFlag, name="psl"): ...
 
-	@CLIOption
-	class FlagDisablePSL(ShortFlagArgument, name="nopsl"): ...
+	@CLIArgument()
+	class FlagDisablePSL(ShortFlag, name="nopsl"): ...
 
-	@CLIOption
-	class FlagEnableFSMDebugging(ShortFlagArgument, name="fsmdebug"): ...
+	@CLIArgument()
+	class FlagEnableFSMDebugging(ShortFlag, name="fsmdebug"): ...
 
-	@CLIOption
-	class FlagReportAsNote(ShortTupleArgument, name="note"): ...
+	@CLIArgument()
+	class FlagReportAsNote(ShortTupleFlag, name="note"): ...
 
-	@CLIOption
-	class FlagReportAsError(ShortTupleArgument, name="error"): ...
+	@CLIArgument()
+	class FlagReportAsError(ShortTupleFlag, name="error"): ...
 
-	@CLIOption
-	class FlagReportAsWarning(ShortTupleArgument, name="warning"): ...
+	@CLIArgument()
+	class FlagReportAsWarning(ShortTupleFlag, name="warning"): ...
 
-	@CLIOption
-	class FlagReportAsFatal(ShortTupleArgument, name="fatal"): ...
+	@CLIArgument()
+	class FlagReportAsFatal(ShortTupleFlag, name="fatal"): ...
 
-	@CLIOption
-	class FlagRelaxLanguageChecks(ShortFlagArgument, name="permissive"): ...
+	@CLIArgument()
+	class FlagRelaxLanguageChecks(ShortFlag, name="permissive"): ...
 
-	@CLIOption
-	class FlagForceLanguageChecks(ShortFlagArgument, name="pedanticerrors"): ...
+	@CLIArgument()
+	class FlagForceLanguageChecks(ShortFlag, name="pedanticerrors"): ...
 
-	@CLIOption
-	class SwitchTimeResolution(ShortTupleArgument, name="t"):
+	@CLIArgument()
+	class SwitchTimeResolution(ShortTupleFlag, name="t"):
 		"""Set simulation time resolution."""
 		# -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
 
-	@CLIOption
-	class ArgLogFile(ShortTupleArgument, name="l"): ...
+	@CLIArgument()
+	class ArgLogFile(ShortTupleFlag, name="l"): ...
 		# what's the difference to -logfile ?
 
-	@CLIOption
-	class ArgKeepStdOut(ShortFlagArgument, name="keepstdout"): ...
+	@CLIArgument()
+	class ArgKeepStdOut(ShortFlag, name="keepstdout"): ...
 
-	@CLIOption
-	class ArgVHDLLibraryName(ShortTupleArgument, name="lib"): ...
+	@CLIArgument()
+	class ArgVHDLLibraryName(ShortTupleFlag, name="lib"): ...
 
-	@CLIOption
-	class ArgOnFinishMode(ShortTupleArgument, name="onfinish"):
+	@CLIArgument()
+	class ArgOnFinishMode(ShortTupleFlag, name="onfinish"):
 		"""Customize the kernel shutdown behavior at the end of simulation; Valid modes: ask, stop, exit, final (Default: ask)."""
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchTopLevel(StringArgument):
 		"""The top-level for simulation."""

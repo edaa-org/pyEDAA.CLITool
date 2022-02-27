@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -31,40 +31,54 @@
 #
 """This module contains the CLI abstraction layer for Active-HDL."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import LongFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument, PathArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.Flag import LongFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
 class VHDLLibraryTool(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's VHDL library management tool ``vlib``."""
+
 	_executableNames = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
-	class ValueLibraryName(StringArgument): ...
+	@CLIArgument()
+	class ValueLibraryName(StringArgument):
+		"""Name of the VHDL library."""
 
 
 @export
 class VHDLCompiler(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's VHDL compiler ``vcom``."""
+
 	_executableNames = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
 	}
 
-	@CLIOption
-	class FlagNoRangeCheck(LongFlagArgument, name="norangecheck"): ...
+	@CLIArgument()
+	class FlagNoRangeCheck(LongFlag, name="norangecheck"): ...
 
-	@CLIOption
-	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
+	@CLIArgument()
+	class SwitchVHDLVersion(StringArgument, pattern="-{0}"):
+		"""Option to set the VHDL language revision."""
 
-	@CLIOption
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+	@CLIArgument()
+	class SwitchVHDLLibrary(ShortTupleFlag, name="work"):
+		"""
+		Option to set the VHDL library the design file is compiled into.
 
-	@CLIOption
-	class ArgSourceFile(PathArgument): ...
+		Also known as *working library*.
+		"""
+
+	@CLIArgument()
+	class ArgSourceFile(PathArgument):
+		"""The path to a VHDL source file."""
 
 	# -reorder                      enables automatic file ordering
 	# -O[0 | 1 | 2 | 3]             set optimization level
@@ -77,10 +91,13 @@ class VHDLCompiler(Executable, ToolMixIn):
 
 @export
 class VHDLSimulator(Executable, ToolMixIn):
+	"""Abstraction of Active-HDL's simulator ``vsim``."""
+
 	_executableNames = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
-	class SwitchBatchCommand(ShortTupleArgument, name="do"): ...
+	@CLIArgument()
+	class SwitchBatchCommand(ShortTupleFlag, name="do"):
+		"""Tcl command(s) to execute in the simulator."""

@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -31,8 +31,10 @@
 #
 """This module contains the CLI abstraction layer for ISE."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -43,27 +45,27 @@ class Fuse(Executable, ToolMixIn):
 		"Windows": "fuse.exe"
 	}
 
-	@CLIOption
-	class FlagIncremental(ShortFlagArgument, name="incremental"): ...
+	@CLIArgument()
+	class FlagIncremental(ShortFlag, name="incremental"): ...
 
 	# FlagIncremental = ShortFlagArgument(_name="incremntal")
 
-	@CLIOption
-	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
+	@CLIArgument()
+	class FlagRangeCheck(ShortFlag, name="rangecheck"): ...
 
-	@CLIOption
-	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
+	@CLIArgument()
+	class SwitchMultiThreading(ShortTupleFlag, name="mt"): ...
 
-	@CLIOption
-	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
+	@CLIArgument()
+	class SwitchTimeResolution(ShortTupleFlag, name="timeprecision_vhdl"): ...
 
-	@CLIOption
-	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
+	@CLIArgument()
+	class SwitchProjectFile(ShortTupleFlag, name="prj"): ...
 
-	@CLIOption
-	class SwitchOutputFile(ShortTupleArgument, name="o"): ...
+	@CLIArgument()
+	class SwitchOutputFile(ShortTupleFlag, name="o"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class ArgTopLevel(StringArgument): ...
 
 
@@ -74,17 +76,17 @@ class ISESimulator(Executable):
 		"Windows": "isim.exe"
 	}
 
-	@CLIOption
-	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+	@CLIArgument()
+	class SwitchLogFile(ShortTupleFlag, name="log"): ...
 
-	@CLIOption
-	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
+	@CLIArgument()
+	class FlagGuiMode(ShortFlag, name="gui"): ...
 
-	@CLIOption
-	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
+	@CLIArgument()
+	class SwitchTclBatchFile(ShortTupleFlag, name="tclbatch"): ...
 
-	@CLIOption
-	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
+	@CLIArgument()
+	class SwitchWaveformFile(ShortTupleFlag, name="view"): ...
 
 
 @export
@@ -94,14 +96,14 @@ class Xst(Executable, ToolMixIn):
 		"Windows": "xst.exe"
 	}
 
-	@CLIOption
-	class SwitchIntStyle(ShortTupleArgument, name="intstyle"): ...
+	@CLIArgument()
+	class SwitchIntStyle(ShortTupleFlag, name="intstyle"): ...
 
-	@CLIOption
-	class SwitchXstFile(ShortTupleArgument, name="ifn"): ...
+	@CLIArgument()
+	class SwitchXstFile(ShortTupleFlag, name="ifn"): ...
 
-	@CLIOption
-	class SwitchReportFile(ShortTupleArgument, name="ofn"): ...
+	@CLIArgument()
+	class SwitchReportFile(ShortTupleFlag, name="ofn"): ...
 
 
 @export
@@ -111,11 +113,11 @@ class CoreGenerator(Executable, ToolMixIn):
 		"Windows": "coregen.exe"
 	}
 
-	@CLIOption
-	class FlagRegenerate(ShortFlagArgument, name="r"): ...
+	@CLIArgument()
+	class FlagRegenerate(ShortFlag, name="r"): ...
 
-	@CLIOption
-	class SwitchProjectFile(ShortTupleArgument, name="p"): ...
+	@CLIArgument()
+	class SwitchProjectFile(ShortTupleFlag, name="p"): ...
 
-	@CLIOption
-	class SwitchBatchFile(ShortTupleArgument, name="b"): ...
+	@CLIArgument()
+	class SwitchBatchFile(ShortTupleFlag, name="b"): ...

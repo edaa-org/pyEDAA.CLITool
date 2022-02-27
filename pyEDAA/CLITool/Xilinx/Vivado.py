@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -31,8 +31,11 @@
 #
 """This module contains the CLI abstraction layer for Vivado."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, ShortValuedFlagArgument, StringArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag
+from pyTooling.CLIAbstraction.Flag import ShortFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
@@ -43,39 +46,39 @@ class XElab(Executable, ToolMixIn):
 		"Windows": "xelab.bat"
 	}
 
-	@CLIOption
-	class FlagRangeCheck(ShortFlagArgument, name="rangecheck"): ...
+	@CLIArgument()
+	class FlagRangeCheck(ShortFlag, name="rangecheck"): ...
 
-	@CLIOption
-	class SwitchMultiThreading(ShortTupleArgument, name="mt"): ...
+	@CLIArgument()
+	class SwitchMultiThreading(ShortTupleFlag, name="mt"): ...
 
-	@CLIOption
-	class SwitchVerbose(ShortTupleArgument, name="verbose"): ...
+	@CLIArgument()
+	class SwitchVerbose(ShortTupleFlag, name="verbose"): ...
 
-	@CLIOption
-	class SwitchDebug(ShortTupleArgument, name="debug"): ...
+	@CLIArgument()
+	class SwitchDebug(ShortTupleFlag, name="debug"): ...
 
 	# class SwitchVHDL2008(ShortFlagArgument):
 	# 	_name =    "vhdl2008"
 	# 	_value =  None
 
-	@CLIOption
-	class SwitchOptimization(ShortValuedFlagArgument, name="O"): ...
+	@CLIArgument()
+	class SwitchOptimization(ShortValuedFlag, name="O"): ...
 		# _pattern = "--{0}{1}"
 
-	@CLIOption
-	class SwitchTimeResolution(ShortTupleArgument, name="timeprecision_vhdl"): ...
+	@CLIArgument()
+	class SwitchTimeResolution(ShortTupleFlag, name="timeprecision_vhdl"): ...
 
-	@CLIOption
-	class SwitchProjectFile(ShortTupleArgument, name="prj"): ...
+	@CLIArgument()
+	class SwitchProjectFile(ShortTupleFlag, name="prj"): ...
 
-	@CLIOption
-	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+	@CLIArgument()
+	class SwitchLogFile(ShortTupleFlag, name="log"): ...
 
-	@CLIOption
-	class SwitchSnapshot(ShortTupleArgument, name="s"): ...
+	@CLIArgument()
+	class SwitchSnapshot(ShortTupleFlag, name="s"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class ArgTopLevel(StringArgument): ...
 
 
@@ -86,19 +89,19 @@ class XSim(Executable, ToolMixIn):
 		"Windows": "xsim.bat"
 	}
 
-	@CLIOption
-	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+	@CLIArgument()
+	class SwitchLogFile(ShortTupleFlag, name="log"): ...
 
-	@CLIOption
-	class FlagGuiMode(ShortFlagArgument, name="gui"): ...
+	@CLIArgument()
+	class FlagGuiMode(ShortFlag, name="gui"): ...
 
-	@CLIOption
-	class SwitchTclBatchFile(ShortTupleArgument, name="tclbatch"): ...
+	@CLIArgument()
+	class SwitchTclBatchFile(ShortTupleFlag, name="tclbatch"): ...
 
-	@CLIOption
-	class SwitchWaveformFile(ShortTupleArgument, name="view"): ...
+	@CLIArgument()
+	class SwitchWaveformFile(ShortTupleFlag, name="view"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchSnapshot(StringArgument): ...
 
 
@@ -109,12 +112,12 @@ class Synth(Executable, ToolMixIn):
 		"Windows": "vivado.bat"
 	}
 
-	@CLIOption
-	class SwitchLogFile(ShortTupleArgument, name="log"): ...
+	@CLIArgument()
+	class SwitchLogFile(ShortTupleFlag, name="log"): ...
 
-	@CLIOption
-	class SwitchSourceFile(ShortTupleArgument, name="source"): ...
+	@CLIArgument()
+	class SwitchSourceFile(ShortTupleFlag, name="source"): ...
 
-	@CLIOption
-	class SwitchMode(ShortTupleArgument, name="mode"): ...
+	@CLIArgument()
+	class SwitchMode(ShortTupleFlag, name="mode"): ...
 		# _value =  "batch"
