@@ -33,8 +33,8 @@
 from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument  import StringArgument, PathArgument
+from pyTooling.CLIAbstraction.Flag      import LongFlag
 from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
-from pyTooling.CLIAbstraction.Flag import LongFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 

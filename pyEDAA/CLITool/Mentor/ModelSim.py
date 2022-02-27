@@ -37,9 +37,9 @@ from flags import Flags
 from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument  import StringArgument
-from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+from pyTooling.CLIAbstraction.Flag      import ShortFlag
 from pyTooling.CLIAbstraction.OptionalValuedFlag import OptionalValuedFlag
-from pyTooling.CLIAbstraction.Flag import ShortFlag
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 

@@ -29,17 +29,16 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIArgument
-from pyTooling.CLIAbstraction            import Executable
-from pyTooling.CLIAbstraction.Argument   import (
-	ExecutableArgument, StringArgument
-)
+from pyTooling.Decorators import export
+
+from pyTooling.CLIAbstraction            import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument   import ExecutableArgument, StringArgument
+from pyTooling.CLIAbstraction.Command    import CommandArgument
+from pyTooling.CLIAbstraction.Flag       import LongFlag
 from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag
-from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag, LongValuedFlag
-from pyTooling.CLIAbstraction.Flag import ShortFlag, LongFlag
-from pyTooling.CLIAbstraction.Command import CommandArgument
 
 
+@export
 class Docker(Executable):
 	_executableNames = {
 		"Linux":   "docker",

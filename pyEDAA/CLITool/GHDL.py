@@ -32,19 +32,19 @@
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
 from typing import Union, Iterable
 
+from pyTooling.Decorators import export
 from pyVHDLModel import VHDLVersion
 
-from pyTooling.CLIAbstraction            import CLIArgument, Executable
-from pyTooling.CLIAbstraction.Argument import (
-	PathListArgument, StringArgument
-)
-from pyTooling.CLIAbstraction.KeyValueFlag import ShortKeyValueFlag
-from pyTooling.CLIAbstraction.BooleanFlag import LongBooleanFlag
-from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag, LongValuedFlag
-from pyTooling.CLIAbstraction.Flag import ShortFlag, LongFlag
-from pyTooling.CLIAbstraction.Command import CommandArgument
+from pyTooling.CLIAbstraction               import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument      import PathListArgument, StringArgument
+from pyTooling.CLIAbstraction.Command       import CommandArgument
+from pyTooling.CLIAbstraction.Flag          import ShortFlag, LongFlag
+from pyTooling.CLIAbstraction.BooleanFlag   import LongBooleanFlag
+from pyTooling.CLIAbstraction.ValuedFlag    import ShortValuedFlag, LongValuedFlag
+from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag
 
 
+@export
 class GHDL(Executable):
 	_executableNames = {
 		"Linux":   "ghdl",

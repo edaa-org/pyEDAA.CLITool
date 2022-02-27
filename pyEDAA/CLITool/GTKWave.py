@@ -1,7 +1,10 @@
+from pyTooling.Decorators import export
+
 from pyTooling.CLIAbstraction            import CLIArgument, Executable
 from pyTooling.CLIAbstraction.ValuedFlag import LongValuedFlag
 
 
+@export
 class GTKWave(Executable):
 	_executableNames = {
 		"Linux":   "gtkwave",
