@@ -7,5 +7,5 @@ Xilinx
 
    ISE
    Vivado
-   Vivado SDK
+   VivadoSDK
    Vitis
