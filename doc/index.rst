@@ -51,7 +51,7 @@ Main Goals
 **********
 
 * Provide a pythonic solution to construct command line calls for EDA tools based on `pyTooling.CLIAbstraction <https://github.com/pyTooling/pyTooling.CLIAbstraction>`__
-* Launch CLI tools and connect to STDIn, STDOUT, STDERR for realtime output post-processing.
+* Launch CLI tools and connect to STDIN, STDOUT, STDERR for realtime output post-processing.
 
 
 .. _features:
@@ -64,6 +64,56 @@ Features
 * Find CLI programs either in ``PATH`` or specify an exact installation location.
 * Generate CLI options in correct order.
 * Generate correctly escaped CLI options.
+
+Consumers
+*********
+
+This layer is used by:
+
+* 🚧 `pyEDAA.Workflow <https://github.com/edaa-org/pyEDAA.Workflow>`__
+
+
+.. _news:
+
+News
+****
+
+.. only:: html
+
+   Feb. 2022 - Supporting more Tools
+   =================================
+
+.. only:: latex
+
+   .. rubric:: Supporting more Tools
+
+* Added more CLI abstraction.
+* Updated to support CLIAbstraction v0.4.0.
+
+
+.. only:: html
+
+   Jan. 2022 - GHDL, GTKWave, ModelSim
+   ===================================
+
+.. only:: latex
+
+   .. rubric:: GHDL, GTKWave, ModelSim
+
+* Added CLI abstraction for GHDL, GTKWave and ModelSim.
+* Prepared structure for other vendors and tools.
+
+
+.. only:: html
+
+   Dec. 2021 - Extracted CLITool from pyIPCMI
+   ==========================================
+
+.. only:: latex
+
+   .. rubric:: Extracted CLITool from pyIPCMI
+
+* The EDA tool abstraction has been extracted from `pyIPCMI <https://GitHub.com/Paebbels/pyIPCMI>`__.
 
 
 .. _contributors:

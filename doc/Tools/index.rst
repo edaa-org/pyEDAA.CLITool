@@ -1,7 +1,7 @@
 Supported Tools
 ###############
 
-* Aldec
+* :ref:`Aldec <TOC:Aldec>`
 
   * 🚧 Active-HDL
   * 🚧 Riviera-PRO
@@ -11,16 +11,16 @@ Supported Tools
   * 🚧 Quartus
   * 🚫 ModelSim Altera (Student) Edition
 
-* Cadence
+* :ref:`Cadence <TOC:Cadence>`
 
   * 🙋 need a list of tools
 
-* IntelFPGA
+* :ref:`IntelFPGA <TOC:IntelFPGA>`
 
   * 🚧 Quartus
   * 🚫 ModelSim Altera (Student) Edition
 
-* Lattice
+* :ref:`Lattice <TOC:Lattice>`
 
   * 🚧 Diamond
   * 🚫 Active-HDL Lattice Edition
@@ -31,32 +31,32 @@ Supported Tools
   * ✅ ModelSim DE/SE/PE
   * 🚫 QuestaSim
 
-* SiemensEDA
+* :ref:`SiemensEDA <TOC:SiemensEDA>`
 
   * 🚫 ModelSim DE/SE/PE
   * 🚫 QuestaSim
 
-* Synopsys
+* :ref:`Synopsys <TOC:Synopsys>`
 
   * 🙋 need a list of tools
 
-* Xilinx
+* :ref:`Xilinx <TOC:Xilinx>`
 
   * 🚧 ISE
   * 🚧 Vivado
   * 🚫 Vivado-SDK
   * 🚫 Vitis
 
-* System Tools
+* :ref:`System Tools <TOC:SystemTools>`
 
   * ✅ Git
 
-* Open Source
+* :ref:`Open Source <TOC:OpenSource>`
 
   * ✅ GHDL
   * ✅ GTKWave
 
-* Yosys
+* :ref:`Yosys <TOC:Yosys>`
 
   * 🙋 need a list of tools
 
@@ -77,4 +77,5 @@ Supported Tools
    Synopsys/index
    SystemTools/index
    OpenSource/index
+   Xilinx/index
    Yosys/index

@@ -3,8 +3,9 @@ Synopsys
 
 .. todo:: A list of Synopsys tools is needed.
 
-.. #toctree::
-   :hidden:
+.. toctree::
+   :name: TOC:Synopsys
+   :maxdepth: 2
 
-   XXX
-   YYY
+   VCS
+   Synplify

@@ -3,8 +3,8 @@ Yosys
 
 .. todo:: A list of Yosys tools is needed.
 
-.. #toctree::
-   :hidden:
+.. toctree::
+   :name: TOC:Yosys
+   :maxdepth: 2
 
-   XXX
-   YYY
+   nextpnr

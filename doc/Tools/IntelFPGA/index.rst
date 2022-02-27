@@ -2,6 +2,7 @@ IntelFPGA
 #########
 
 .. toctree::
-   :hidden:
+   :name: TOC:IntelFPGA
+   :maxdepth: 2
 
    Quartus

@@ -2,6 +2,7 @@ Lattice
 #######
 
 .. toctree::
-   :hidden:
+   :name: TOC:Lattice
+   :maxdepth: 2
 
    Diamond
