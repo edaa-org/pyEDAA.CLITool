@@ -50,14 +50,14 @@ class CommonOptions(TestCase, Helper):
 	@mark.xfail
 	def test_Help(self):
 		tool = GHDLInDocker(dryRun=True)
-		tool[GHDL.FlagHelp] = True
+		tool[GHDL.CommandHelp] = True
 		tool[Docker.CommandContainer] = True
 		tool[Docker.CommandRun] = True
 		tool[Docker.FlagRemoveContainer] = True
 		tool[Docker.ValueImageName] = "ghdl:latest"
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"help\"]", repr(tool))
 
 	@mark.xfail
 	def test_Version(self):
@@ -66,10 +66,10 @@ class CommonOptions(TestCase, Helper):
 		tool[Docker.CommandRun] = True
 		tool[Docker.FlagRemoveContainer] = True
 		tool[Docker.ValueImageName] = "ghdl:latest"
-		tool[GHDL.FlagVersion] = True
+		tool[GHDL.CommandVersion] = True
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"version\"]", repr(tool))
 
 
 class Analyze(TestCase, Helper):
