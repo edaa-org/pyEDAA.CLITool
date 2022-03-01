@@ -62,6 +62,8 @@ Consumers
 This layer is used by:
 
 * 🚧 `pyEDAA.Workflow <https://github.com/edaa-org/pyEDAA.Workflow>`__
+* 🚧 `pyEDAA.Launcher <https://github.com/edaa-org/pyEDAA.Launcher>`__
+* 🚧 `Open Source Verification Bundle (OSVB) <https://umarcor.github.io/osvb>`__
 
 
 .. _news:

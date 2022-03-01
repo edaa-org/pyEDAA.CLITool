@@ -107,7 +107,8 @@ print(f"Calling GHDL: {tool}")
 
 This layer is used by:
 
-* 🚧 pyEDAA.Workflow
+* 🚧 [pyEDAA.Workflow](https://github.com/edaa-org/pyEDAA.Workflow)
+* 🚧 [pyEDAA.Launcher](https://github.com/edaa-org/pyEDAA.Launcher)
 * 🚧 [Open Source Verification Bundle (OSVB)](https://umarcor.github.io/osvb)
 
 
