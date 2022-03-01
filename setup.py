@@ -45,8 +45,6 @@ DescribePythonPackageHostedOnGitHub(
 	sourceFileWithVersion=packageInformationFile,
 	developmentStatus="beta",
 	classifiers=list(DEFAULT_CLASSIFIERS) + [
-		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
-		"Topic :: Software Development :: Code Generators",
-		"Topic :: Software Development :: Compilers"
+		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
 	]
 )
