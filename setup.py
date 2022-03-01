@@ -43,7 +43,7 @@ DescribePythonPackageHostedOnGitHub(
 	description="An abstraction layer of EDA CLI tools.",
 	gitHubNamespace=gitHubNamespace,
 	sourceFileWithVersion=packageInformationFile,
-	developmentStatus="pre-alpha",
+	developmentStatus="beta",
 	classifiers=list(DEFAULT_CLASSIFIERS) + [
 		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
 		"Topic :: Software Development :: Code Generators",

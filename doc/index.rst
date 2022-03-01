@@ -35,15 +35,6 @@ The pyEDAA.CLITool Documentation
 
 Unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
 
-.. image:: _static/work-in-progress.png
-   :height: 275 px
-   :align: center
-   :target: https://GitHub.com/edaa-org/pyEDAA.CLITool
-
-.. raw:: html
-
-    <br>
-
 
 .. _goals:
 

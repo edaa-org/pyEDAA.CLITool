@@ -23,10 +23,6 @@
 -->
 
 
-<p align="center">
-  <a title="edaa-org.github.io/pyEDAA.CLITool" href="https://edaa-org.github.io/pyEDAA.CLITool"><img height="275px" src="doc/_static/work-in-progress.png"/></a>
-</p>
-
 Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
 
 
