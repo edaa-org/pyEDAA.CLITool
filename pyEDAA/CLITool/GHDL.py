@@ -47,9 +47,9 @@ from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag
 @export
 class GHDL(Executable):
 	_executableNames = {
-		"Windows": "ghdl.exe",
+		"Darwin":  "ghdl",
 		"Linux":   "ghdl",
-		"Darwin":  "ghdl"
+		"Windows": "ghdl.exe"
 	}
 
 	# XXX: overwrite __init__ and get backend variant

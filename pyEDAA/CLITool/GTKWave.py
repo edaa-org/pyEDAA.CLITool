@@ -39,9 +39,9 @@ from pyTooling.CLIAbstraction.ValuedFlag import LongValuedFlag
 @export
 class GTKWave(Executable):
 	_executableNames = {
-		"Windows": "gtkwave.exe",
+		"Darwin":  "gtkwave",
 		"Linux":   "gtkwave",
-		"Darwin":  "gtkwave"
+		"Windows": "gtkwave.exe"
 	}
 
 	@CLIArgument()

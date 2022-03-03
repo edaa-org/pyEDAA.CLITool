@@ -41,6 +41,7 @@ from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag
 @export
 class Docker(Executable):
 	_executableNames = {
+		"Darwin":  "docker",
 		"Linux":   "docker",
 		"Windows": "docker.exe"
 	}
