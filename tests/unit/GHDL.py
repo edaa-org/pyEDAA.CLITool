@@ -29,6 +29,7 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl``."""
+from sys                  import platform as sys_platform
 from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
@@ -39,6 +40,15 @@ from .                    import Helper
 
 class CommonOptions(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
+
+	@classmethod
+	def setUpClass(cls) -> None:
+		print(f"\nPlatform: {sys_platform}")
+		if sys_platform in ("linux", "darwin"):
+			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
+			ghdlBinaryPath.touch()
+			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -57,6 +67,15 @@ class CommonOptions(TestCase, Helper):
 
 class Analyze(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
+
+	@classmethod
+	def setUpClass(cls) -> None:
+		print(f"\nPlatform: {sys_platform}")
+		if sys_platform in ("linux", "darwin"):
+			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
+			ghdlBinaryPath.touch()
+			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
 	def test_AnalyzeFile(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
