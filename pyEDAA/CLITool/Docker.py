@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2021-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2021-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -29,51 +29,51 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from pyTooling.CLIAbstraction            import CLIOption
-from pyTooling.CLIAbstraction            import Executable
-from pyTooling.CLIAbstraction.Argument   import (
-	ExecutableArgument, CommandArgument,
-	ShortFlagArgument, LongFlagArgument,
-	ShortValuedFlagArgument, LongValuedFlagArgument,
-	LongTupleArgument,
-	StringArgument
-)
+from pyTooling.Decorators import export
+
+from pyTooling.CLIAbstraction            import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument   import ExecutableArgument, StringArgument
+from pyTooling.CLIAbstraction.Command    import CommandArgument
+from pyTooling.CLIAbstraction.Flag       import LongFlag
+from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag
 
 
+@export
 class Docker(Executable):
 	_executableNames = {
+		"Darwin":  "docker",
 		"Linux":   "docker",
 		"Windows": "docker.exe"
 	}
 
 	# 'version' sub commands and options
-	@CLIOption()
+	@CLIArgument()
 	class CommandVersion(CommandArgument, name="version"): ...
 
 	# 'container' sub commands and options
-	@CLIOption()
+	@CLIArgument()
 	class CommandContainer(CommandArgument, name="container"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class CommandRun(CommandArgument, name="run"): ...
 
-	@CLIOption()
-	class FlagContainerName(LongTupleArgument, name="name"): ...
+	@CLIArgument()
+	class FlagContainerName(LongTupleFlag, name="name"): ...
 
-	@CLIOption()
-	class FlagRemoveContainer(LongFlagArgument, name="rm"): ...
+	@CLIArgument()
+	class FlagRemoveContainer(LongFlag, name="rm"): ...
 
-	@CLIOption()
-	class FlagMount(LongTupleArgument, name="mount"): ...
+	@CLIArgument()
+	class FlagMount(LongTupleFlag, name="mount"): ...
 
-	@CLIOption()
-	class FlagVolume(LongTupleArgument, name="volume"): ...
+	@CLIArgument()
+	class FlagVolume(LongTupleFlag, name="volume"): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class ValueImageName(StringArgument): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class ValueCommand(StringArgument): ...
 
-	@CLIOption()
+	@CLIArgument()
 	class Executable(ExecutableArgument): ...  # XXX: no argument here

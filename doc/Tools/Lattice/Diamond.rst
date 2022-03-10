@@ -1,0 +1,4 @@
+Diamond
+#######
+
+.. todo:: Needs documentation.

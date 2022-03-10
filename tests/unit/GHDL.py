@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -29,6 +29,7 @@
 # ==================================================================================================================== #
 #
 """Unit tests for executable ``ghdl``."""
+from sys                  import platform as sys_platform
 from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
@@ -40,28 +41,46 @@ from .                    import Helper
 class CommonOptions(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
+	@classmethod
+	def setUpClass(cls) -> None:
+		print(f"\nPlatform: {sys_platform}")
+		if sys_platform in ("linux", "darwin"):
+			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
+			ghdlBinaryPath.touch()
+			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
+
 	def test_Help(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagHelp] = True
+		tool[tool.CommandHelp] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"--help\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"help\"]", repr(tool))
 
 	def test_Version(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagVersion] = True
+		tool[tool.CommandVersion] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"version\"]", repr(tool))
 
 
 class Analyze(TestCase, Helper):
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
 
+	@classmethod
+	def setUpClass(cls) -> None:
+		print(f"\nPlatform: {sys_platform}")
+		if sys_platform in ("linux", "darwin"):
+			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
+			ghdlBinaryPath.touch()
+			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
+
 	def test_AnalyzeFile(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandAnalyze] = True
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True
@@ -73,7 +92,7 @@ class Analyze(TestCase, Helper):
 
 	def test_DeriveAnalyzer(self):
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True

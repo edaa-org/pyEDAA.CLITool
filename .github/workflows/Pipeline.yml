@@ -12,14 +12,15 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@r0
     with:
       name: pyEDAA.CLITool
+      system_list: 'ubuntu macos'  # disabled: "windows" and "msys2"
 
-  #UnitTesting:
-  #  uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r0
-  #  needs:
-  #    - Params
-  #  with:
-  #    jobs: ${{ needs.Params.outputs.python_jobs }}
-  #    artifact: ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}
+  UnitTesting:
+    uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r0
+    needs:
+      - Params
+    with:
+      jobs: ${{ needs.Params.outputs.python_jobs }}
+      artifact: ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}
 
   Coverage:
     uses: pyTooling/Actions/.github/workflows/CoverageCollection.yml@r0
@@ -44,10 +45,10 @@ jobs:
       report: 'htmlmypy'
       artifact: ${{ fromJson(needs.Params.outputs.params).artifacts.typing }}
 
-  #PublishTestResults:
-  #  uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r0
-  #  needs:
-  #    - UnitTesting
+  PublishTestResults:
+    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r0
+    needs:
+      - UnitTesting
 
   Package:
     uses: pyTooling/Actions/.github/workflows/Package.yml@r0
@@ -62,7 +63,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Release.yml@r0
     if: startsWith(github.ref, 'refs/tags')
     needs:
-      #- UnitTesting
+      - UnitTesting
       - Coverage
       - StaticTypeCheck
       - Package
@@ -112,20 +113,28 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@r0
     needs:
       - Params
-      #- UnitTesting
+      - UnitTesting
       - Coverage
       - StaticTypeCheck
       - BuildTheDocs
       - PublishToGitHubPages
-      #- PublishTestResults
+      - PublishTestResults
     with:
       package: ${{ fromJson(needs.Params.outputs.params).artifacts.package }}
       remaining: |
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-ubuntu-3.7
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-ubuntu-3.8
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-ubuntu-3.9
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-ubuntu-3.10
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-windows-3.7
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-windows-3.8
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-windows-3.9
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-windows-3.10
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-msys2-3.9
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-macos-3.7
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-macos-3.8
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-macos-3.9
+        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-macos-3.10
         ${{ fromJson(needs.Params.outputs.params).artifacts.coverage }}
         ${{ fromJson(needs.Params.outputs.params).artifacts.typing }}
         ${{ fromJson(needs.Params.outputs.params).artifacts.doc }}
-#        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-3.6
-#        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-3.7
-#        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-3.8
-#        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-3.9
-#        ${{ fromJson(needs.Params.outputs.params).artifacts.unittesting }}-3.10

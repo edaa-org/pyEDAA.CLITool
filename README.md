@@ -23,10 +23,6 @@
 -->
 
 
-<p align="center">
-  <a title="edaa-org.github.io/pyEDAA.CLITool" href="https://edaa-org.github.io/pyEDAA.CLITool"><img height="275px" src="doc/_static/work-in-progress.png"/></a>
-</p>
-
 Provide unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
 
 
@@ -111,7 +107,8 @@ print(f"Calling GHDL: {tool}")
 
 This layer is used by:
 
-* 🚧 pyEDAA.Workflow
+* 🚧 [pyEDAA.Workflow](https://github.com/edaa-org/pyEDAA.Workflow)
+* 🚧 [pyEDAA.Launcher](https://github.com/edaa-org/pyEDAA.Launcher)
 * 🚧 [Open Source Verification Bundle (OSVB)](https://umarcor.github.io/osvb)
 
 

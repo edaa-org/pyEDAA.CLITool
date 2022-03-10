@@ -11,8 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universit‰t Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universit√§t Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -31,25 +31,29 @@
 #
 """This module contains the CLI abstraction layer for Riviera-PRO."""
 from pyTooling.Decorators               import export
-from pyTooling.CLIAbstraction           import CLIOption, Executable
-from pyTooling.CLIAbstraction.Argument  import ShortFlagArgument, ShortTupleArgument, StringArgument, PathArgument
+from pyTooling.CLIAbstraction           import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument  import StringArgument, PathArgument
+from pyTooling.CLIAbstraction.Flag      import ShortFlag
+from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
 from pyEDAA.CLITool                     import ToolMixIn
 
 
 @export
 class VHDLLibraryTool(Executable, ToolMixIn):
-	"""Abstraction layer of Riviera-PRO's VHDL library management tool 'vlib'."""
+	"""Abstraction of Riviera-PRO's VHDL library management tool ``vlib``."""
+
 	_executableNames = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchLibraryName(StringArgument): ...
 
 
 class VHDLCompiler(Executable, ToolMixIn):
-	"""Abstraction layer of Riviera-PRO's VHDL compiler 'vcom'."""
+	"""Abstraction of Riviera-PRO's VHDL compiler ``vcom``."""
+
 	_executableNames = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
@@ -58,35 +62,37 @@ class VHDLCompiler(Executable, ToolMixIn):
 	# class FlagNoRangeCheck(metaclass=LongFlagArgument):
 	# 	_name =   "norangecheck"
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchVHDLVersion(StringArgument, pattern="-{0}"): ...
 
-	@CLIOption
-	class SwitchVHDLLibrary(ShortTupleArgument, name="work"): ...
+	@CLIArgument()
+	class SwitchVHDLLibrary(ShortTupleFlag, name="work"): ...
 
-	@CLIOption
+	@CLIArgument()
 	class ArgSourceFile(PathArgument): ...
 
 
 @export
 class VHDLSimulator(Executable, ToolMixIn):
+	"""Abstraction of Riviera-PRO's HDL simulator ``vsim``."""
+
 	_executableNames = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}
 
-	@CLIOption
-	class SwitchBatchCommand(ShortTupleArgument, name="do"):
+	@CLIArgument()
+	class SwitchBatchCommand(ShortTupleFlag, name="do"):
 		"""Specify a Tcl batch script for the batch mode."""
 
-	@CLIOption
-	class FlagCommandLineMode(ShortFlagArgument, name="c"):
+	@CLIArgument()
+	class FlagCommandLineMode(ShortFlag, name="c"):
 		"""Run simulation in command line mode."""
 
-	@CLIOption
-	class SwitchTimeResolution(ShortTupleArgument, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
+	@CLIArgument()
+	class SwitchTimeResolution(ShortTupleFlag, name="t"):   # -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit
 		"""Set simulation time resolution."""
 
-	@CLIOption
+	@CLIArgument()
 	class SwitchTopLevel(StringArgument):
 		"""The top-level for simulation."""

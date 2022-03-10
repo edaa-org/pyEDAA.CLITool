@@ -35,15 +35,6 @@ The pyEDAA.CLITool Documentation
 
 Unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
 
-.. image:: _static/work-in-progress.png
-   :height: 275 px
-   :align: center
-   :target: https://GitHub.com/edaa-org/pyEDAA.CLITool
-
-.. raw:: html
-
-    <br>
-
 
 .. _goals:
 
@@ -51,7 +42,7 @@ Main Goals
 **********
 
 * Provide a pythonic solution to construct command line calls for EDA tools based on `pyTooling.CLIAbstraction <https://github.com/pyTooling/pyTooling.CLIAbstraction>`__
-* Launch CLI tools and connect to STDIn, STDOUT, STDERR for realtime output post-processing.
+* Launch CLI tools and connect to STDIN, STDOUT, STDERR for realtime output post-processing.
 
 
 .. _features:
@@ -60,10 +51,62 @@ Features
 ********
 
 * Support multiple native platforms: Linux, macOS, Windows.
-* Support nested platforms like MSYS2 with MinGW32, MinGW64, URCT64, Clang64, ...
+* Support nested platforms like MSYS2 with MinGW32, MinGW64, UCRT64, Clang64, ...
 * Find CLI programs either in ``PATH`` or specify an exact installation location.
 * Generate CLI options in correct order.
 * Generate correctly escaped CLI options.
+
+Consumers
+*********
+
+This layer is used by:
+
+* 🚧 `pyEDAA.Workflow <https://github.com/edaa-org/pyEDAA.Workflow>`__
+* 🚧 `pyEDAA.Launcher <https://github.com/edaa-org/pyEDAA.Launcher>`__
+* 🚧 `Open Source Verification Bundle (OSVB) <https://umarcor.github.io/osvb>`__
+
+
+.. _news:
+
+News
+****
+
+.. only:: html
+
+   Feb. 2022 - Supporting more Tools
+   =================================
+
+.. only:: latex
+
+   .. rubric:: Supporting more Tools
+
+* Added more CLI abstraction.
+* Updated to support CLIAbstraction v0.4.0.
+
+
+.. only:: html
+
+   Jan. 2022 - GHDL, GTKWave, ModelSim
+   ===================================
+
+.. only:: latex
+
+   .. rubric:: GHDL, GTKWave, ModelSim
+
+* Added CLI abstraction for GHDL, GTKWave and ModelSim.
+* Prepared structure for other vendors and tools.
+
+
+.. only:: html
+
+   Dec. 2021 - Extracted CLITool from pyIPCMI
+   ==========================================
+
+.. only:: latex
+
+   .. rubric:: Extracted CLITool from pyIPCMI
+
+* The EDA tool abstraction has been extracted from `pyIPCMI <https://GitHub.com/Paebbels/pyIPCMI>`__.
 
 
 .. _contributors:
@@ -114,7 +157,7 @@ License
    :hidden:
 
    Tutorial
-   Tools
+   Tools/index
 
 
 .. raw:: latex
@@ -135,11 +178,10 @@ License
    :caption: Appendix
    :hidden:
 
-   Coverage Report ➚ <https://edaa-org.GitHub.io/pyEDAA.CLITool/coverage/>
-   Static Type Check Report ➚ <https://edaa-org.GitHub.io/pyEDAA.CLITool/typing/>
+   Coverage Report ➚ <coverage/index>
+   Static Type Check Report ➚ <typing/index>
    License
    Doc-License
    Glossary
    genindex
-.. #
    py-modindex

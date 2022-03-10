@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -50,14 +50,14 @@ class CommonOptions(TestCase, Helper):
 	@mark.xfail
 	def test_Help(self):
 		tool = GHDLInDocker(dryRun=True)
-		tool[GHDL.FlagHelp] = True
+		tool[GHDL.CommandHelp] = True
 		tool[Docker.CommandContainer] = True
 		tool[Docker.CommandRun] = True
 		tool[Docker.FlagRemoveContainer] = True
 		tool[Docker.ValueImageName] = "ghdl:latest"
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--help\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"help\"]", repr(tool))
 
 	@mark.xfail
 	def test_Version(self):
@@ -66,10 +66,10 @@ class CommonOptions(TestCase, Helper):
 		tool[Docker.CommandRun] = True
 		tool[Docker.FlagRemoveContainer] = True
 		tool[Docker.ValueImageName] = "ghdl:latest"
-		tool[GHDL.FlagVersion] = True
+		tool[GHDL.CommandVersion] = True
 
 		executable = self.getExecutablePath("docker")
-		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"--version\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"version\"]", repr(tool))
 
 
 class Analyze(TestCase, Helper):
@@ -77,7 +77,7 @@ class Analyze(TestCase, Helper):
 	def test_AnalyzeFile(self):
 		tool = GHDLInDocker(dryRun=True)
 		tool[tool.CommandAnalyze] = True
-		tool[tool.FlagVHDlStandard] = "08"
+		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True

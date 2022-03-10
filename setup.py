@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -43,10 +43,8 @@ DescribePythonPackageHostedOnGitHub(
 	description="An abstraction layer of EDA CLI tools.",
 	gitHubNamespace=gitHubNamespace,
 	sourceFileWithVersion=packageInformationFile,
-	developmentStatus="pre-alpha",
+	developmentStatus="beta",
 	classifiers=list(DEFAULT_CLASSIFIERS) + [
-		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
-		"Topic :: Software Development :: Code Generators",
-		"Topic :: Software Development :: Compilers"
+		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
 	]
 )

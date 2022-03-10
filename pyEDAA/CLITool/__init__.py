@@ -11,8 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2021 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2017-2022 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -32,7 +32,7 @@
 """An abstraction layer of EDA CLI tools."""
 __author__ =    "Patrick Lehmann"
 __email__ =     "Paebbels@gmail.com"
-__copyright__ = "2014-2021, Patrick Lehmann, Unai Martinez-Corral"
+__copyright__ = "2014-2022, Patrick Lehmann, Unai Martinez-Corral"
 __license__ =   "Apache License, Version 2.0"
-__version__ =   "0.1.0"
+__version__ =   "0.2.0"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
