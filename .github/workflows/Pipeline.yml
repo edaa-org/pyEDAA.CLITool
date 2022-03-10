@@ -12,7 +12,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@r0
     with:
       name: pyEDAA.CLITool
-      system_list: 'ubuntu macos'  # disabled: "windows" and "msys2"
+#      system_list: 'ubuntu macos'  # disabled: "windows" and "msys2"
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r0
