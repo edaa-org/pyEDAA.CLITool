@@ -36,3 +36,11 @@ __copyright__ = "2014-2023, Patrick Lehmann, Unai Martinez-Corral"
 __license__ =   "Apache License, Version 2.0"
 __version__ =   "0.3.0"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
+
+from pyTooling.Decorators import export
+from pyTooling.Exceptions import ExceptionBase
+
+
+@export
+class CLIToolException(ExceptionBase):
+	pass

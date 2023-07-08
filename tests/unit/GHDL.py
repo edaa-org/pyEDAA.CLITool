@@ -39,11 +39,11 @@ from .                    import Helper
 
 
 class CommonOptions(TestCase, Helper):
-	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin"
 
 	@classmethod
 	def setUpClass(cls) -> None:
-		print(f"\nPlatform: {sys_platform}")
+		# print(f"\nPlatform: {sys_platform}")
 		if sys_platform in ("linux", "darwin"):
 			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
 			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
@@ -51,33 +51,46 @@ class CommonOptions(TestCase, Helper):
 			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
 	def test_Help(self):
+		print()
+
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandHelp] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
 		self.assertEqual(f"[\"{executable}\", \"help\"]", repr(tool))
 
+		helpText = tool.Help()
+		print(helpText)
+
 	def test_Version(self):
+		print()
+
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandVersion] = True
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
 		self.assertEqual(f"[\"{executable}\", \"version\"]", repr(tool))
 
+		version = tool.Version()
+		print(str(version))
+		print(repr(version))
+
 
 class Analyze(TestCase, Helper):
-	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local")) / "bin"
+	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin"
 
 	@classmethod
 	def setUpClass(cls) -> None:
-		print(f"\nPlatform: {sys_platform}")
+		# print(f"\nPlatform: {sys_platform}")
 		if sys_platform in ("linux", "darwin"):
 			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
 			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
 			ghdlBinaryPath.touch()
 			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
-	def test_AnalyzeFile(self):
+	def test_Analyze(self):
+		print()
+
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagVHDLStandard] = "08"
@@ -90,7 +103,37 @@ class Analyze(TestCase, Helper):
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
 		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))
 
+		tool.StartProcess()
+		for line in tool.GetLineReader():
+			print(line)
+		tool.Terminate()
+		print(tool.ExitCode)
+
+	def test_AnalyzeFile(self):
+		print()
+
+		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool[tool.CommandAnalyze] = True
+		tool[tool.FlagVHDLStandard] = "08"
+		tool[tool.FlagSynopsys] = True
+		tool[tool.FlagRelaxed] = True
+		tool[tool.FlagExplicit] = True
+		tool[tool.FlagMultiByteComments] = True
+		tool[tool.FlagLibrary] = "lib_Test"
+		tool[tool.OptionPaths] = (Path("example/file_A1.vhdl"), )
+
+		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"example\\file_A1.vhdl\"]", repr(tool))
+
+		tool.StartProcess()
+		for line in tool.GetLineReader():
+			print(line)
+		tool.Terminate()
+		print(tool.ExitCode)
+
 	def test_DeriveAnalyzer(self):
+		print()
+
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
@@ -103,3 +146,8 @@ class Analyze(TestCase, Helper):
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
 		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(derived))
+
+		derived.StartProcess()
+		for line in derived.GetLineReader():
+			print(line)
+		print(derived.ExitCode)

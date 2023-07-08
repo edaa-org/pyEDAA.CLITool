@@ -30,10 +30,11 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from typing import Union, Iterable
+from re                   import search as re_search
+from typing               import Union, Iterable, Tuple
 
 from pyTooling.Decorators import export
-from pyVHDLModel import VHDLVersion
+from pyVHDLModel          import VHDLVersion
 
 from pyTooling.CLIAbstraction               import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument      import PathListArgument, StringArgument
@@ -42,6 +43,107 @@ from pyTooling.CLIAbstraction.Flag          import ShortFlag, LongFlag
 from pyTooling.CLIAbstraction.BooleanFlag   import LongBooleanFlag
 from pyTooling.CLIAbstraction.ValuedFlag    import ShortValuedFlag, LongValuedFlag
 from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag
+
+from pyEDAA.CLITool       import CLIToolException
+
+
+@export
+class GHDLVersion:
+	_major: int
+	_minor: int
+	_micro: int
+	_dev: bool
+	_commitsSinceLastTag: int
+	_gitHash: str
+	_dirty: bool
+	_edition: str
+	_gnatCompiler: Tuple[int, int, int]
+	_backend: str
+
+	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
+		match = re_search(
+			r"GHDL"
+			r"\s(?P<major>\d+)"
+			r"\.(?P<minor>\d+)"
+			r"\.(?P<micro>\d+)"
+			r"(?:-(?P<suffix>dev))?"
+			r"\s\("
+			r"(?P<major2>\d+)"
+			r"\.(?P<minor2>\d+)"
+			r"\.(?P<micro2>\d+)"
+			r"\.(?:r(?P<cslt>\d+))"
+			r"\.(?:g(?P<hash>[0-9a-f]+))"
+			r"(?:\.(?P<dirty>dirty))?"
+			r"\)\s"
+			r"\[(?P<edition>[\w\s]+)\]",
+			versionLine)
+
+		if match is None:
+			raise CLIToolException(f"Unknown first GHDL version string '{versionLine}'.")
+
+		self._major = int(match["major"])
+		self._minor = int(match["minor"])
+		self._micro = int(match["micro"])
+		self._dev = "dev" in match.groups()
+		self._commitsSinceLastTag = int(match["cslt"])
+		self._gitHash = match["hash"]
+		self._dirty = "dirty" in match.groups()
+		self._edition = match["edition"]
+
+		match = re_search(
+			r"\s*[\w\s]+:\s(?P<major>\d+)\.(?P<minor>\d+)\.(?P<micro>\d+)", gnatLine)
+
+		if match is None:
+			raise CLIToolException(f"Unknown second GHDL version string '{gnatLine}'.")
+
+		self._gnatCompiler = (match["major"], match["minor"], match["micro"])
+
+		match = re_search(
+			r"\s*(?P<backend>\w+)\scode\sgenerator", backendLine)
+
+		if match is None:
+			raise CLIToolException(f"Unknown third GHDL version string '{backendLine}'.")
+
+		self._backend = match["backend"]
+
+	@property
+	def Major(self) -> int:
+		return self._major
+
+	@property
+	def Minor(self) -> int:
+		return self._minor
+
+	@property
+	def Micro(self) -> int:
+		return self._micro
+
+	@property
+	def Dev(self) -> bool:
+		return self._dev
+
+	@property
+	def CommitsSinceLastTag(self) -> int:
+		return self._commitsSinceLastTag
+
+	@property
+	def GitHash(self) -> str:
+		return self._gitHash
+
+	@property
+	def Dirty(self) -> bool:
+		return self._dirty
+
+	@property
+	def Edition(self) -> str:
+		return self._edition
+
+	def __str__(self) -> str:
+		dev = f"-dev" if self._dev else ""
+		return f"{self._major}.{self._minor}.{self._micro}{dev}"
+
+	def __repr__(self) -> str:
+		return f"{self.__str__()} (Backend: {self._backend}; Git: {self._gitHash})"
 
 
 @export
@@ -227,8 +329,8 @@ class GHDL(Executable):
 		"""Turns warnings into errors."""
 
 	@CLIArgument()
-	class OptionPath(PathListArgument):
-		"""Add VHDL file to analyze."""
+	class OptionPaths(PathListArgument):
+		"""Add list of VHDL files to analyze."""
 
 	@CLIArgument()
 	class OptionTopLevel(StringArgument):
@@ -335,3 +437,24 @@ class GHDL(Executable):
 		self._SetParameters(tool, std, ieee)
 
 		return tool
+
+	def Help(self):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandHelp] = True
+
+		tool.StartProcess()
+		return "\n".join(tool.GetLineReader())
+
+	def Version(self):
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandVersion] = True
+
+		tool.StartProcess()
+		iterator = iter(tool.GetLineReader())
+		firstLine = next(iterator)
+		secondLine = next(iterator)
+		thirdLine = next(iterator)
+
+		return GHDLVersion(firstLine, secondLine, thirdLine)
