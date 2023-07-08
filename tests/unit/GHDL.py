@@ -109,45 +109,98 @@ class Analyze(TestCase, Helper):
 		tool.Terminate()
 		print(tool.ExitCode)
 
-	def test_AnalyzeFile(self):
-		print()
-
+	def _GetAnalyzer(self) -> GHDL:
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagVHDLStandard] = "08"
 		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
 		tool[tool.FlagExplicit] = True
 		tool[tool.FlagMultiByteComments] = True
+
+		return tool
+
+	def test_AnalyzeFaultyFile(self):
+		print()
+
+		tool = self._GetAnalyzer()
+		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagLibrary] = "lib_Test"
-		tool[tool.OptionPaths] = (Path("example/file_A1.vhdl"), )
+		tool[tool.OptionPaths] = (Path("project/designB/file_B1.vhdl"), )
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"example\\file_A1.vhdl\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"project\\designB\\file_B1.vhdl\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
 			print(line)
 		tool.Terminate()
-		print(tool.ExitCode)
 
-	def test_DeriveAnalyzer(self):
+		self.assertEqual(1, tool.ExitCode)
+
+	def test_AnalyzeSingleFiles(self):
 		print()
 
-		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
-		tool[tool.FlagVHDLStandard] = "08"
-		tool[tool.FlagSynopsys] = True
-		tool[tool.FlagRelaxed] = True
-		tool[tool.FlagExplicit] = True
-		tool[tool.FlagMultiByteComments] = True
+		libraryFiles = (
+			Path("project/lib/file_P1.vhdl"),
+			Path("project/lib/file_P2.vhdl"),
+		)
+		designFiles = (
+			Path("project/designA/file_A1.vhdl"),
+			Path("project/designA/file_A2.vhdl"),
+		)
 
-		derived = tool.GetGHDLAsAnalyzer()
-		derived[derived.FlagLibrary] = "lib_Test"
+		analyzer = self._GetAnalyzer()
+		for file in libraryFiles:
+			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagLibrary] = "libCommon"
+			tool[tool.OptionPaths] = (file, )
+			tool.StartProcess()
+			for line in tool.GetLineReader():
+				print(line)
+			tool.Terminate()
 
-		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(derived))
+			self.assertEqual(0, tool.ExitCode)
 
-		derived.StartProcess()
-		for line in derived.GetLineReader():
+		for file in designFiles:
+			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagLibrary] = "libDesign"
+			tool[tool.OptionPaths] = (file, )
+			tool.StartProcess()
+			for line in tool.GetLineReader():
+				print(line)
+			tool.Terminate()
+
+			self.assertEqual(0, tool.ExitCode)
+
+	def test_AnalyzeMultipleFiles(self):
+		print()
+
+		libraryFiles = (
+			Path("project/lib/file_P1.vhdl"),
+			Path("project/lib/file_P2.vhdl"),
+		)
+		designFiles = (
+			Path("project/designA/file_A1.vhdl"),
+			Path("project/designA/file_A2.vhdl"),
+		)
+
+		analyzer = self._GetAnalyzer()
+		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagLibrary] = "libCommon"
+		tool[tool.OptionPaths] = libraryFiles
+		tool.StartProcess()
+		for line in tool.GetLineReader():
 			print(line)
-		print(derived.ExitCode)
+		tool.Terminate()
+
+		self.assertEqual(0, tool.ExitCode)
+
+		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagLibrary] = "libDesign"
+		tool[tool.OptionPaths] = designFiles
+		tool.StartProcess()
+		for line in tool.GetLineReader():
+			print(line)
+		tool.Terminate()
+
+		self.assertEqual(0, tool.ExitCode)
