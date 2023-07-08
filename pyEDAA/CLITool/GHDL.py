@@ -30,11 +30,12 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from re                   import search as re_search
-from typing               import Union, Iterable, Tuple
+from re                    import search as re_search
+from typing import Union, Iterable, Tuple, ClassVar, Dict
 
-from pyTooling.Decorators import export
-from pyVHDLModel          import VHDLVersion
+from pyTooling.Decorators  import export
+from pyTooling.MetaClasses import ExtendedType
+from pyVHDLModel           import VHDLVersion
 
 from pyTooling.CLIAbstraction               import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument      import PathListArgument, StringArgument
@@ -48,7 +49,7 @@ from pyEDAA.CLITool       import CLIToolException
 
 
 @export
-class GHDLVersion:
+class GHDLVersion(metaclass=ExtendedType, slots=True):
 	_major: int
 	_minor: int
 	_micro: int
@@ -148,7 +149,7 @@ class GHDLVersion:
 
 @export
 class GHDL(Executable):
-	_executableNames = {
+	_executableNames: ClassVar[Dict[str, str]] = {
 		"Darwin":  "ghdl",
 		"Linux":   "ghdl",
 		"Windows": "ghdl.exe"
