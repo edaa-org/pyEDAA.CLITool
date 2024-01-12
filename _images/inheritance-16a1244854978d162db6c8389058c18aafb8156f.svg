@@ -1,0 +1,44 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.w3.org/1999/xlink" width="1pt" height="864pt" viewBox="0.00 0.00 1.28 864.00">
+<ns0:g id="graph0" class="graph" transform="scale(0.00435556 0.00435556) rotate(0) translate(4 198363.13)">
+<ns0:title>inheritanceb670c1d2e2</ns0:title>
+
+<ns0:g id="node1" class="node">
+<ns0:title>Executable</ns0:title>
+<ns0:g id="a_node1"><ns0:a ns1:title="Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="195.5,-198350.36 104.5,-198350.36 104.5,-8.77 195.5,-8.77 195.5,-198350.36" />
+<ns0:text text-anchor="middle" x="150" y="-198336.86" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Executable</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="node3" class="node">
+<ns0:title>GHDL</ns0:title>
+<ns0:g id="a_node3"><ns0:a ns1:href="../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL" ns1:title="GHDL" target="_top">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="285.5,-99188.81 231.5,-99188.81 231.5,-99170.31 285.5,-99170.31 285.5,-99188.81" />
+<ns0:text text-anchor="middle" x="258.5" y="-99175.31" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">GHDL</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge2" class="edge">
+<ns0:title>Executable-&gt;GHDL</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M195.86,-99179.56C205.74,-99179.56 216.02,-99179.56 225.29,-99179.56" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="226.22,-99181.31 231.22,-99179.56 226.22,-99177.81 226.22,-99181.31" />
+</ns0:g>
+
+<ns0:g id="node2" class="node">
+<ns0:title>Program</ns0:title>
+<ns0:g id="a_node2"><ns0:a ns1:title="Represent a simple command line interface (CLI) executable (program or script).">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="68.5,-198359.13 0,-198359.13 0,0 68.5,0 68.5,-198359.13" />
+<ns0:text text-anchor="middle" x="34.25" y="-198345.63" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Program</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge1" class="edge">
+<ns0:title>Program-&gt;Executable</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M68.76,-99179.56C78.08,-99179.56 88.4,-99179.56 98.46,-99179.56" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="99.34,-99181.31 104.34,-99179.56 99.34,-99177.81 99.34,-99181.31" />
+</ns0:g>
+</ns0:g>
+</ns0:svg>

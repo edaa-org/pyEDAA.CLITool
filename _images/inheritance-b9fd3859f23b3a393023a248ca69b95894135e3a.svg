@@ -1,0 +1,44 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.w3.org/1999/xlink" width="308pt" height="27pt" viewBox="0.00 0.00 308.00 26.50">
+<ns0:g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 22.5)">
+<ns0:title>inheritance1b9f6bec01</ns0:title>
+
+<ns0:g id="node1" class="node">
+<ns0:title>Executable</ns0:title>
+<ns0:g id="a_node1"><ns0:a ns1:title="Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="195.5,-18.5 104.5,-18.5 104.5,0 195.5,0 195.5,-18.5" />
+<ns0:text text-anchor="middle" x="150" y="-5" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Executable</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="node3" class="node">
+<ns0:title>GTKWave</ns0:title>
+<ns0:g id="a_node3"><ns0:a ns1:href="../pyEDAA.CLITool/pyEDAA.CLITool.GTKWave.html#pyEDAA.CLITool.GTKWave.GTKWave" ns1:title="GTKWave" target="_top">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="300,-18.5 231.5,-18.5 231.5,0 300,0 300,-18.5" />
+<ns0:text text-anchor="middle" x="265.75" y="-5" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">GTKWave</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge2" class="edge">
+<ns0:title>Executable-&gt;GTKWave</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M195.96,-9.25C205.73,-9.25 215.99,-9.25 225.52,-9.25" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="226.35,-11 231.35,-9.25 226.35,-7.5 226.35,-11" />
+</ns0:g>
+
+<ns0:g id="node2" class="node">
+<ns0:title>Program</ns0:title>
+<ns0:g id="a_node2"><ns0:a ns1:title="Represent a simple command line interface (CLI) executable (program or script).">
+<ns0:polygon fill="white" stroke="black" stroke-width="0.5" points="68.5,-18.5 0,-18.5 0,0 68.5,0 68.5,-18.5" />
+<ns0:text text-anchor="middle" x="34.25" y="-5" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Program</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge1" class="edge">
+<ns0:title>Program-&gt;Executable</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M68.76,-9.25C78.08,-9.25 88.4,-9.25 98.46,-9.25" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="99.34,-11 104.34,-9.25 99.34,-7.5 99.34,-11" />
+</ns0:g>
+</ns0:g>
+</ns0:svg>

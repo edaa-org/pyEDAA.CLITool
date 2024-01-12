@@ -1,0 +1,26 @@
+.. # Template modified  by Patrick Lehmann
+     * removed automodule on top, because private members are activated for autodoc (no doubled documentation).
+     * Made sections like 'submodules' bold text, but no headlines to reduce number of ToC levels.
+
+=========================
+``pyEDAA.CLITool.Docker``
+=========================
+
+.. py:module:: pyEDAA.CLITool.Docker
+
+
+.. currentmodule:: pyEDAA.CLITool.Docker
+
+
+**Classes**
+
+- :py:class:`Docker`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+
+.. autoclass:: Docker
+   :members:
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Docker
+      :parts: 1
