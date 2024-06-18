@@ -38,18 +38,32 @@ from pyEDAA.CLITool.GHDL  import GHDL
 from .                    import Helper
 
 
-class CommonOptions(TestCase, Helper):
+class GHDLTestcases(TestCase, Helper):
+	_libraryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl"))
 	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin"
 
 	@classmethod
 	def setUpClass(cls) -> None:
 		# print(f"\nPlatform: {sys_platform}")
 		if sys_platform in ("linux", "darwin"):
-			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+			if not cls._libraryDirectoryPath.exists():
+				print(f"Creating lib/ghdl directory '{cls._libraryDirectoryPath}': ", end="")
+				cls._libraryDirectoryPath.mkdir(parents=True)
+				print(f"DONE" if cls._libraryDirectoryPath.exists() and cls._libraryDirectoryPath.is_dir() else f"FAILED")
+
+			binaryDirectoryPath = cls._binaryDirectoryPath.resolve()
+			if not binaryDirectoryPath.exists():
+				print(f"Creating bin directory '{binaryDirectoryPath}': ", end="")
+				binaryDirectoryPath.mkdir(parents=True)
+				print(f"DONE" if binaryDirectoryPath.exists() and binaryDirectoryPath.is_dir() else f"FAILED")
+
+			ghdlBinaryPath: Path = binaryDirectoryPath / "ghdl"
 			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
 			ghdlBinaryPath.touch()
-			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
+			print(f"DONE" if ghdlBinaryPath.exists() and ghdlBinaryPath.is_file() else f"FAILED")
 
+
+class CommonOptions(GHDLTestcases):
 	def test_Help(self) -> None:
 		print()
 
@@ -76,18 +90,7 @@ class CommonOptions(TestCase, Helper):
 		print(repr(version))
 
 
-class Analyze(TestCase, Helper):
-	_binaryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin"
-
-	@classmethod
-	def setUpClass(cls) -> None:
-		# print(f"\nPlatform: {sys_platform}")
-		if sys_platform in ("linux", "darwin"):
-			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
-			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
-			ghdlBinaryPath.touch()
-			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
-
+class Analyze(GHDLTestcases):
 	def test_Analyze(self) -> None:
 		print()
 
