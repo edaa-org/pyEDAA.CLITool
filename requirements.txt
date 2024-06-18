@@ -1,2 +1,3 @@
 pyTooling ~= 6.3
 pyVHDLModel ~= 0.28.0
+py-flags ~= 1.1

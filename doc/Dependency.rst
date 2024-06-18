@@ -32,6 +32,10 @@ pyEDAA.CLITool Package
 | `pyVHDLModel <https://GitHub.com/VHDL/pyVHDLModel>`__                                 | ≥0.28       | `Apache License, 2.0 <https://GitHub.com/VHDL/pyVHDLModel/blob/master/LICENSE>`__                        | * `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__ (`Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__)           |
 +---------------------------------------------------------------------------------------+-------------+----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+.. todo:: investigate dependencies and licenses of pyTooling with CLIAbstraction and pyAttributes/argcomplete.
+
+.. todo:: investigate dependencies of py-flags 1.1.4 => MIT.
+
 .. #
    | `pyAttributes <https://GitHub.com/pyTooling/pyAttributes>`__  | ≥2.5.1      | `Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__    | * `pyTooling <https://GitHub.com/pyTooling/pyTooling>`__ (`Apache License, 2.0 <https://GitHub.com/pyTooling/pyTooling/blob/main/LICENSE.txt>`__)      |
    |                                                               |             |                                                                                           | * `argcomplete <https://GitHub.com/kislyuk/argcomplete>`__ (`Apache License, 2.0 <https://GitHub.com/kislyuk/argcomplete/blob/develop/LICENSE.rst>`__) |

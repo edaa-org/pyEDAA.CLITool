@@ -35,8 +35,13 @@ junit_logging = "all"
 color = true
 verbose = 1             # possible values: 0 (minimal output), 1 (-v), 2 (-vv)
 fail-under = 80
-#generate-badge = "."
-#badge-format = "png"
+exclude = [
+	"build",
+	"dist",
+	"doc",
+	"tests",
+	"setup.py"
+]
 ignore-setters = true
 
 [tool.coverage.run]

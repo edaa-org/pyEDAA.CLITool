@@ -37,6 +37,9 @@ __license__ =   "Apache License, Version 2.0"
 __version__ =   "0.3.0"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
 
+from pathlib import Path
+from typing  import Any, Optional as Nullable
+
 from pyTooling.Decorators import export
 from pyTooling.Exceptions import ExceptionBase
 
@@ -47,7 +50,13 @@ class CLIToolException(ExceptionBase):
 
 
 class ToolMixIn:
-	def __init__(self, platform, dryrun, binaryDirectoryPath, version, logger=None):
+	_platform: str
+	_dryrun: bool
+	_binaryDirectoryPath: Path
+	_version: str
+	_logger: Any
+
+	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None):
 		self._platform =            platform
 		self._dryrun =              dryrun
 		self._binaryDirectoryPath = binaryDirectoryPath
