@@ -30,6 +30,7 @@
 #
 """Unit tests for executable ``ghdl`` inside a container run via Docker."""
 from pathlib import Path
+from typing  import Optional as Nullable
 
 from pytest                 import mark
 from unittest               import TestCase
@@ -40,7 +41,7 @@ from .                      import Helper
 
 
 class GHDLInDocker(Docker, GHDL):
-	def __init__(self, executablePath: Path = None, binaryDirectoryPath: Path = None, dryRun: bool = False) -> None:
+	def __init__(self, executablePath: Nullable[Path] = None, binaryDirectoryPath: Nullable[Path] = None, dryRun: bool = False) -> None:
 		super().__init__(executablePath, binaryDirectoryPath, dryRun)
 
 		self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")

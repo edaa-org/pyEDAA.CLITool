@@ -31,7 +31,7 @@
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
 from re                    import search as re_search
-from typing import Union, Iterable, Tuple, ClassVar, Dict
+from typing                import Union, Iterable, Tuple, Optional as Nullable
 
 from pyTooling.Decorators  import export
 from pyTooling.MetaClasses import ExtendedType
@@ -97,7 +97,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		if match is None:
 			raise CLIToolException(f"Unknown second GHDL version string '{gnatLine}'.")
 
-		self._gnatCompiler = (match["major"], match["minor"], match["micro"])
+		self._gnatCompiler = (int(match["major"]), int(match["minor"]), int(match["micro"]))
 
 		match = re_search(
 			r"\s*(?P<backend>\w+)\scode\sgenerator", backendLine)
@@ -322,11 +322,11 @@ class GHDL(Executable):
 		"""Warns if an all/others specification does not apply."""
 
 	@CLIArgument()
-	class FlagSyntesisBindingRule(ShortFlag, name="unused", pattern="-W{0}"):
+	class FlagUnused(ShortFlag, name="unused", pattern="-W{0}"):
 		"""Warns for unused subprograms."""
 
 	@CLIArgument()
-	class FlagSyntesisBindingRule(ShortFlag, name="error", pattern="-W{0}"):
+	class FlagError(ShortFlag, name="error", pattern="-W{0}"):
 		"""Turns warnings into errors."""
 
 	@CLIArgument()
@@ -405,14 +405,14 @@ class GHDL(Executable):
 			else:
 				tool.__cliParameters__[key] = key()
 
-	def _SetParameters(self, tool: "GHDL", std: VHDLVersion = None, ieee: str = None):
+	def _SetParameters(self, tool: "GHDL", std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None):
 		if std is not None:
 			tool[self.FlagVHDLStandard] = str(std)
 
 		if ieee is not None:
 			tool[self.FlagVHDLStandard] = ieee
 
-	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
+	def GetGHDLAsAnalyzer(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandAnalyze] = True
@@ -421,7 +421,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
+	def GetGHDLAsElaborator(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandElaborate] = True
@@ -430,7 +430,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
+	def GetGHDLAsSimulator(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandRun] = True
