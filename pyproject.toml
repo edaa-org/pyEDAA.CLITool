@@ -10,12 +10,14 @@ build-backend = "setuptools.build_meta"
 line-length = 120
 
 [tool.mypy]
-python_version = "3.11"
-namespace_packages = true
-
+files = ["pyEDAA.CLITool"]
+python_version = "3.12"
+#ignore_missing_imports = true
+strict = true
 pretty = true
 show_error_context = true
-
+show_error_codes = true
+namespace_packages = true
 html_report = "report/typing"
 
 [tool.pytest.ini_options]
@@ -27,13 +29,23 @@ filterwarnings = [
 	"error::DeprecationWarning",
 	"error::PendingDeprecationWarning"
 ]
+junit_logging = "all"
+
+[tool.interrogate]
+color = true
+verbose = 1             # possible values: 0 (minimal output), 1 (-v), 2 (-vv)
+fail-under = 80
+#generate-badge = "."
+#badge-format = "png"
+ignore-setters = true
 
 [tool.coverage.run]
 branch = true
+relative_files = true
 omit = [
 	"*site-packages*",
 	"setup.py",
-	"tests/*"
+	"tests/unit/*"
 ]
 
 [tool.coverage.report]
@@ -47,9 +59,12 @@ omit = [
 	"tests/*"
 ]
 
+[tool.coverage.xml]
+output = "report/coverage/coverage.xml"
+
+[tool.coverage.json]
+output = "report/coverage/coverage.json"
+
 [tool.coverage.html]
 directory = "report/coverage/html"
 title="Code Coverage of pyEDAA.CLITool"
-
-[tool.coverage.xml]
-output = "report/coverage/coverage.xml"
