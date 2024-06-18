@@ -149,7 +149,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 
 @export
 class GHDL(Executable):
-	_executableNames: ClassVar[Dict[str, str]] = {
+	_executableNames = {
 		"Darwin":  "ghdl",
 		"Linux":   "ghdl",
 		"Windows": "ghdl.exe"
