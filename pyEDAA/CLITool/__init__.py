@@ -44,3 +44,13 @@ from pyTooling.Exceptions import ExceptionBase
 @export
 class CLIToolException(ExceptionBase):
 	pass
+
+
+class ToolMixIn:
+	def __init__(self, platform, dryrun, binaryDirectoryPath, version, logger=None):
+		self._platform =            platform
+		self._dryrun =              dryrun
+		self._binaryDirectoryPath = binaryDirectoryPath
+		self._version =             version
+		self._logger =              logger
+		# self._environment =         Environment()

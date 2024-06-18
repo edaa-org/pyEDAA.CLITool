@@ -36,7 +36,7 @@ jobs:
       html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   DocCoverage:
-    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@r1
+    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@dev
     needs:
       - UnitTestingParams
     with:
