@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -50,7 +50,7 @@ class CommonOptions(TestCase, Helper):
 			ghdlBinaryPath.touch()
 			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
-	def test_Help(self):
+	def test_Help(self) -> None:
 		print()
 
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -62,7 +62,7 @@ class CommonOptions(TestCase, Helper):
 		helpText = tool.Help()
 		print(helpText)
 
-	def test_Version(self):
+	def test_Version(self) -> None:
 		print()
 
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -88,7 +88,7 @@ class Analyze(TestCase, Helper):
 			ghdlBinaryPath.touch()
 			print(f"DONE" if ghdlBinaryPath.exists() else f"FAILED")
 
-	def test_Analyze(self):
+	def test_Analyze(self) -> None:
 		print()
 
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -119,7 +119,7 @@ class Analyze(TestCase, Helper):
 
 		return tool
 
-	def test_AnalyzeFaultyFile(self):
+	def test_AnalyzeFaultyFile(self) -> None:
 		print()
 
 		tool = self._GetAnalyzer()
@@ -137,7 +137,7 @@ class Analyze(TestCase, Helper):
 
 		self.assertEqual(1, tool.ExitCode)
 
-	def test_AnalyzeSingleFiles(self):
+	def test_AnalyzeSingleFiles(self) -> None:
 		print()
 
 		libraryFiles = (
@@ -172,7 +172,7 @@ class Analyze(TestCase, Helper):
 
 			self.assertEqual(0, tool.ExitCode)
 
-	def test_AnalyzeMultipleFiles(self):
+	def test_AnalyzeMultipleFiles(self) -> None:
 		print()
 
 		libraryFiles = (

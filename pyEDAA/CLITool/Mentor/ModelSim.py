@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -75,7 +75,7 @@ class VHDLCompilerCoverageOptions(Flags):
 	StateMachine =        "f"
 	Toggle =              "t"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return "".join([i.value for i in self])
 
 
@@ -86,7 +86,7 @@ class VHDLCompilerFSMVerbosityLevel(Enum):
 	TransitionTable = "t"
 	AnyWarning =      "w"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.value
 
 

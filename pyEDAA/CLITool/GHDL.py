@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -412,7 +412,7 @@ class GHDL(Executable):
 		if ieee is not None:
 			tool[self.FlagVHDLStandard] = ieee
 
-	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandAnalyze] = True
@@ -421,7 +421,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandElaborate] = True
@@ -430,7 +430,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandRun] = True
@@ -439,7 +439,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def Help(self):
+	def Help(self) -> str:
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandHelp] = True
@@ -447,7 +447,7 @@ class GHDL(Executable):
 		tool.StartProcess()
 		return "\n".join(tool.GetLineReader())
 
-	def Version(self):
+	def Version(self) -> GHDLVersion:
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandVersion] = True
