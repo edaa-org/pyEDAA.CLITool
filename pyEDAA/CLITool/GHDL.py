@@ -151,6 +151,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 class GHDL(Executable):
 	_executableNames = {
 		"Darwin":  "ghdl",
+		"FreeBSD": "ghdl",
 		"Linux":   "ghdl",
 		"Windows": "ghdl.exe"
 	}
