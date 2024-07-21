@@ -31,6 +31,7 @@
 #
 """Package installer for 'An abstraction layer of EDA CLI tools'."""
 from pathlib             import Path
+from setuptools          import setup
 from pyTooling.Packaging import DescribePythonPackageHostedOnGitHub, DEFAULT_CLASSIFIERS
 
 gitHubNamespace =        "edaa-org"
@@ -38,13 +39,14 @@ packageName =            "pyEDAA.CLITool"
 packageDirectory =       packageName.replace(".", "/")
 packageInformationFile = Path(f"{packageDirectory}/__init__.py")
 
-DescribePythonPackageHostedOnGitHub(
-	packageName=packageName,
-	description="An abstraction layer of EDA CLI tools.",
-	gitHubNamespace=gitHubNamespace,
-	sourceFileWithVersion=packageInformationFile,
-	developmentStatus="beta",
-	classifiers=list(DEFAULT_CLASSIFIERS) + [
-		"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
-	]
+setup(**DescribePythonPackageHostedOnGitHub(
+		packageName=packageName,
+		description="An abstraction layer of EDA CLI tools.",
+		gitHubNamespace=gitHubNamespace,
+		sourceFileWithVersion=packageInformationFile,
+		developmentStatus="beta",
+		classifiers=list(DEFAULT_CLASSIFIERS) + [
+			"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
+		]
+	)
 )

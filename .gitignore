@@ -7,6 +7,9 @@ __pycache__/
 .cov
 coverage.xml
 
+# Generated reports
+report/
+
 # setuptools
 /build/**/*.*
 /dist/**/*.*
@@ -15,11 +18,16 @@ coverage.xml
 # Dependencies
 !requirements.txt
 
-# Sphinx documentation
-/doc/_build/
-/doc/_theme/
-/doc/pyEDAA.CLITool/**/*.*
-!/doc/pyEDAA.CLITool/index.rst
+# Sphinx
+doc/_build/
+doc/pyEDAA.CLITool/**/*.*
+!doc/pyEDAA.CLITool/index.rst
 
-# PyCharm project
+# BuildTheDocs
+doc/_theme/**/*.*
+
+# IntelliJ project files
 /.idea/workspace.xml
+
+# Git files
+!.git*

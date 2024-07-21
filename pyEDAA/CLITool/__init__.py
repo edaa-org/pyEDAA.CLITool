@@ -40,8 +40,9 @@ __keywords__ =  ["cli", "abstraction layer", "eda"]
 from pathlib import Path
 from typing  import Any, Optional as Nullable
 
-from pyTooling.Decorators import export
-from pyTooling.Exceptions import ExceptionBase
+from pyTooling.Decorators  import export
+from pyTooling.Exceptions  import ExceptionBase
+from pyTooling.MetaClasses import ExtendedType
 
 
 @export
@@ -49,7 +50,7 @@ class CLIToolException(ExceptionBase):
 	pass
 
 
-class ToolMixIn:
+class ToolMixIn(metaclass=ExtendedType, mixin=True):
 	_platform: str
 	_dryrun: bool
 	_binaryDirectoryPath: Path

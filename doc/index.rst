@@ -36,16 +36,16 @@ The pyEDAA.CLITool Documentation
 Unified interfaces to execute EDA tools via CLI from Python, agnostic to any specific configuration format/object.
 
 
-.. _goals:
+.. _GOALS:
 
 Main Goals
 **********
 
-* Provide a pythonic solution to construct command line calls for EDA tools based on `pyTooling.CLIAbstraction <https://github.com/pyTooling/pyTooling.CLIAbstraction>`__
+* Provide a pythonic solution to construct command line calls for EDA tools based on `pyTooling.CLIAbstraction <https://github.com/pyTooling/pyTooling>`__
 * Launch CLI tools and connect to STDIN, STDOUT, STDERR for realtime output post-processing.
 
 
-.. _features:
+.. _FEATURES:
 
 Features
 ********
@@ -55,6 +55,9 @@ Features
 * Find CLI programs either in ``PATH`` or specify an exact installation location.
 * Generate CLI options in correct order.
 * Generate correctly escaped CLI options.
+
+
+.. _CONSUMERS:
 
 Consumers
 *********
@@ -66,7 +69,7 @@ This layer is used by:
 * 🚧 `Open Source Verification Bundle (OSVB) <https://umarcor.github.io/osvb>`__
 
 
-.. _news:
+.. _NEWS:
 
 News
 ****
@@ -109,7 +112,7 @@ News
 * The EDA tool abstraction has been extracted from `pyIPCMI <https://GitHub.com/Paebbels/pyIPCMI>`__.
 
 
-.. _contributors:
+.. _CONTRIBUTORS:
 
 Contributors
 ************
@@ -119,7 +122,7 @@ Contributors
 * `and more... <https://GitHub.com/edaa-org/pyEDAA.CLITool/graphs/contributors>`__
 
 
-.. _license:
+.. _LICENSE:
 
 License
 *******
@@ -159,16 +162,22 @@ License
    Tutorial
    Tools/index
 
-
 .. raw:: latex
 
-   \part{References}
+   \part{References and Reports}
 
 .. toctree::
-   :caption: References
+   :caption: References and Reports
    :hidden:
 
-   pyEDAA.CLITool/index
+   pyEDAA.CLITool/pyEDAA.CLITool
+   unittests/index
+   coverage/index
+   Doc. Coverage Report <DocCoverage>
+   Static Type Check Report ➚ <typing/index>
+
+.. Coverage Report ➚ <coverage/index>
+   Static Type Check Report ➚ <typing/index>
 
 .. raw:: latex
 
@@ -178,10 +187,9 @@ License
    :caption: Appendix
    :hidden:
 
-   Coverage Report ➚ <coverage/index>
-   Static Type Check Report ➚ <typing/index>
    License
    Doc-License
    Glossary
    genindex
-   py-modindex
+   Python Module Index <modindex>
+   TODO
