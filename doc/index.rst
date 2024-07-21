@@ -76,6 +76,18 @@ News
 
 .. only:: html
 
+   July 2024 - General Updates
+   ===========================
+
+.. only:: latex
+
+   .. rubric:: General Updates
+
+* Updated to support pyTooling v6.5.
+* Replaced Sphinx theme with ReadTheDocs theme.
+
+.. only:: html
+
    Feb. 2022 - Supporting more Tools
    =================================
 
