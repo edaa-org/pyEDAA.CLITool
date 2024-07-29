@@ -64,19 +64,16 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
 		match = re_search(
 			r"GHDL"
-			r"\s(?P<major>\d+)"
-			r"\.(?P<minor>\d+)"
-			r"\.(?P<micro>\d+)"
-			r"(?:-(?P<suffix>dev))?"
-			r"\s\("
-			r"(?P<major2>\d+)"
-			r"\.(?P<minor2>\d+)"
-			r"\.(?P<micro2>\d+)"
-			r"\.(?:r(?P<cslt>\d+))"
-			r"\.(?:g(?P<hash>[0-9a-f]+))"
-			r"(?:\.(?P<dirty>dirty))?"
-			r"\)\s"
-			r"\[(?P<edition>[\w\s]+)\]",
+			r"\s(?P<major>\d+)\.(?P<minor>\d+)\.(?P<micro>\d+)"
+			r"(?:"
+				r"(?:"
+					r"\s\((?P<packaging>tarball)\)"
+				r")|(?:"
+					r"(?:-(?P<suffix>dev|rc\d+))?"
+					r"\s\((?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<hash>[0-9a-f]+))(?:\.(?P<dirty>dirty))?\)"
+				r")"
+			r")"
+			r"\s\[(?P<edition>[\w\s]+)\]",
 			versionLine)
 
 		if match is None:
@@ -85,8 +82,14 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		self._major = int(match["major"])
 		self._minor = int(match["minor"])
 		self._micro = int(match["micro"])
-		self._dev = "dev" in match.groups()
-		self._commitsSinceLastTag = int(match["cslt"])
+		if (suffix := match["suffix"]) is not None:
+			self._dev = suffix == "dev"
+		else:
+			self._dev = False
+		if (cslt := match["cslt"]) is not None:
+			self._commitsSinceLastTag = int(cslt)
+		else:
+			self._commitsSinceLastTag = 0
 		self._gitHash = match["hash"]
 		self._dirty = "dirty" in match.groups()
 		self._edition = match["edition"]
