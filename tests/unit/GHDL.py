@@ -42,24 +42,24 @@ class GHDLTestcases(TestCase, Helper):
 	_libraryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")).resolve()
 	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin").resolve()
 
-	@classmethod
-	def setUpClass(cls) -> None:
-		# print(f"\nPlatform: {sys_platform}")
-		if sys_platform in ("linux", "darwin"):
-			# if not cls._libraryDirectoryPath.exists():
-			# 	print(f"Creating lib/ghdl directory '{cls._libraryDirectoryPath}': ", end="")
-			# 	cls._libraryDirectoryPath.mkdir(parents=True)
-			# 	print(f"DONE" if cls._libraryDirectoryPath.exists() and cls._libraryDirectoryPath.is_dir() else f"FAILED")
-			#
-			# if not cls._binaryDirectoryPath.exists():
-			# 	print(f"Creating bin directory '{cls._binaryDirectoryPath}': ", end="")
-			# 	cls._binaryDirectoryPath.mkdir(parents=True)
-			# 	print(f"DONE" if cls._binaryDirectoryPath.exists() and cls._binaryDirectoryPath.is_dir() else f"FAILED")
-
-			ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
-			print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
-			ghdlBinaryPath.touch()
-			print(f"DONE" if ghdlBinaryPath.exists() and ghdlBinaryPath.is_file() else f"FAILED")
+	# @classmethod
+	# def setUpClass(cls) -> None:
+	# 	# print(f"\nPlatform: {sys_platform}")
+	# 	if sys_platform in ("linux", "darwin"):
+	# 		# if not cls._libraryDirectoryPath.exists():
+	# 		# 	print(f"Creating lib/ghdl directory '{cls._libraryDirectoryPath}': ", end="")
+	# 		# 	cls._libraryDirectoryPath.mkdir(parents=True)
+	# 		# 	print(f"DONE" if cls._libraryDirectoryPath.exists() and cls._libraryDirectoryPath.is_dir() else f"FAILED")
+	# 		#
+	# 		# if not cls._binaryDirectoryPath.exists():
+	# 		# 	print(f"Creating bin directory '{cls._binaryDirectoryPath}': ", end="")
+	# 		# 	cls._binaryDirectoryPath.mkdir(parents=True)
+	# 		# 	print(f"DONE" if cls._binaryDirectoryPath.exists() and cls._binaryDirectoryPath.is_dir() else f"FAILED")
+	#
+	# 		ghdlBinaryPath: Path = cls._binaryDirectoryPath / "ghdl"
+	# 		print(f"Creating dummy file '{ghdlBinaryPath}': ", end="")
+	# 		ghdlBinaryPath.touch()
+	# 		print(f"DONE" if ghdlBinaryPath.exists() and ghdlBinaryPath.is_file() else f"FAILED")
 
 
 class CommonOptions(GHDLTestcases):
