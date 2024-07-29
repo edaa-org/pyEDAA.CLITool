@@ -20,7 +20,9 @@ jobs:
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       apt: ghdl-mcode
+      brew: ghdl
       ubuntu_before_script: which ghdl
+      macos_before_script: which ghdl
 #      ubuntu_before_script: sudo install -m 755 tests/mock/ghdl /usr/local/bin
       requirements: "-r tests/unit/requirements.txt"
       unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}

@@ -38,8 +38,8 @@ from .                    import Helper
 
 
 class GHDLTestcases(TestCase, Helper):
-	_libraryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")).resolve()
-	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/local/lib/ghdl")) / "../../bin").resolve()
+	_libraryDirectoryPath = Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl")).resolve()
+	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl")) / "../../bin").resolve()
 
 
 class CommonOptions(GHDLTestcases):
