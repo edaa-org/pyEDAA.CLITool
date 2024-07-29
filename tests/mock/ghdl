@@ -1,0 +1,204 @@
+#! /bin/bash
+
+ANSI_BLACK="\e[30m"
+ANSI_RED="\e[31m"
+ANSI_GREEN="\e[32m"
+ANSI_YELLOW="\e[33m"
+ANSI_BLUE="\e[34m"
+ANSI_MAGENTA="\e[35m"
+ANSI_CYAN="\e[36m"
+ANSI_DARK_GRAY="\e[90m"
+ANSI_LIGHT_GRAY="\e[37m"
+ANSI_LIGHT_RED="\e[91m"
+ANSI_LIGHT_GREEN="\e[92m"
+ANSI_LIGHT_YELLOW="\e[93m"
+ANSI_LIGHT_BLUE="\e[94m"
+ANSI_LIGHT_MAGENTA="\e[95m"
+ANSI_LIGHT_CYAN="\e[96m"
+ANSI_WHITE="\e[97m"
+ANSI_NOCOLOR="\e[0m"
+
+# red texts
+COLORED_ERROR="${ANSI_RED}[ERROR]"
+COLORED_FAILED="${ANSI_RED}[FAILED]${ANSI_NOCOLOR}"
+
+# yellow texts
+COLORED_WARNING="${ANSI_YELLOW}[WARNING]"
+
+# green texts
+COLORED_PASSED="${ANSI_GREEN}[PASSED]${ANSI_NOCOLOR}"
+COLORED_DONE="${ANSI_GREEN}[DONE]${ANSI_NOCOLOR}"
+COLORED_SUCCESSFUL="${ANSI_GREEN}[SUCCESSFUL]${ANSI_NOCOLOR}"
+
+case "$(uname -s)" in
+	Linux*)
+		MACHINE=Linux
+		GHDL_PATH="/usr/bin/ghdl"
+		;;
+	Darwin*)
+		MACHINE=Mac
+		;;
+	MINGW*)
+		MACHINE=MinGw
+		if [[ "$MSYSTEM" == "MINGW64" ]]; then
+			MSYS_GHDL_PATH="/mingw64/bin/ghdl"
+			GHDL_PATH="C:\msys64\mingw64\bin\ghdl.exe"
+		elif [[ "$MSYSTEM" == "UCRT64" ]]; then
+			MSYS_GHDL_PATH="/ucrt64/bin/ghdl"
+			GHDL_PATH="C:\msys64\ucrt64\bin\ghdl.exe"
+		fi
+		;;
+	CYGWIN*)
+		MACHINE=Cygwin
+		;;
+	*)
+		MACHINE="UNKNOWN:$(uname -s)"
+esac
+
+
+if [[ "$#" -eq 0 ]]; then
+	echo "${GHDL_PATH}:error: missing command, try ${GHDL_PATH} 'help'"
+	exit 1
+fi
+
+while [[ "$#" -gt 0 ]]; do
+	case "$1" in
+		-h|--help|help)
+			echo "usage: ${GHDL_PATH} COMMAND [OPTIONS] ..."
+			echo "COMMAND is one of:"
+			echo "analyze [OPTS] FILEs"
+			echo "  Analyze one or multiple VHDL files"
+			echo "  aliases: -a, analyse"
+			echo "elaborate [OPTS] UNIT [ARCH]"
+			echo "  Elaborate design UNIT"
+			echo "  alias: -e"
+			echo "run UNIT [ARCH] [RUNOPTS]"
+			echo "  Run design UNIT"
+			echo "  alias: -r"
+			echo "elab-run [OPTS] UNIT [ARCH] [RUNOPTS]"
+			echo "  Elaborate and run design UNIT"
+			echo "  alias: --elab-run"
+			echo "help [CMD]"
+			echo "  Display this help or [help on CMD]"
+			echo "  aliases: -h, --help"
+			echo "version"
+			echo "  Display ghdl version"
+			echo "  aliases: -v, --version"
+			echo "help-options"
+			echo "  Display help for analyzer options"
+			echo "  alias: --help-options, opts-help, --options-help"
+			echo "help-warnings"
+			echo "  Display help about all the warnings"
+			echo "  alias: --help-warnings"
+			echo ""
+			echo "To display the options of a GHDL program,"
+			echo "  run your program with the 'help' option."
+			echo "Also see 'opts-help' for analyzer options."
+			echo ""
+			echo "Please, refer to the GHDL manual for more information."
+			echo "Report issues on https://github.com/ghdl/ghdl"
+			exit 0
+			;;
+		-v|--version|version)
+			echo "GHDL 4.1.0 (tarball) [Dunoon edition]"
+			echo " Compiled with GNAT Version: 14.1.0"
+			echo " llvm 18.1.4 code generator"
+			echo "Written by Tristan Gingold."
+			echo ""
+			echo "Copyright (C) 2003 - 2024 Tristan Gingold."
+			echo "GHDL is free software, covered by the GNU General Public License.  There is NO"
+			echo "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+			exit 0
+			;;
+		-a|analyze|analyse)
+			while [[ "$#" -gt 0 ]]; do
+				case "$1" in
+					--std=*)
+						;;
+					--work=*)
+						;;
+					-P*)
+						;;
+					-fsynopsys)
+						;;
+					-frelaxed|-frelaxed-rules)
+						;;
+					-fexplicit)
+						;;
+					-v)
+						;;
+					-C|--mb-comments)
+						;;
+					*)
+						;;
+				esac
+				shift # parsed argument or value
+			done
+
+			exit 0
+			;;
+		-e|elaborate)
+			while [[ "$#" -gt 0 ]]; do
+				case "$1" in
+					--std=*)
+						;;
+					--work=*)
+						;;
+					-P*)
+						;;
+					-fsynopsys)
+						;;
+					-frelaxed|-frelaxed-rules)
+						;;
+					-fexplicit)
+						;;
+					--syn-binding)
+						;;
+					-v)
+						;;
+					*)
+						;;
+				esac
+				shift # parsed argument or value
+			done
+
+			exit 0
+			;;
+		-r|run)
+			while [[ "$#" -gt 0 ]]; do
+				case "$1" in
+					--std=*)
+						;;
+					--work=*)
+						;;
+					-P*)
+						;;
+					-fsynopsys)
+						;;
+					-frelaxed|-frelaxed-rules)
+						;;
+					-fexplicit)
+						;;
+					-v)
+						;;
+					*)
+						;;
+				esac
+				shift # parsed argument or value
+			done
+
+			exit 0
+			;;
+		--elab-run|elab-run)
+			;;
+#		--ghdl)
+#			GHDL="$2"				# overwrite a potentially existing GHDL environment variable
+#			shift						# skip argument
+#			;;
+		*)		# unknown option
+			echo 1>&2 -e "\n${COLORED_ERROR} Unknown command line option '$1'.${ANSI_NOCOLOR}"
+			exit 127
+			;;
+	esac
+	shift # parsed argument or value
+done
