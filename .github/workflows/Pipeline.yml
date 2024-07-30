@@ -21,10 +21,17 @@ jobs:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       apt: ghdl-mcode
       brew: ghdl
+      pacboy: ghdl
       ubuntu_before_script: |
         which ghdl
         ghdl version
       macos_before_script: |
+        which ghdl
+        ghdl version
+      mingw64_before_script: |
+        which ghdl
+        ghdl version
+      ucrt64_before_script: |
         which ghdl
         ghdl version
 #      ubuntu_before_script: sudo install -m 755 tests/mock/ghdl /usr/local/bin
