@@ -61,28 +61,39 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 	_gnatCompiler: Tuple[int, int, int]
 	_backend: str
 
-	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
-		match = re_search(
-			r"GHDL"
-			r"\s(?P<major>\d+)\.(?P<minor>\d+)\.(?P<micro>\d+)"
+	VERSION_LINE_PATTERN = (
+		r"GHDL"
+		r"\s(?P<Major>\d+)\.(?P<Minor>\d+)\.(?P<Micro>\d+)(?:-(?P<Suffix>dev|rc\d+))?"
+		r"\s\((?:"
 			r"(?:"
-				r"(?:"
-					r"\s\((?P<packaging>tarball)\)"
-				r")|(?:"
-					r"(?:-(?P<suffix>dev|rc\d+))?"
-					r"\s\((?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<hash>[0-9a-f]+))(?:\.(?P<dirty>dirty))?\)"
-				r")"
+				r"(?P<Packaging>tarball)"
+			r")|(?:"
+				r"(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
+			r")|(?:"
+				r"Ubuntu\s(?P<UbuntuMajor>\d+)\.(?P<UbuntuMinor>\d+)\.(?P<UbuntuMicro>\d+)\+dfsg-(?P<dfsg>\d+)ubuntu(?P<UbuntuPackage>\d+)"
 			r")"
-			r"\s\[(?P<edition>[\w\s]+)\]",
-			versionLine)
+		r")\)"
+		r"\s\[(?P<Edition>[\w\s]+)\]"
+	)
+	GNAT_LINE_PATTERN = (
+		r"\s*[\w\s]+:\s"
+		r"(?:"
+			r"(?:(?P<Major>\d+)\.(?P<Minor>\d+)\.(?P<Micro>\d+))"
+		r"|"
+			r"(?:Community\s(?P<Year>\d{4})\s\((?P<DateCode>\d{8}-\d{2})\))"
+		r")"
+	)
+	BACKEND_LINE_PATTERN = r"\s*(?P<Backend>\w+)\scode\sgenerator"
 
+	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
+		match = re_search("^" + self.VERSION_LINE_PATTERN + "$", versionLine)
 		if match is None:
 			raise CLIToolException(f"Unknown first GHDL version string '{versionLine}'.")
 
-		self._major = int(match["major"])
-		self._minor = int(match["minor"])
-		self._micro = int(match["micro"])
-		if (suffix := match["suffix"]) is not None:
+		self._major = int(match["Major"])
+		self._minor = int(match["Minor"])
+		self._micro = int(match["Micro"])
+		if (suffix := match["Suffix"]) is not None:
 			self._dev = suffix == "dev"
 		else:
 			self._dev = False
@@ -90,25 +101,24 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 			self._commitsSinceLastTag = int(cslt)
 		else:
 			self._commitsSinceLastTag = 0
-		self._gitHash = match["hash"]
-		self._dirty = "dirty" in match.groups()
-		self._edition = match["edition"]
+		self._gitHash = match["Hash"]
+		self._dirty = "Dirty" in match.groups()
+		self._edition = match["Edition"]
 
-		match = re_search(
-			r"\s*[\w\s]+:\s(?P<major>\d+)\.(?P<minor>\d+)\.(?P<micro>\d+)", gnatLine)
-
+		match = re_search("^" + self.GNAT_LINE_PATTERN + "$", versionLine)
 		if match is None:
 			raise CLIToolException(f"Unknown second GHDL version string '{gnatLine}'.")
 
-		self._gnatCompiler = (int(match["major"]), int(match["minor"]), int(match["micro"]))
+		if match["Year"] is None:
+			self._gnatCompiler = (int(match["Major"]), int(match["Minor"]), int(match["Micro"]))
+		else:
+			self._gnatCompiler = (int(match["Year"]), 0, 0)
 
-		match = re_search(
-			r"\s*(?P<backend>\w+)\scode\sgenerator", backendLine)
-
+		match = re_search("^" + self.BACKEND_LINE_PATTERN + "$", versionLine)
 		if match is None:
 			raise CLIToolException(f"Unknown third GHDL version string '{backendLine}'.")
 
-		self._backend = match["backend"]
+		self._backend = match["Backend"]
 
 	@property
 	def Major(self) -> int:
