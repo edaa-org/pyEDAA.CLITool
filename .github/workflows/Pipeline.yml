@@ -20,7 +20,7 @@ jobs:
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       apt: ghdl-mcode
-      brew: ghdl llvm
+      brew: --cask ghdl
       pacboy: ghdl
       ubuntu_before_script: |
         which ghdl
@@ -28,6 +28,12 @@ jobs:
       macos_before_script: |
         which ghdl
         ghdl version
+        echo $(brew --prefix llvm@15)
+        export DYLD_LIBRARY_PATH=$(brew --prefix llvm@15)/lib
+        echo -$DYLD_LIBRARY_PATH-
+        echo "----"
+        ls $(brew --prefix llvm@15)/lib
+#        ls /usr/local/opt/llvm@15/lib || true
       mingw64_before_script: |
         which ghdl
         ghdl version
