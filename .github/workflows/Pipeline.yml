@@ -20,7 +20,7 @@ jobs:
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       apt: ghdl-mcode
-      brew: ghdl
+      brew: ghdl llvm
       pacboy: ghdl
       ubuntu_before_script: |
         which ghdl
