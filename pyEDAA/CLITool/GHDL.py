@@ -83,7 +83,14 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 			r"(?:Community\s(?P<Year>\d{4})\s\((?P<DateCode>\d{8}-\d{2})\))"
 		r")"
 	)
-	BACKEND_LINE_PATTERN = r"\s*(?P<Backend>\w+)\scode\sgenerator"
+	BACKEND_LINE_PATTERN = (
+		r"\s*"
+		r"(?:static elaboration, )?"
+		r"(?P<Backend>llvm|mcode|gcc)"
+		r"(?: (?P<LLVMMajor>\d+)\.(?P<LLVMMinor>\d+)\.(?P<LLVMMicro>\d+))?"
+		r"(?: JIT)?"
+		r" code generator"
+	)
 
 	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
 		match = re_search("^" + self.VERSION_LINE_PATTERN + "$", versionLine)
@@ -105,7 +112,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		self._dirty = "Dirty" in match.groups()
 		self._edition = match["Edition"]
 
-		match = re_search("^" + self.GNAT_LINE_PATTERN + "$", versionLine)
+		match = re_search("^" + self.GNAT_LINE_PATTERN + "$", gnatLine)
 		if match is None:
 			raise CLIToolException(f"Unknown second GHDL version string '{gnatLine}'.")
 
@@ -114,7 +121,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		else:
 			self._gnatCompiler = (int(match["Year"]), 0, 0)
 
-		match = re_search("^" + self.BACKEND_LINE_PATTERN + "$", versionLine)
+		match = re_search("^" + self.BACKEND_LINE_PATTERN + "$", backendLine)
 		if match is None:
 			raise CLIToolException(f"Unknown third GHDL version string '{backendLine}'.")
 
