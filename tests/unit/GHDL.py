@@ -109,10 +109,10 @@ class Analyze(GHDLTestcases):
 		tool = self._GetAnalyzer()
 		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagLibrary] = "lib_Test"
-		tool[tool.OptionPaths] = (Path("project/designB/file_B1.vhdl"), )
+		tool[tool.OptionPaths] = (Path("tests/project/designB/file_B1.vhdl"), )
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"project/designB/file_B1.vhdl\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"tests/project/designB/file_B1.vhdl\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
@@ -125,12 +125,12 @@ class Analyze(GHDLTestcases):
 		print()
 
 		libraryFiles = (
-			Path("project/lib/file_P1.vhdl"),
-			Path("project/lib/file_P2.vhdl"),
+			Path("tests/project/lib/file_P1.vhdl"),
+			Path("tests/project/lib/file_P2.vhdl"),
 		)
 		designFiles = (
-			Path("project/designA/file_A1.vhdl"),
-			Path("project/designA/file_A2.vhdl"),
+			Path("tests/project/designA/file_A1.vhdl"),
+			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
 		analyzer = self._GetAnalyzer()
@@ -160,12 +160,12 @@ class Analyze(GHDLTestcases):
 		print()
 
 		libraryFiles = (
-			Path("project/lib/file_P1.vhdl"),
-			Path("project/lib/file_P2.vhdl"),
+			Path("tests/project/lib/file_P1.vhdl"),
+			Path("tests/project/lib/file_P2.vhdl"),
 		)
 		designFiles = (
-			Path("project/designA/file_A1.vhdl"),
-			Path("project/designA/file_A2.vhdl"),
+			Path("tests/project/designA/file_A1.vhdl"),
+			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
 		analyzer = self._GetAnalyzer()
