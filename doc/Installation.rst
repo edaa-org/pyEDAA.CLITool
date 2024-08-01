@@ -1,6 +1,6 @@
-.. _INSTALL:
-
 .. |PackageName| replace:: pyEDAA.CLITool
+
+.. _INSTALL:
 
 Installation/Updates
 ####################
