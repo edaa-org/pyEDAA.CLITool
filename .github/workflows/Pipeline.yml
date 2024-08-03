@@ -25,21 +25,32 @@ jobs:
       ubuntu_before_script: |
         which ghdl
         ghdl version
-      macos_before_script: |
+        echo "GHDL_PREFIX=/usr/lib/x86_64-linux-gnu/ >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=/usr/lib/x86_64-linux-gnu/" >> $GITHUB_ENV
+      macos_arm_before_script: |
         which ghdl
         ghdl version
         echo $(brew --prefix llvm@15)
         export DYLD_LIBRARY_PATH=$(brew --prefix llvm@15)/lib
         echo -$DYLD_LIBRARY_PATH-
         echo "DYLD_LIBRARY_PATH=$(brew --prefix llvm@15)/lib" >> $GITHUB_ENV
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
         echo "----"
         ls $(brew --prefix llvm@15)/lib
       mingw64_before_script: |
         which ghdl
         ghdl version
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+#        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
       ucrt64_before_script: |
         which ghdl
         ghdl version
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+#        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
 #      ubuntu_before_script: sudo install -m 755 tests/mock/ghdl /usr/local/bin
       requirements: "-r tests/unit/requirements.txt"
       unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}

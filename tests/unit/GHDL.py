@@ -33,15 +33,12 @@ from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
 
-from pyTooling.Platform   import CurrentPlatform
-
 from pyEDAA.CLITool.GHDL  import GHDL
 from .                    import Helper
 
 
 class GHDLTestcases(TestCase, Helper):
-	_libraryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl" if not CurrentPlatform.IsNativeMacOS else "/opt/homebrew/lib/ghdl")) / "../").resolve()
-	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl" if not CurrentPlatform.IsNativeMacOS else "/opt/homebrew/lib/ghdl")) / "../../bin").resolve()
+	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl")) / "../../bin").resolve()
 
 
 class CommonOptions(GHDLTestcases):
