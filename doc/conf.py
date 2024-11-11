@@ -7,12 +7,21 @@ from pathlib import Path
 
 from pyTooling.Packaging import extractVersionInformation
 
+# ==============================================================================
+# Project configuration
+# ==============================================================================
+githubNamespace = "edaa-org"
+project = "pyEDAA.CLITool"
+directoryName = project.replace('.', '/')
+
+# ==============================================================================
+# Project paths
+# ==============================================================================
 ROOT = Path(__file__).resolve().parent
 
 sys_path.insert(0, abspath("."))
 sys_path.insert(0, abspath(".."))
-sys_path.insert(0, abspath("../pyEDAA/CLITool"))
-# sys_path.insert(0, abspath("_extensions"))
+sys_path.insert(0, abspath(f"../{directoryName}"))
 
 
 # ==============================================================================
@@ -21,10 +30,7 @@ sys_path.insert(0, abspath("../pyEDAA/CLITool"))
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-githubNamespace = "EDAA-org"
-project = "pyEDAA.CLITool"
-
-packageInformationFile = Path(f"../{project.replace('.', '/')}/__init__.py")
+packageInformationFile = Path(f"../{directoryName}/__init__.py")
 versionInformation = extractVersionInformation(packageInformationFile)
 
 author =    versionInformation.Author
@@ -91,7 +97,7 @@ html_logo = str(Path(html_static_path[0]) / "logo.svg")
 html_favicon = str(Path(html_static_path[0]) / "favicon.svg")
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = f"{project.replace('.', '')}Doc"
+htmlhelp_basename = f"{project}Doc"
 
 # If not None, a 'Last updated on:' timestamp is inserted at every page
 # bottom, using the given strftime format.
@@ -253,15 +259,6 @@ todo_link_only = True
 # ==============================================================================
 # sphinx-reports
 # ==============================================================================
-_coverageLevels = {
-	30:      {"class": "report-cov-below30",  "desc": "almost undocumented"},
-	50:      {"class": "report-cov-below50",  "desc": "poorly documented"},
-	80:      {"class": "report-cov-below80",  "desc": "roughly documented"},
-	90:      {"class": "report-cov-below90",  "desc": "well documented"},
-	100:     {"class": "report-cov-below100", "desc": "excellent documented"},
-	"error": {"class": "report-cov-error",    "desc": "internal error"},
-}
-
 report_unittest_testsuites = {
 	"src": {
 		"name":        f"{project}",
@@ -273,15 +270,15 @@ report_codecov_packages = {
 		"name":        f"{project}",
 		"json_report": "../report/coverage/coverage.json",
 		"fail_below":  80,
-		"levels":      _coverageLevels
+		"levels":      "default"
 	}
 }
 report_doccov_packages = {
 	"src": {
 		"name":       f"{project}",
-		"directory":  f"../{project.replace('.', '/')}",
+		"directory":  f"../{directoryName}",
 		"fail_below": 80,
-		"levels":     _coverageLevels
+		"levels":     "default"
 	}
 }
 
@@ -289,12 +286,16 @@ report_doccov_packages = {
 # ==============================================================================
 # Sphinx_Design
 # ==============================================================================
-sd_fontawesome_latex = True
+# sd_fontawesome_latex = True
 
 
 # ==============================================================================
 # AutoAPI.Sphinx
 # ==============================================================================
 autoapi_modules = {
-  'pyEDAA.CLITool':  {'output': "pyEDAA.CLITool", "override": True}
+	f"{project}":  {
+		"template": "module",
+		"output":   project,
+		"override": True
+	}
 }
