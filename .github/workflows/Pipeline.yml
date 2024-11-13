@@ -8,6 +8,11 @@ on:
     - cron: '0 22 * * 5'
 
 jobs:
+  ConfigParams:
+    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@dev
+    with:
+      package_name: pyEDAA.CLITool
+
   UnitTestingParams:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@dev
     with:
@@ -59,22 +64,24 @@ jobs:
   StaticTypeCheck:
     uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@dev
     needs:
+      - ConfigParams
       - UnitTestingParams
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       commands: |
-        touch pyEDAA/__init__.py
-        mypy --html-report htmlmypy -p pyEDAA.CLITool
+        ${{ needs.ConfigParams.outputs.mypy_prepare_command }}
+        mypy --html-report htmlmypy -p ${{ needs.ConfigParams.outputs.package_fullname }}
       html_report: 'htmlmypy'
       html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   DocCoverage:
     uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@dev
     needs:
+      - ConfigParams
       - UnitTestingParams
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
-      directory: pyEDAA/CLITool
+      directory: ${{ needs.ConfigParams.outputs.package_directors }}
       fail_under: 75
 
   Package:
@@ -106,17 +113,6 @@ jobs:
       additional_merge_args: '"--pytest=rewrite-dunder-init;reduce-depth:pytest.tests.unit" --render=tree'
       merged_junit_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
 
-  IntermediateCleanUp:
-    uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@dev
-    needs:
-      - UnitTestingParams
-      - PublishCoverageResults
-      - PublishTestResults
-      - HTMLDocumentation
-    with:
-      sqlite_coverage_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-
-      xml_unittest_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
-
 #  VerifyDocs:
 #    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@dev
 #    needs:
@@ -124,25 +120,39 @@ jobs:
 #    with:
 #      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
 
-  HTMLDocumentation:
+  Documentation:
     uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@dev
     needs:
+      - ConfigParams
       - UnitTestingParams
       - PublishTestResults
       - PublishCoverageResults
 #      - VerifyDocs
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
+      coverage_report_json_directory: ${{ needs.ConfigParams.outputs.coverage_report_json_directory }}
       unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
       coverage_json_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
       html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
       latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
 
+  IntermediateCleanUp:
+    uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@dev
+    needs:
+      - UnitTestingParams
+      - PublishCoverageResults
+      - PublishTestResults
+      - Documentation
+    with:
+      sqlite_coverage_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-
+      xml_unittest_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
+
+
   PDFDocumentation:
     uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@dev
     needs:
       - UnitTestingParams
-      - HTMLDocumentation
+      - Documentation
     with:
       document: pyEDAA.CLITool
       latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
@@ -152,7 +162,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@dev
     needs:
       - UnitTestingParams
-      - HTMLDocumentation
+      - Documentation
 #      - PDFDocumentation
       - PublishCoverageResults
       - StaticTypeCheck
@@ -186,7 +196,7 @@ jobs:
       - UnitTestingParams
       - UnitTesting
       - StaticTypeCheck
-      - HTMLDocumentation
+      - Documentation
 #      - PDFDocumentation
       - PublishTestResults
       - PublishCoverageResults
