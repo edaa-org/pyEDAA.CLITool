@@ -129,8 +129,8 @@ News
 Contributors
 ************
 
-* `Patrick Lehmann <https://GitHub.com/Paebbels>`__ (Maintainer)
-* `Unai Martinez-Corral <https://GitHub.com/umarcor/>`__
+* :gh:`Patrick Lehmann <Paebbels>` (Maintainer)
+* :gh:`Unai Martinez-Corral <umarcor>`
 * `and more... <https://GitHub.com/edaa-org/pyEDAA.CLITool/graphs/contributors>`__
 
 
@@ -182,14 +182,13 @@ License
    :caption: References and Reports
    :hidden:
 
-   pyEDAA.CLITool/pyEDAA.CLITool
+   Python Class Reference <pyEDAA.CLITool/pyEDAA.CLITool>
    unittests/index
    coverage/index
    Doc. Coverage Report <DocCoverage>
    Static Type Check Report ➚ <typing/index>
 
 .. Coverage Report ➚ <coverage/index>
-   Static Type Check Report ➚ <typing/index>
 
 .. raw:: latex
 

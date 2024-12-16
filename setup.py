@@ -47,6 +47,8 @@ setup(**DescribePythonPackageHostedOnGitHub(
 		developmentStatus="beta",
 		classifiers=list(DEFAULT_CLASSIFIERS) + [
 			"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
-		]
-	)
-)
+		],
+	dataFiles={
+		packageName: ["py.typed"]
+	}
+))

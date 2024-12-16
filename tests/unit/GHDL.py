@@ -109,7 +109,7 @@ class Analyze(GHDLTestcases):
 		tool[tool.OptionPaths] = (Path("tests/project/designB/file_B1.vhdl"), )
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"tests/project/designB/file_B1.vhdl\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"tests\\project\\designB\\file_B1.vhdl\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
