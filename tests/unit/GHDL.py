@@ -103,13 +103,17 @@ class Analyze(GHDLTestcases):
 	def test_AnalyzeFaultyFile(self) -> None:
 		print()
 
+		self.maxDiff = None
+
+		path = Path("tests/project/designB/file_B1.vhdl")
+
 		tool = self._GetAnalyzer()
 		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagLibrary] = "lib_Test"
-		tool[tool.OptionPaths] = (Path("tests/project/designB/file_B1.vhdl"), )
+		tool[tool.OptionPaths] = (path, )
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"tests\\project\\designB\\file_B1.vhdl\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"{path!s}\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():

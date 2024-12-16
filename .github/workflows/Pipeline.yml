@@ -17,6 +17,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@dev
     with:
       name: pyEDAA.CLITool
+      disable_list: windows:*
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@dev
@@ -24,39 +25,89 @@ jobs:
       - UnitTestingParams
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
-      apt: ghdl-mcode
-      brew: --cask ghdl
-      pacboy: ghdl
       ubuntu_before_script: |
-        which ghdl
-        ghdl version
-        echo "GHDL_PREFIX=/usr/lib/x86_64-linux-gnu/ >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=/usr/lib/x86_64-linux-gnu/" >> $GITHUB_ENV
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+          # tree .
+          sudo xargs --no-run-if-empty -a ./ubuntu.requirements -- apt-get install -y --no-install-recommends
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+      macos_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-macos13-x86_64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
       macos_arm_before_script: |
-        which ghdl
-        ghdl version
-        echo $(brew --prefix llvm@15)
-        export DYLD_LIBRARY_PATH=$(brew --prefix llvm@15)/lib
-        echo -$DYLD_LIBRARY_PATH-
-        echo "DYLD_LIBRARY_PATH=$(brew --prefix llvm@15)/lib" >> $GITHUB_ENV
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
-        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
-        echo "----"
-        ls $(brew --prefix llvm@15)/lib
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-llvm-5.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+#      windows_before_script: |
+#        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ucrt64.zip" -o ghdl.zip
+#        dir
+#        mkdir install
+#        cd install
+#        unzip ../ghdl.zip
+#        dir
+
       mingw64_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        pacman -U --noconfirm ghdl.pkg.tar.zst
+
         which ghdl
         ghdl version
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
-#        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
       ucrt64_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-ucrt-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        pacman -U --noconfirm ghdl.pkg.tar.zst
+
         which ghdl
         ghdl version
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
-#        ls -lAh "$(realpath $(dirname $(which ghdl))/../lib)"
-#      ubuntu_before_script: sudo install -m 755 tests/mock/ghdl /usr/local/bin
       requirements: "-r tests/unit/requirements.txt"
       unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
       coverage_sqlite_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
