@@ -76,15 +76,17 @@ News
 
 .. only:: html
 
-   July 2024 - General Updates
-   ===========================
+   July/Dez 2024 - General Updates
+   ===============================
 
 .. only:: latex
 
    .. rubric:: General Updates
 
-* Updated to support pyTooling v6.5.
+* Updated to support pyTooling v8.0.
 * Replaced Sphinx theme with ReadTheDocs theme.
+* FreeBSD support for GHDL, GTKWave and Docker.
+* Reworked documentation.
 
 .. only:: html
 
