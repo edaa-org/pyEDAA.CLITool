@@ -249,5 +249,5 @@ install the mandatory dependencies too.
 +==========================================================+==============+===========================================================================================+======================+
 | `wheel <https://GitHub.com/pypa/wheel>`__                | ≥0.45        | `MIT <https://github.com/pypa/wheel/blob/main/LICENSE.txt>`__                             | *Not yet evaluated.* |
 +----------------------------------------------------------+--------------+-------------------------------------------------------------------------------------------+----------------------+
-| `Twine <https://GitHub.com/pypa/twine/>`__               | ≥5.1         | `Apache License, 2.0 <https://github.com/pypa/twine/blob/main/LICENSE>`__                 | *Not yet evaluated.* |
+| `Twine <https://GitHub.com/pypa/twine/>`__               | ≥6.0         | `Apache License, 2.0 <https://github.com/pypa/twine/blob/main/LICENSE>`__                 | *Not yet evaluated.* |
 +----------------------------------------------------------+--------------+-------------------------------------------------------------------------------------------+----------------------+
