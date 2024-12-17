@@ -4,124 +4,270 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 5'
+# Every Friday at 22:00 - rerun pipeline to check for dependency-based issues
+    - cron: '0 22 * * 5'
 
 jobs:
+  ConfigParams:
+    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@dev
+    with:
+      package_name: pyEDAA.CLITool
 
-  Params:
+  UnitTestingParams:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@dev
     with:
       name: pyEDAA.CLITool
-      disable_list: "mingw64:3.10 windows:3.7 windows:3.8 windows:3.9 windows:3.10 windows:3.11"
+      disable_list: windows:*
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@dev
     needs:
-      - Params
+      - UnitTestingParams
     with:
-      jobs: ${{ needs.Params.outputs.python_jobs }}
-      artifact: ${{ fromJson(needs.Params.outputs.artifact_names).unittesting_xml }}
+      jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
+      ubuntu_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
 
-  Coverage:
-    uses: pyTooling/Actions/.github/workflows/CoverageCollection.yml@dev
-    needs:
-      - Params
-    with:
-      python_version: ${{ needs.Params.outputs.python_version }}
-      artifact: ${{ fromJson(needs.Params.outputs.artifact_names).codecoverage_html }}
-    secrets:
-      codacy_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+          # tree .
+          sudo xargs --no-run-if-empty -a ./ubuntu.requirements -- apt-get install -y --no-install-recommends
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+      macos_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-macos13-x86_64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+      macos_arm_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        (
+          mkdir -p install
+          cd install
+          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-llvm-5.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
+          (
+            cd bin
+            pwd
+            ls -lAh .
+          )
+        )
+
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+#      windows_before_script: |
+#        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ucrt64.zip" -o ghdl.zip
+#        dir
+#        mkdir install
+#        cd install
+#        unzip ../ghdl.zip
+#        dir
+
+      mingw64_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        pacman -U --noconfirm ghdl.pkg.tar.zst
+
+        which ghdl
+        ghdl version
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+      ucrt64_before_script: |
+        export GH_TOKEN=${{ github.token }}
+        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
+
+        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-ucrt-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        pacman -U --noconfirm ghdl.pkg.tar.zst
+
+        which ghdl
+        ghdl version
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+      requirements: "-r tests/unit/requirements.txt"
+      unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+      coverage_sqlite_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
 
   StaticTypeCheck:
     uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@dev
     needs:
-      - Params
+      - ConfigParams
+      - UnitTestingParams
     with:
-      python_version: ${{ needs.Params.outputs.python_version }}
-      requirements: '-r tests/requirements.txt'
+      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       commands: |
-        cd pyEDAA
-        mypy --html-report ../htmlmypy -p CLITool
-      html_artifact: ${{ fromJson(needs.Params.outputs.artifact_names).statictyping_html }}
+        ${{ needs.ConfigParams.outputs.mypy_prepare_command }}
+        mypy --html-report htmlmypy -p ${{ needs.ConfigParams.outputs.package_fullname }}
+      html_report: 'htmlmypy'
+      html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
-  PublishTestResults:
-    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@dev
+  DocCoverage:
+    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@dev
     needs:
-      - UnitTesting
+      - ConfigParams
+      - UnitTestingParams
+    with:
+      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
+      directory: ${{ needs.ConfigParams.outputs.package_directors }}
+      fail_under: 75
 
   Package:
     uses: pyTooling/Actions/.github/workflows/Package.yml@dev
     needs:
-      - Params
-      - Coverage
+      - UnitTestingParams
+      - UnitTesting
     with:
-      python_version: ${{ needs.Params.outputs.python_version }}
-      artifact: ${{ fromJson(needs.Params.outputs.artifact_names).package_all }}
+      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
+      artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
 
-  Release:
+  PublishCoverageResults:
+    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@dev
+    needs:
+      - UnitTestingParams
+      - UnitTesting
+    with:
+      coverage_json_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
+      coverage_html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
+    secrets:
+      codacy_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+
+  PublishTestResults:
+    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@dev
+    needs:
+      - UnitTestingParams
+      - UnitTesting
+    with:
+      additional_merge_args: '"--pytest=rewrite-dunder-init;reduce-depth:pytest.tests.unit" --render=tree'
+      merged_junit_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+
+#  VerifyDocs:
+#    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@dev
+#    needs:
+#      - UnitTestingParams
+#    with:
+#      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
+
+  Documentation:
+    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@dev
+    needs:
+      - ConfigParams
+      - UnitTestingParams
+      - PublishTestResults
+      - PublishCoverageResults
+#      - VerifyDocs
+    with:
+      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
+      coverage_report_json_directory: ${{ needs.ConfigParams.outputs.coverage_report_json_directory }}
+      unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+      coverage_json_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
+      html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
+      latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
+
+  IntermediateCleanUp:
+    uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@dev
+    needs:
+      - UnitTestingParams
+      - PublishCoverageResults
+      - PublishTestResults
+      - Documentation
+    with:
+      sqlite_coverage_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-
+      xml_unittest_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
+
+
+  PDFDocumentation:
+    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@dev
+    needs:
+      - UnitTestingParams
+      - Documentation
+    with:
+      document: pyEDAA.CLITool
+      latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
+      pdf_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}
+
+  PublishToGitHubPages:
+    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@dev
+    needs:
+      - UnitTestingParams
+      - Documentation
+#      - PDFDocumentation
+      - PublishCoverageResults
+      - StaticTypeCheck
+    with:
+      doc: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
+#      coverage: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
+      typing: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
+
+  ReleasePage:
     uses: pyTooling/Actions/.github/workflows/Release.yml@dev
     if: startsWith(github.ref, 'refs/tags')
     needs:
-      - UnitTesting
-      - Coverage
-      - StaticTypeCheck
-      - Package
+      - PublishToGitHubPages
 
   PublishOnPyPI:
     uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@dev
     if: startsWith(github.ref, 'refs/tags')
     needs:
-      - Params
-      - Release
-      - Package
+      - UnitTestingParams
+      - ReleasePage
     with:
-      python_version: ${{ needs.Params.outputs.python_version }}
+      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       requirements: -r dist/requirements.txt
-      artifact: ${{ fromJson(needs.Params.outputs.artifact_names).package_all }}
+      artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-
-#  VerifyDocs:
-#    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@dev
-#    needs:
-#      - Params
-#    with:
-#      python_version: ${{ needs.Params.outputs.python_version }}
-
-  BuildTheDocs:
-    uses: pyTooling/Actions/.github/workflows/BuildTheDocs.yml@dev
-    needs:
-      - Params
-      #- VerifyDocs
-    with:
-      artifact: ${{ fromJson(needs.Params.outputs.artifact_names).documentation_html }}
-
-  PublishToGitHubPages:
-    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@dev
-    needs:
-      - Params
-      - BuildTheDocs
-      - Coverage
-      - StaticTypeCheck
-    with:
-      doc: ${{ fromJson(needs.Params.outputs.artifact_names).documentation_html }}
-      coverage: ${{ fromJson(needs.Params.outputs.artifact_names).codecoverage_html }}
-      typing: ${{ fromJson(needs.Params.outputs.artifact_names).statictyping_html }}
 
   ArtifactCleanUp:
     uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@dev
     needs:
-      - Params
+      - UnitTestingParams
       - UnitTesting
-      - Coverage
       - StaticTypeCheck
-      - BuildTheDocs
-      - PublishToGitHubPages
+      - Documentation
+#      - PDFDocumentation
       - PublishTestResults
+      - PublishCoverageResults
+      - PublishToGitHubPages
     with:
-      package: ${{ fromJson(needs.Params.outputs.artifact_names).package_all }}
+      package: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
       remaining: |
-        ${{ fromJson(needs.Params.outputs.artifact_names).unittesting_xml }}-*
-        ${{ fromJson(needs.Params.outputs.artifact_names).codecoverage_html }}
-        ${{ fromJson(needs.Params.outputs.artifact_names).statictyping_html }}
-        ${{ fromJson(needs.Params.outputs.artifact_names).documentation_html }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_html }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_xml }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}-*
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_html }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_xml }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
+        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
+#        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}

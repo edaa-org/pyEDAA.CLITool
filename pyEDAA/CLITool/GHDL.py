@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -30,10 +30,12 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `GHDL <https://github.com/ghdl/ghdl>`__."""
-from typing import Union, Iterable
+from re                    import search as re_search
+from typing                import Union, Iterable, Tuple, Optional as Nullable
 
-from pyTooling.Decorators import export
-from pyVHDLModel import VHDLVersion
+from pyTooling.Decorators  import export
+from pyTooling.MetaClasses import ExtendedType
+from pyVHDLModel           import VHDLVersion
 
 from pyTooling.CLIAbstraction               import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument      import PathListArgument, StringArgument
@@ -43,11 +45,133 @@ from pyTooling.CLIAbstraction.BooleanFlag   import LongBooleanFlag
 from pyTooling.CLIAbstraction.ValuedFlag    import ShortValuedFlag, LongValuedFlag
 from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag
 
+from pyEDAA.CLITool       import CLIToolException
+
+
+@export
+class GHDLVersion(metaclass=ExtendedType, slots=True):
+	_major: int
+	_minor: int
+	_micro: int
+	_dev: bool
+	_commitsSinceLastTag: int
+	_gitHash: str
+	_dirty: bool
+	_edition: str
+	_gnatCompiler: Tuple[int, int, int]
+	_backend: str
+
+	VERSION_LINE_PATTERN = (
+		r"GHDL"
+		r"\s(?P<Major>\d+)\.(?P<Minor>\d+)\.(?P<Micro>\d+)(?:-(?P<Suffix>dev|rc\d+))?"
+		r"\s\((?:"
+			r"(?:"
+				r"(?P<Packaging>tarball)"
+			r")|(?:"
+				r"(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
+			r")|(?:"
+				r"Ubuntu\s(?P<UbuntuMajor>\d+)\.(?P<UbuntuMinor>\d+)\.(?P<UbuntuMicro>\d+)\+dfsg-(?P<dfsg>\d+)ubuntu(?P<UbuntuPackage>\d+)"
+			r")"
+		r")\)"
+		r"\s\[(?P<Edition>[\w\s]+)\]"
+	)
+	GNAT_LINE_PATTERN = (
+		r"\s*[\w\s]+:\s"
+		r"(?:"
+			r"(?:(?P<Major>\d+)\.(?P<Minor>\d+)\.(?P<Micro>\d+))"
+		r"|"
+			r"(?:Community\s(?P<Year>\d{4})\s\((?P<DateCode>\d{8}-\d{2})\))"
+		r")"
+	)
+	BACKEND_LINE_PATTERN = (
+		r"\s*"
+		r"(?:static elaboration, )?"
+		r"(?P<Backend>llvm|mcode|gcc)"
+		r"(?: (?P<LLVMMajor>\d+)\.(?P<LLVMMinor>\d+)\.(?P<LLVMMicro>\d+))?"
+		r"(?: JIT)?"
+		r" code generator"
+	)
+
+	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
+		match = re_search("^" + self.VERSION_LINE_PATTERN + "$", versionLine)
+		if match is None:
+			raise CLIToolException(f"Unknown first GHDL version string '{versionLine}'.")
+
+		self._major = int(match["Major"])
+		self._minor = int(match["Minor"])
+		self._micro = int(match["Micro"])
+		if (suffix := match["Suffix"]) is not None:
+			self._dev = suffix == "dev"
+		else:
+			self._dev = False
+		if (cslt := match["cslt"]) is not None:
+			self._commitsSinceLastTag = int(cslt)
+		else:
+			self._commitsSinceLastTag = 0
+		self._gitHash = match["Hash"]
+		self._dirty = "Dirty" in match.groups()
+		self._edition = match["Edition"]
+
+		match = re_search("^" + self.GNAT_LINE_PATTERN + "$", gnatLine)
+		if match is None:
+			raise CLIToolException(f"Unknown second GHDL version string '{gnatLine}'.")
+
+		if match["Year"] is None:
+			self._gnatCompiler = (int(match["Major"]), int(match["Minor"]), int(match["Micro"]))
+		else:
+			self._gnatCompiler = (int(match["Year"]), 0, 0)
+
+		match = re_search("^" + self.BACKEND_LINE_PATTERN + "$", backendLine)
+		if match is None:
+			raise CLIToolException(f"Unknown third GHDL version string '{backendLine}'.")
+
+		self._backend = match["Backend"]
+
+	@property
+	def Major(self) -> int:
+		return self._major
+
+	@property
+	def Minor(self) -> int:
+		return self._minor
+
+	@property
+	def Micro(self) -> int:
+		return self._micro
+
+	@property
+	def Dev(self) -> bool:
+		return self._dev
+
+	@property
+	def CommitsSinceLastTag(self) -> int:
+		return self._commitsSinceLastTag
+
+	@property
+	def GitHash(self) -> str:
+		return self._gitHash
+
+	@property
+	def Dirty(self) -> bool:
+		return self._dirty
+
+	@property
+	def Edition(self) -> str:
+		return self._edition
+
+	def __str__(self) -> str:
+		dev = f"-dev" if self._dev else ""
+		return f"{self._major}.{self._minor}.{self._micro}{dev}"
+
+	def __repr__(self) -> str:
+		return f"{self.__str__()} (Backend: {self._backend}; Git: {self._gitHash})"
+
 
 @export
 class GHDL(Executable):
 	_executableNames = {
 		"Darwin":  "ghdl",
+		"FreeBSD": "ghdl",
 		"Linux":   "ghdl",
 		"Windows": "ghdl.exe"
 	}
@@ -219,16 +343,16 @@ class GHDL(Executable):
 		"""Warns if an all/others specification does not apply."""
 
 	@CLIArgument()
-	class FlagSyntesisBindingRule(ShortFlag, name="unused", pattern="-W{0}"):
+	class FlagUnused(ShortFlag, name="unused", pattern="-W{0}"):
 		"""Warns for unused subprograms."""
 
 	@CLIArgument()
-	class FlagSyntesisBindingRule(ShortFlag, name="error", pattern="-W{0}"):
+	class FlagError(ShortFlag, name="error", pattern="-W{0}"):
 		"""Turns warnings into errors."""
 
 	@CLIArgument()
-	class OptionPath(PathListArgument):
-		"""Add VHDL file to analyze."""
+	class OptionPaths(PathListArgument):
+		"""Add list of VHDL files to analyze."""
 
 	@CLIArgument()
 	class OptionTopLevel(StringArgument):
@@ -302,14 +426,14 @@ class GHDL(Executable):
 			else:
 				tool.__cliParameters__[key] = key()
 
-	def _SetParameters(self, tool: "GHDL", std: VHDLVersion = None, ieee: str = None):
+	def _SetParameters(self, tool: "GHDL", std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None):
 		if std is not None:
 			tool[self.FlagVHDLStandard] = str(std)
 
 		if ieee is not None:
 			tool[self.FlagVHDLStandard] = ieee
 
-	def GetGHDLAsAnalyzer(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsAnalyzer(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandAnalyze] = True
@@ -318,7 +442,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsElaborator(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsElaborator(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandElaborate] = True
@@ -327,7 +451,7 @@ class GHDL(Executable):
 
 		return tool
 
-	def GetGHDLAsSimulator(self, std: VHDLVersion = None, ieee: str = None):
+	def GetGHDLAsSimulator(self, std: Nullable[VHDLVersion] = None, ieee: Nullable[str] = None) -> "GHDL":
 		tool = GHDL(executablePath=self._executablePath)
 
 		tool[tool.CommandRun] = True
@@ -335,3 +459,24 @@ class GHDL(Executable):
 		self._SetParameters(tool, std, ieee)
 
 		return tool
+
+	def Help(self) -> str:
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandHelp] = True
+
+		tool.StartProcess()
+		return "\n".join(tool.GetLineReader())
+
+	def Version(self) -> GHDLVersion:
+		tool = GHDL(executablePath=self._executablePath)
+
+		tool[tool.CommandVersion] = True
+
+		tool.StartProcess()
+		iterator = iter(tool.GetLineReader())
+		firstLine = next(iterator)
+		secondLine = next(iterator)
+		thirdLine = next(iterator)
+
+		return GHDLVersion(firstLine, secondLine, thirdLine)

@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -34,8 +34,9 @@ from pyTooling.Decorators               import export
 from pyTooling.CLIAbstraction           import CLIArgument, Executable
 from pyTooling.CLIAbstraction.Argument  import StringArgument, StringListArgument
 from pyTooling.CLIAbstraction.Flag      import ShortFlag
-from pyTooling.CLIAbstraction.ValuedFlag import ShortValuedFlag
+from pyTooling.CLIAbstraction.ValuedFlag      import ShortValuedFlag
 from pyTooling.CLIAbstraction.ValuedTupleFlag import ShortTupleFlag
+
 from pyEDAA.CLITool                     import ToolMixIn
 
 

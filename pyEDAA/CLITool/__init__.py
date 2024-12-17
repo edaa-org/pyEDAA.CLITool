@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -32,7 +32,35 @@
 """An abstraction layer of EDA CLI tools."""
 __author__ =    "Patrick Lehmann"
 __email__ =     "Paebbels@gmail.com"
-__copyright__ = "2014-2023, Patrick Lehmann, Unai Martinez-Corral"
+__copyright__ = "2014-2024, Patrick Lehmann, Unai Martinez-Corral"
 __license__ =   "Apache License, Version 2.0"
-__version__ =   "0.2.1"
+__version__ =   "0.3.0"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
+
+from pathlib import Path
+from typing  import Any, Optional as Nullable
+
+from pyTooling.Decorators  import export
+from pyTooling.Exceptions  import ExceptionBase
+from pyTooling.MetaClasses import ExtendedType
+
+
+@export
+class CLIToolException(ExceptionBase):
+	pass
+
+
+class ToolMixIn(metaclass=ExtendedType, mixin=True):
+	_platform: str
+	_dryrun: bool
+	_binaryDirectoryPath: Path
+	_version: str
+	_logger: Any
+
+	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None):
+		self._platform =            platform
+		self._dryrun =              dryrun
+		self._binaryDirectoryPath = binaryDirectoryPath
+		self._version =             version
+		self._logger =              logger
+		# self._environment =         Environment()

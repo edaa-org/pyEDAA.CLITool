@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -30,6 +30,7 @@
 #
 """Unit tests for executable ``ghdl`` inside a container run via Docker."""
 from pathlib import Path
+from typing  import Optional as Nullable
 
 from pytest                 import mark
 from unittest               import TestCase
@@ -40,7 +41,7 @@ from .                      import Helper
 
 
 class GHDLInDocker(Docker, GHDL):
-	def __init__(self, executablePath: Path = None, binaryDirectoryPath: Path = None, dryRun: bool = False):
+	def __init__(self, executablePath: Nullable[Path] = None, binaryDirectoryPath: Nullable[Path] = None, dryRun: bool = False) -> None:
 		super().__init__(executablePath, binaryDirectoryPath, dryRun)
 
 		self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")
@@ -48,7 +49,7 @@ class GHDLInDocker(Docker, GHDL):
 
 class CommonOptions(TestCase, Helper):
 	@mark.xfail
-	def test_Help(self):
+	def test_Help(self) -> None:
 		tool = GHDLInDocker(dryRun=True)
 		tool[GHDL.CommandHelp] = True
 		tool[Docker.CommandContainer] = True
@@ -60,7 +61,7 @@ class CommonOptions(TestCase, Helper):
 		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"help\"]", repr(tool))
 
 	@mark.xfail
-	def test_Version(self):
+	def test_Version(self) -> None:
 		tool = GHDLInDocker(dryRun=True)
 		tool[Docker.CommandContainer] = True
 		tool[Docker.CommandRun] = True
@@ -74,7 +75,7 @@ class CommonOptions(TestCase, Helper):
 
 class Analyze(TestCase, Helper):
 	@mark.xfail
-	def test_AnalyzeFile(self):
+	def test_AnalyzeFile(self) -> None:
 		tool = GHDLInDocker(dryRun=True)
 		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagVHDLStandard] = "08"

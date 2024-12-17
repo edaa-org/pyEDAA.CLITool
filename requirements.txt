@@ -1,2 +1,3 @@
-pyTooling.CLIAbstraction >= 0.4.1
-pyVHDLModel >= 0.27.1
+pyTooling ~= 8.0
+pyVHDLModel ~= 0.29.2
+py-flags ~= 1.1

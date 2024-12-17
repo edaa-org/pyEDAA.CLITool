@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Bötzingen, Germany                                                             #
+# Copyright 2017-2024 Patrick Lehmann - Bötzingen, Germany                                                             #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -31,19 +31,19 @@
 """
 Helper classes for unit tests.
 
-:copyright: Copyright 2007-2023 Patrick Lehmann - Bötzingen, Germany
+:copyright: Copyright 2007-2024 Patrick Lehmann - Bötzingen, Germany
 :license: Apache License, Version 2.0
 """
-from pathlib import Path
+from pathlib  import Path
 from platform import system
-from sys import platform as sys_platform
+from typing   import Optional as Nullable
 
 
 class Helper:
 	_system = system()
 
 	@classmethod
-	def getExecutablePath(cls, programName: str, binaryDirectory: Path = None) -> str:
+	def getExecutablePath(cls, programName: str, binaryDirectory: Nullable[Path] = None) -> str:
 		extensions = ".exe" if cls._system == "Windows" else ""
 		programName = f"{programName}{extensions}"
 		if binaryDirectory is not None:

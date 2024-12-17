@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2023 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2024 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -39,7 +39,7 @@ from .                      import Helper
 
 @mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
 class CommonOptions(TestCase, Helper):
-	def test_Version(self):
+	def test_Version(self) -> None:
 		tool = Docker(dryRun=True)
 		tool[tool.CommandVersion] = True
 
@@ -49,7 +49,7 @@ class CommonOptions(TestCase, Helper):
 
 @mark.skipif(sys_platform == "win32", reason="Don't run these tests on Windows.")
 class Analyze(TestCase, Helper):
-	def test_Alpine(self):
+	def test_Alpine(self) -> None:
 		tool = Docker(dryRun=True)
 		tool[tool.CommandContainer] = True
 		tool[tool.CommandRun] = True
