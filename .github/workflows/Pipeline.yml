@@ -9,19 +9,20 @@ on:
 
 jobs:
   ConfigParams:
-    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@dev
+    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@r4
     with:
       package_name: pyEDAA.CLITool
 
   UnitTestingParams:
-    uses: pyTooling/Actions/.github/workflows/Parameters.yml@dev
+    uses: pyTooling/Actions/.github/workflows/Parameters.yml@r4
     with:
       name: pyEDAA.CLITool
       disable_list: windows:*
 
   UnitTesting:
-    uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@dev
+    uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r4
     needs:
+      - ConfigParams
       - UnitTestingParams
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
@@ -109,11 +110,14 @@ jobs:
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
       requirements: "-r tests/unit/requirements.txt"
-      unittest_xml_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
-      coverage_sqlite_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
+      unittest_report_xml_directory:  ${{ needs.ConfigParams.outputs.unittest_report_xml_directory }}
+      unittest_report_xml_filename:   ${{ needs.ConfigParams.outputs.unittest_report_xml_filename }}
+      coverage_report_html_directory: ${{ needs.ConfigParams.outputs.coverage_report_html_directory }}
+      unittest_xml_artifact:          ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+      coverage_sqlite_artifact:       ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
 
   StaticTypeCheck:
-    uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@dev
+    uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@r4
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -126,7 +130,7 @@ jobs:
       html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   DocCoverage:
-    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@dev
+    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@r4
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -136,7 +140,7 @@ jobs:
       fail_under: 75
 
   Package:
-    uses: pyTooling/Actions/.github/workflows/Package.yml@dev
+    uses: pyTooling/Actions/.github/workflows/Package.yml@r4
     needs:
       - UnitTestingParams
       - UnitTesting
@@ -145,7 +149,7 @@ jobs:
       artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
 
   PublishCoverageResults:
-    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@dev
+    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@r4
     needs:
       - UnitTestingParams
       - UnitTesting
@@ -156,7 +160,7 @@ jobs:
       codacy_token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
   PublishTestResults:
-    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@dev
+    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r4
     needs:
       - UnitTestingParams
       - UnitTesting
@@ -165,14 +169,14 @@ jobs:
       merged_junit_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
 
 #  VerifyDocs:
-#    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@dev
+#    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@r4
 #    needs:
 #      - UnitTestingParams
 #    with:
 #      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
 
   Documentation:
-    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@dev
+    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@r4
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -188,7 +192,7 @@ jobs:
       latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
 
   IntermediateCleanUp:
-    uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@dev
+    uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@r4
     needs:
       - UnitTestingParams
       - PublishCoverageResults
@@ -200,7 +204,7 @@ jobs:
 
 
   PDFDocumentation:
-    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@dev
+    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r4
     needs:
       - UnitTestingParams
       - Documentation
@@ -210,7 +214,7 @@ jobs:
       pdf_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}
 
   PublishToGitHubPages:
-    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@dev
+    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@r4
     needs:
       - UnitTestingParams
       - Documentation
@@ -223,13 +227,13 @@ jobs:
       typing: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   ReleasePage:
-    uses: pyTooling/Actions/.github/workflows/Release.yml@dev
+    uses: pyTooling/Actions/.github/workflows/Release.yml@r4
     if: startsWith(github.ref, 'refs/tags')
     needs:
       - PublishToGitHubPages
 
   PublishOnPyPI:
-    uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@dev
+    uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@r4
     if: startsWith(github.ref, 'refs/tags')
     needs:
       - UnitTestingParams
@@ -242,7 +246,7 @@ jobs:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
   ArtifactCleanUp:
-    uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@dev
+    uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@r4
     needs:
       - UnitTestingParams
       - UnitTesting
