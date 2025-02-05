@@ -10,7 +10,7 @@
 [![PyPI](https://img.shields.io/pypi/v/pyEDAA.CLITool?longCache=true&style=flat-square&logo=PyPI&logoColor=FBE072)](https://pypi.org/project/pyEDAA.CLITool/)
 ![PyPI - Status](https://img.shields.io/pypi/status/pyEDAA.CLITool?longCache=true&style=flat-square&logo=PyPI&logoColor=FBE072)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyEDAA.CLITool?longCache=true&style=flat-square&logo=PyPI&logoColor=FBE072)  
-[![GitHub Workflow - Build and Test Status](https://img.shields.io/github/actions/workflow/status/edaa-org/pyEDAA.CLITool/Pipeline.ymllongCache=true&style=flat-square&label=Build%20and%20test&logo=GitHub%20Actions&logoColor=FFFFFF)](https://GitHub.com/edaa-org/pyEDAA.CLITool/actions/workflows/Pipeline.yml)
+[![GitHub Workflow - Build and Test Status](https://img.shields.io/github/actions/workflow/status/edaa-org/pyEDAA.CLITool/Pipeline.yml?longCache=true&style=flat-square&label=Build%20and%20test&logo=GitHub%20Actions&logoColor=FFFFFF)](https://GitHub.com/edaa-org/pyEDAA.CLITool/actions/workflows/Pipeline.yml)
 [![Libraries.io status for latest release](https://img.shields.io/librariesio/release/pypi/pyEDAA.CLITool?longCache=true&style=flat-square&logo=Libraries.io&logoColor=fff)](https://libraries.io/github/edaa-org/pyEDAA.CLITool)
 [![Codacy - Quality](https://img.shields.io/codacy/grade/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=Codacy)](https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool)
 [![Codacy - Coverage](https://img.shields.io/codacy/coverage/7cc5334a04924f77ae75bbffbf48ff98?longCache=true&style=flat-square&logo=Codacy)](https://www.codacy.com/gh/edaa-org/pyEDAA.CLITool)
