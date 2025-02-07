@@ -1,0 +1,122 @@
+.. # Template modified by Patrick Lehmann
+     * removed automodule on top, because private members are activated for autodoc (no doubled documentation).
+     * Made sections like 'submodules' bold text, but no headlines to reduce number of ToC levels.
+
+==============================
+pyEDAA.CLITool.Mentor.ModelSim
+==============================
+
+.. automodule:: pyEDAA.CLITool.Mentor.ModelSim
+
+
+.. currentmodule:: pyEDAA.CLITool.Mentor.ModelSim
+
+
+**Classes**
+
+- :py:class:`OptionalModelSimMinusArgument`:
+  Class and base-class for all OptionalValuedFlag classes, which represents a flag argument with data.
+
+- :py:class:`OptionalModelSimPlusArgument`:
+  Class and base-class for all OptionalValuedFlag classes, which represents a flag argument with data.
+
+- :py:class:`VHDLLibraryTool`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`VHDLCompilerCoverageOptions`:
+  Undocumented.
+
+- :py:class:`VHDLCompilerFSMVerbosityLevel`:
+  Create a collection of name/value pairs.
+
+- :py:class:`VHDLCompiler`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`VHDLSimulator`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+
+
+---------------------
+
+**Classes**
+
+
+
+
+.. autoclass:: OptionalModelSimMinusArgument
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: OptionalModelSimMinusArgument
+      :parts: 1
+
+.. autoclass:: OptionalModelSimPlusArgument
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: OptionalModelSimPlusArgument
+      :parts: 1
+
+.. autoclass:: VHDLLibraryTool
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLLibraryTool
+      :parts: 1
+
+.. autoclass:: VHDLCompilerCoverageOptions
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLCompilerCoverageOptions
+      :parts: 1
+
+.. autoclass:: VHDLCompilerFSMVerbosityLevel
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLCompilerFSMVerbosityLevel
+      :parts: 1
+
+.. autoclass:: VHDLCompiler
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLCompiler
+      :parts: 1
+
+.. autoclass:: VHDLSimulator
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLSimulator
+      :parts: 1
