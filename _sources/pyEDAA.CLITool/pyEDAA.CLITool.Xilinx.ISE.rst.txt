@@ -1,0 +1,80 @@
+.. # Template modified by Patrick Lehmann
+     * removed automodule on top, because private members are activated for autodoc (no doubled documentation).
+     * Made sections like 'submodules' bold text, but no headlines to reduce number of ToC levels.
+
+=========================
+pyEDAA.CLITool.Xilinx.ISE
+=========================
+
+.. automodule:: pyEDAA.CLITool.Xilinx.ISE
+
+
+.. currentmodule:: pyEDAA.CLITool.Xilinx.ISE
+
+
+**Classes**
+
+- :py:class:`Fuse`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`ISESimulator`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`Xst`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`CoreGenerator`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+
+
+---------------------
+
+**Classes**
+
+
+
+
+.. autoclass:: Fuse
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Fuse
+      :parts: 1
+
+.. autoclass:: ISESimulator
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: ISESimulator
+      :parts: 1
+
+.. autoclass:: Xst
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Xst
+      :parts: 1
+
+.. autoclass:: CoreGenerator
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: CoreGenerator
+      :parts: 1
