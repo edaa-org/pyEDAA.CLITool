@@ -47,7 +47,7 @@ from pyTooling.MetaClasses import ExtendedType
 
 @export
 class CLIToolException(ExceptionBase):
-	pass
+	"""Base-class for all pyEDAA.CLITool specific exceptions."""
 
 
 class ToolMixIn(metaclass=ExtendedType, mixin=True):
