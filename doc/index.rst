@@ -196,6 +196,7 @@ License
    Python Class Reference <pyEDAA.CLITool/pyEDAA.CLITool>
    unittests/index
    coverage/index
+   CodeCoverage
    Doc. Coverage Report <DocCoverage>
    Static Type Check Report ➚ <typing/index>
 

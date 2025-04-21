@@ -142,6 +142,7 @@ if ($doccov)
 if ($liveunit)
 { Write-Host -ForegroundColor DarkYellow    "[live][UNIT]      Running Unit Tests using pytest ..."
 
+  $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
   $env:ENVIRONMENT_NAME = "Windows (x86-64)"
   pytest -raP --color=yes --junitxml=report/unit/unittest.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
 
@@ -158,6 +159,7 @@ elseif ($unit)
 
   # Run unit tests
   $runUnitFunc = {
+    $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
     $env:ENVIRONMENT_NAME = "Windows (x86-64)"
     pytest -raP --color=yes --junitxml=report/unit/unittest.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
   }
@@ -168,6 +170,7 @@ elseif ($unit)
 if ($livecov)
 { Write-Host -ForegroundColor DarkMagenta   "[live][COV]       Running Unit Tests with coverage ..."
 
+  $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
   $env:ENVIRONMENT_NAME = "Windows (x86-64)"
   coverage run --data-file=.coverage --rcfile=pyproject.toml -m pytest -ra --tb=line --color=yes tests/unit
 
@@ -196,6 +199,7 @@ elseif ($cov)
 
   # Collect coverage
   $collectCovFunc = {
+    $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
     $env:ENVIRONMENT_NAME = "Windows (x86-64)"
     coverage run --data-file=.coverage --rcfile=pyproject.toml -m pytest -ra --tb=line --color=yes tests/unit
 
