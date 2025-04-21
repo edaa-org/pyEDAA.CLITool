@@ -34,7 +34,7 @@ __author__ =    "Patrick Lehmann"
 __email__ =     "Paebbels@gmail.com"
 __copyright__ = "2014-2025, Patrick Lehmann, Unai Martinez-Corral"
 __license__ =   "Apache License, Version 2.0"
-__version__ =   "0.3.2"
+__version__ =   "0.3.4"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
 
 from pathlib import Path
