@@ -216,15 +216,15 @@ jobs:
       xml_unittest_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
 
 
-  PDFDocumentation:
-    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r4
-    needs:
-      - UnitTestingParams
-      - Documentation
-    with:
-      document: pyEDAA.CLITool
-      latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
-      pdf_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}
+#  PDFDocumentation:
+#    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r4
+#    needs:
+#      - UnitTestingParams
+#      - Documentation
+#    with:
+#      document: pyEDAA.CLITool
+#      latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
+#      pdf_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}
 
   PublishToGitHubPages:
     uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@r4
@@ -243,6 +243,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Release.yml@r4
     if: startsWith(github.ref, 'refs/tags')
     needs:
+      - Package
       - PublishToGitHubPages
 
   PublishOnPyPI:
