@@ -68,7 +68,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 			r"(?:"
 				r"(?P<Packaging>tarball)"
 			r")|(?:"
-				r"(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
+				r"[a-z]?(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
 			r")|(?:"
 				r"Ubuntu\s(?P<UbuntuMajor>\d+)\.(?P<UbuntuMinor>\d+)\.(?P<UbuntuMicro>\d+)\+dfsg-(?P<dfsg>\d+)ubuntu(?P<UbuntuPackage>\d+)"
 			r")"
