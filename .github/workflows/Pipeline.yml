@@ -33,7 +33,7 @@ jobs:
         (
           mkdir -p install
           cd install
-          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -52,7 +52,7 @@ jobs:
         (
           mkdir -p install
           cd install
-          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-macos13-x86_64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-macos13-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -69,7 +69,7 @@ jobs:
         (
           mkdir -p install
           cd install
-          curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-llvm-5.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-llvm-6.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -80,7 +80,7 @@ jobs:
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
 #      windows_before_script: |
-#        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/ghdl-mcode-5.0.0-dev-ucrt64.zip" -o ghdl.zip
+#        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip" -o ghdl.zip
 #        dir
 #        mkdir install
 #        cd install
@@ -91,7 +91,7 @@ jobs:
         export GH_TOKEN=${{ github.token }}
         # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
 
-        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
         which ghdl
@@ -102,7 +102,7 @@ jobs:
         export GH_TOKEN=${{ github.token }}
         # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
 
-        curl -L "https://github.com/Paebbels/ghdl/releases/download/testing/mingw-w64-ucrt-x86_64-ghdl-mcode-5.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
         which ghdl
@@ -173,7 +173,7 @@ jobs:
       - UnitTestingParams
       - UnitTesting
     with:
-      testsuite-summary-name: ${{ inputs.package_name }}
+      testsuite-summary-name: ${{ needs.ConfigParams.outputs.package_fullname }}
       merged_junit_filename:  ${{ needs.ConfigParams.outputs.unittest_merged_report_xml_filename }}
       merged_junit_artifact:  ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
       dorny:                  true
