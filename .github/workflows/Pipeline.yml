@@ -243,6 +243,7 @@ jobs:
     uses: pyTooling/Actions/.github/workflows/Release.yml@r4
     if: startsWith(github.ref, 'refs/tags')
     needs:
+      - Package
       - PublishToGitHubPages
 
   PublishOnPyPI:
