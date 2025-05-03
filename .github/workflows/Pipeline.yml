@@ -148,9 +148,11 @@ jobs:
       coverage_report_json_filename:  ${{ needs.ConfigParams.outputs.coverage_report_json_filename }}
       coverage_html_artifact:         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
       coverage_report_html_directory: ${{ needs.ConfigParams.outputs.coverage_report_html_directory }}
-      codecov:                        false
-      codacy:                         false
-    secrets: inherit
+      codecov:                        true
+      codacy:                         true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      CODACY_TOKEN:  ${{ secrets.CODACY_TOKEN }}
 
   PublishTestResults:
     uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@dev
@@ -163,8 +165,9 @@ jobs:
       merged_junit_filename:  ${{ needs.ConfigParams.outputs.unittest_merged_report_xml_filename }}
       merged_junit_artifact:  ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
       dorny:                  true
-      codecov:                false
-    secrets: inherit
+      codecov:                true
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 #  VerifyDocs:
 #    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@r4
