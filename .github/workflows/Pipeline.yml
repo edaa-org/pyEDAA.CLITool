@@ -2,12 +2,16 @@ name: Pipeline
 
 on:
   push:
+  create:
   workflow_dispatch:
   schedule:
 # Every Friday at 22:00 - rerun pipeline to check for dependency-based issues
     - cron: '0 22 * * 5'
 
 jobs:
+  Prepare:
+    uses: pyTooling/Actions/.github/workflows/PrepareJob.yml@dev
+
   ConfigParams:
     uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@r4
     with:
@@ -27,9 +31,6 @@ jobs:
     with:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       ubuntu_before_script: |
-        export GH_TOKEN=${{ github.token }}
-        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
-
         (
           mkdir -p install
           cd install
@@ -46,9 +47,6 @@ jobs:
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
       macos_before_script: |
-        export GH_TOKEN=${{ github.token }}
-        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
-
         (
           mkdir -p install
           cd install
@@ -63,9 +61,6 @@ jobs:
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
       macos_arm_before_script: |
-        export GH_TOKEN=${{ github.token }}
-        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
-
         (
           mkdir -p install
           cd install
@@ -88,9 +83,6 @@ jobs:
 #        dir
 
       mingw64_before_script: |
-        export GH_TOKEN=${{ github.token }}
-        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
-
         curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
@@ -99,9 +91,6 @@ jobs:
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
       ucrt64_before_script: |
-        export GH_TOKEN=${{ github.token }}
-        # gh release download "testing" --repo "Paebbels/ghdl" --pattern "ghdl-mcode-*-ubuntu*-x86_64.tar.gz" --output "ghdl-mcode.tar.gz"
-
         curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
@@ -109,7 +98,7 @@ jobs:
         ghdl version
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
-      requirements: "-r tests/unit/requirements.txt"
+      requirements: '-r tests/unit/requirements.txt'
       unittest_report_xml_directory:  ${{ needs.ConfigParams.outputs.unittest_report_xml_directory }}
       unittest_report_xml_filename:   ${{ needs.ConfigParams.outputs.unittest_report_xml_filename }}
       coverage_report_html_directory: ${{ needs.ConfigParams.outputs.coverage_report_html_directory }}
@@ -130,14 +119,13 @@ jobs:
       html_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   DocCoverage:
-    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@r4
+    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@dev
     needs:
       - ConfigParams
       - UnitTestingParams
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       directory:      ${{ needs.ConfigParams.outputs.package_directors }}
-      fail_under:     75
 
   Package:
     uses: pyTooling/Actions/.github/workflows/Package.yml@r4
@@ -149,7 +137,7 @@ jobs:
       artifact:       ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
 
   PublishCoverageResults:
-    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@r4
+    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@dev
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -164,10 +152,10 @@ jobs:
       codacy:                         true
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      CODACY_TOKEN:  ${{ secrets.CODACY_PROJECT_TOKEN }}
+      CODACY_TOKEN:  ${{ secrets.CODACY_TOKEN }}
 
   PublishTestResults:
-    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r4
+    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@dev
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -179,7 +167,7 @@ jobs:
       dorny:                  true
       codecov:                true
     secrets:
-      CODECOV_TOKEN:          ${{ secrets.CODECOV_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 #  VerifyDocs:
 #    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@r4
@@ -210,11 +198,9 @@ jobs:
       - UnitTestingParams
       - PublishCoverageResults
       - PublishTestResults
-      - Documentation
     with:
       sqlite_coverage_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-
-      xml_unittest_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
-
+      xml_unittest_artifacts_prefix:    ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
 
 #  PDFDocumentation:
 #    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r4
@@ -239,12 +225,35 @@ jobs:
       coverage: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
       typing:   ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
-  ReleasePage:
-    uses: pyTooling/Actions/.github/workflows/Release.yml@r4
-    if: startsWith(github.ref, 'refs/tags')
+  TriggerTaggedRelease:
+    uses: pyTooling/Actions/.github/workflows/TagReleaseCommit.yml@dev
     needs:
+      - Prepare
+      - UnitTesting
+#      - StaticTypeCheck
       - Package
       - PublishToGitHubPages
+    if: needs.Prepare.outputs.is_release_commit
+    permissions:
+      contents: write  # required for create tag
+      actions:  write  # required for trigger workflow
+    with:
+      version:  ${{ needs.Prepare.outputs.version }}
+      auto_tag: ${{ needs.Prepare.outputs.is_release_commit }}
+    secrets: inherit
+
+  ReleasePage:
+    uses: pyTooling/Actions/.github/workflows/PublishReleaseNotes.yml@dev
+    if: needs.Prepare.outputs.is_release_tag == 'true'
+    needs:
+      - Prepare
+      - UnitTesting
+#      - StaticTypeCheck
+      - Package
+      - PublishToGitHubPages
+    with:
+      tag: ${{ needs.Prepare.outputs.version }}
+    secrets: inherit
 
   PublishOnPyPI:
     uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@r4
@@ -254,10 +263,9 @@ jobs:
       - ReleasePage
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
-      requirements: -r dist/requirements.txt
-      artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
-    secrets:
-      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      requirements:   '-r dist/requirements.txt'
+      artifact:       ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
+    secrets: inherit
 
   ArtifactCleanUp:
     uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@r4
