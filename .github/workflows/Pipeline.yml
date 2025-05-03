@@ -240,7 +240,6 @@ jobs:
     with:
       version:  ${{ needs.Prepare.outputs.version }}
       auto_tag: ${{ needs.Prepare.outputs.is_release_commit }}
-    secrets: inherit
 
   ReleasePage:
     uses: pyTooling/Actions/.github/workflows/PublishReleaseNotes.yml@dev
@@ -253,7 +252,6 @@ jobs:
       - PublishToGitHubPages
     with:
       tag: ${{ needs.Prepare.outputs.version }}
-    secrets: inherit
 
   PublishOnPyPI:
     uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@r4
@@ -265,7 +263,8 @@ jobs:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       requirements:   '-r dist/requirements.txt'
       artifact:       ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
-    secrets: inherit
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
   ArtifactCleanUp:
     uses: pyTooling/Actions/.github/workflows/ArtifactCleanUp.yml@r4
