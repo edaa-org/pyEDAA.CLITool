@@ -2,7 +2,6 @@ name: Pipeline
 
 on:
   push:
-  create:
   workflow_dispatch:
   schedule:
 # Every Friday at 22:00 - rerun pipeline to check for dependency-based issues
@@ -169,29 +168,6 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-#  VerifyDocs:
-#    uses: pyTooling/Actions/.github/workflows/VerifyDocs.yml@r4
-#    needs:
-#      - UnitTestingParams
-#    with:
-#      python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
-
-  Documentation:
-    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@r4
-    needs:
-      - ConfigParams
-      - UnitTestingParams
-      - PublishTestResults
-      - PublishCoverageResults
-#      - VerifyDocs
-    with:
-      python_version:                 ${{ needs.UnitTestingParams.outputs.python_version }}
-      coverage_report_json_directory: ${{ needs.ConfigParams.outputs.coverage_report_json_directory }}
-      unittest_xml_artifact:          ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
-      coverage_json_artifact:         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
-      html_artifact:                  ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
-      latex_artifact:                 ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
-
   IntermediateCleanUp:
     uses: pyTooling/Actions/.github/workflows/IntermediateCleanUp.yml@r4
     needs:
@@ -202,22 +178,26 @@ jobs:
       sqlite_coverage_artifacts_prefix: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}-
       xml_unittest_artifacts_prefix:    ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}-
 
-#  PDFDocumentation:
-#    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r4
-#    needs:
-#      - UnitTestingParams
-#      - Documentation
-#    with:
-#      document: pyEDAA.CLITool
-#      latex_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
-#      pdf_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}
+  Documentation:
+    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@r4
+    needs:
+      - ConfigParams
+      - UnitTestingParams
+      - PublishTestResults
+      - PublishCoverageResults
+    with:
+      python_version:                 ${{ needs.UnitTestingParams.outputs.python_version }}
+      coverage_report_json_directory: ${{ needs.ConfigParams.outputs.coverage_report_json_directory }}
+      unittest_xml_artifact:          ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).unittesting_xml }}
+      coverage_json_artifact:         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_json }}
+      html_artifact:                  ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
+      latex_artifact:                 ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
 
   PublishToGitHubPages:
     uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@r4
     needs:
       - UnitTestingParams
       - Documentation
-#      - PDFDocumentation
       - PublishCoverageResults
       - StaticTypeCheck
     with:
@@ -273,10 +253,10 @@ jobs:
       - UnitTesting
       - StaticTypeCheck
       - Documentation
-#      - PDFDocumentation
       - PublishTestResults
       - PublishCoverageResults
       - PublishToGitHubPages
+      - IntermediateCleanUp
     with:
       package: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
       remaining: |
@@ -295,4 +275,3 @@ jobs:
         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
-#        ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_pdf }}

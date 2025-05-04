@@ -144,7 +144,9 @@ if ($liveunit)
 
   $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
   $env:ENVIRONMENT_NAME = "Windows (x86-64)"
-  pytest -raP --color=yes --junitxml=report/unit/unittest.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
+  pytest -raP --color=yes --junitxml=report/unit/TestReportSummary.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
+
+  pyedaa-reports -v unittest "--merge=pyTest-JUnit:report/unit/TestReportSummary.xml" "--name=$PackageName" "--pytest=rewrite-dunder-init;reduce-depth:pytest.tests.unit" "--output=pyTest-JUnit:report/unit/unittest.xml"
 
   if ($copyunit)
   { cp -Recurse -Force .\report\unit\html\* .\doc\_build\html\unittests
@@ -161,7 +163,9 @@ elseif ($unit)
   $runUnitFunc = {
     $env:GHDL_PREFIX = "C:\Tools\GHDL\6.0.0.dev0-ucrt64-mcode\lib\ghdl"
     $env:ENVIRONMENT_NAME = "Windows (x86-64)"
-    pytest -raP --color=yes --junitxml=report/unit/unittest.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
+    pytest -raP --color=yes --junitxml=report/unit/TestReportSummary.xml --template=html1/index.html --report=report/unit/html/index.html --split-report tests/unit
+
+    pyedaa-reports -v unittest "--merge=pyTest-JUnit:report/unit/TestReportSummary.xml" "--name=$PackageName" "--pytest=rewrite-dunder-init;reduce-depth:pytest.tests.unit" "--output=pyTest-JUnit:report/unit/unittest.xml"
   }
   $unitJob = Start-Job -Name "UnitTests" -ScriptBlock $runUnitFunc
   $jobs += $unitJob
