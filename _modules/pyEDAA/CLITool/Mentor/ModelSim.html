@@ -1,0 +1,628 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyEDAA.CLITool.Mentor.ModelSim &mdash; pyEDAA.CLITool 0.3.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=55b73dce" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-reports.469918902edf87f5154c9531e0f2362c.css?v=6ad14cd5" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/override.css?v=e6c450a4" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8da8c241"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="https://edaa-org.github.io/">Used as a layer of EDA² ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Installation.html">Installation/Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Dependency.html">Dependencies</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tools/index.html">Supported Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References and Reports</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.html">Python Class Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unittests/index.html">Unittest Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../coverage/index.html">Code Coverage Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CodeCoverage.html">Code Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../DocCoverage.html">Doc. Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../typing/index.html">Static Type Check Report ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../License.html">Apache License 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Doc-License.html">Creative Commons Attribution 4.0 International</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../py-modindex.html">Python Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../TODO.html">TODOs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">pyEDAA.CLITool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../CLITool.html">pyEDAA.CLITool</a></li>
+      <li class="breadcrumb-item active">pyEDAA.CLITool.Mentor.ModelSim</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyEDAA.CLITool.Mentor.ModelSim</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ==================================================================================================================== #</span>
+<span class="c1">#              _____ ____    _        _      ____ _     ___ _____           _                                          #</span>
+<span class="c1">#  _ __  _   _| ____|  _ \  / \      / \    / ___| |   |_ _|_   _|__   ___ | |                                         #</span>
+<span class="c1"># | &#39;_ \| | | |  _| | | | |/ _ \    / _ \  | |   | |    | |  | |/ _ \ / _ \| |                                         #</span>
+<span class="c1"># | |_) | |_| | |___| |_| / ___ \  / ___ \ | |___| |___ | |  | | (_) | (_) | |                                         #</span>
+<span class="c1"># | .__/ \__, |_____|____/_/   \_\/_/   \_(_)____|_____|___| |_|\___/ \___/|_|                                         #</span>
+<span class="c1"># |_|    |___/                                                                                                         #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1"># Authors:                                                                                                             #</span>
+<span class="c1">#   Patrick Lehmann                                                                                                    #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># License:                                                                                                             #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1"># Copyright 2017-2025 Patrick Lehmann - Boetzingen, Germany                                                            #</span>
+<span class="c1"># Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);                                                      #</span>
+<span class="c1"># you may not use this file except in compliance with the License.                                                     #</span>
+<span class="c1"># You may obtain a copy of the License at                                                                              #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0                                                                         #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software                                                  #</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,                                                    #</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                             #</span>
+<span class="c1"># See the License for the specific language governing permissions and                                                  #</span>
+<span class="c1"># limitations under the License.                                                                                       #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># SPDX-License-Identifier: Apache-2.0                                                                                  #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;This module contains the CLI abstraction layer for ModelSim.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">flags</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flags</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.Decorators</span><span class="w">               </span><span class="kn">import</span> <span class="n">export</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction</span><span class="w">           </span><span class="kn">import</span> <span class="n">CLIArgument</span><span class="p">,</span> <span class="n">Executable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.Argument</span><span class="w">  </span><span class="kn">import</span> <span class="n">StringArgument</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.Flag</span><span class="w">      </span><span class="kn">import</span> <span class="n">ShortFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.OptionalValuedFlag</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalValuedFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.ValuedTupleFlag</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShortTupleFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyEDAA.CLITool</span><span class="w">                     </span><span class="kn">import</span> <span class="n">ToolMixIn</span>
+
+
+<div class="viewcode-block" id="OptionalModelSimMinusArgument">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.OptionalModelSimMinusArgument">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptionalModelSimMinusArgument</span><span class="p">(</span><span class="n">OptionalValuedFlag</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">patternWithValue</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="p">):</span>
+	<span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="OptionalModelSimPlusArgument">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.OptionalModelSimPlusArgument">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptionalModelSimPlusArgument</span><span class="p">(</span><span class="n">OptionalValuedFlag</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">patternWithValue</span><span class="o">=</span><span class="s2">&quot;+</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="p">):</span>
+	<span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="VHDLLibraryTool">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLLibraryTool">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VHDLLibraryTool</span><span class="p">(</span><span class="n">Executable</span><span class="p">,</span> <span class="n">ToolMixIn</span><span class="p">):</span>
+	<span class="n">_executableNames</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;Linux&quot;</span><span class="p">:</span>   <span class="s2">&quot;vlib&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;Windows&quot;</span><span class="p">:</span> <span class="s2">&quot;vlib.exe&quot;</span>
+	<span class="p">}</span>
+
+<div class="viewcode-block" id="VHDLLibraryTool.ValueLibraryName">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLLibraryTool.ValueLibraryName">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ValueLibraryName</span><span class="p">(</span><span class="n">StringArgument</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;VHDL library name to create.&quot;&quot;&quot;</span></div>
+</div>
+
+
+<div class="viewcode-block" id="VHDLCompilerCoverageOptions">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompilerCoverageOptions">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VHDLCompilerCoverageOptions</span><span class="p">(</span><span class="n">Flags</span><span class="p">):</span>
+	<span class="n">__no_flags_name__</span> <span class="o">=</span>   <span class="s2">&quot;Default&quot;</span>
+	<span class="n">__all_flags_name__</span> <span class="o">=</span>  <span class="s2">&quot;All&quot;</span>
+	<span class="n">Statement</span> <span class="o">=</span>           <span class="s2">&quot;s&quot;</span>
+	<span class="n">Branch</span> <span class="o">=</span>              <span class="s2">&quot;b&quot;</span>
+	<span class="n">Condition</span> <span class="o">=</span>           <span class="s2">&quot;c&quot;</span>
+	<span class="n">Expression</span> <span class="o">=</span>          <span class="s2">&quot;e&quot;</span>
+	<span class="n">StateMachine</span> <span class="o">=</span>        <span class="s2">&quot;f&quot;</span>
+	<span class="n">Toggle</span> <span class="o">=</span>              <span class="s2">&quot;t&quot;</span>
+
+<div class="viewcode-block" id="VHDLCompilerCoverageOptions.__str__">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompilerCoverageOptions.__str__">[docs]</a>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VHDLCompilerFSMVerbosityLevel">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompilerFSMVerbosityLevel">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VHDLCompilerFSMVerbosityLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+	<span class="n">Default</span> <span class="o">=</span>         <span class="s2">&quot;&quot;</span>
+	<span class="n">Basic</span> <span class="o">=</span>           <span class="s2">&quot;b&quot;</span>
+	<span class="n">TransitionTable</span> <span class="o">=</span> <span class="s2">&quot;t&quot;</span>
+	<span class="n">AnyWarning</span> <span class="o">=</span>      <span class="s2">&quot;w&quot;</span>
+
+<div class="viewcode-block" id="VHDLCompilerFSMVerbosityLevel.__str__">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompilerFSMVerbosityLevel.__str__">[docs]</a>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="VHDLCompiler">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VHDLCompiler</span><span class="p">(</span><span class="n">Executable</span><span class="p">,</span> <span class="n">ToolMixIn</span><span class="p">):</span>
+	<span class="n">_executableNames</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;Linux&quot;</span><span class="p">:</span>   <span class="s2">&quot;vcom&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;Windows&quot;</span><span class="p">:</span> <span class="s2">&quot;vcom.exe&quot;</span>
+	<span class="p">}</span>
+
+<div class="viewcode-block" id="VHDLCompiler.FlagTime">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagTime">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagTime</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Print the compilation wall clock time.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagExplicit">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagExplicit">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagExplicit</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;explicit&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagQuietMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagQuietMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagQuietMode</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;quiet&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Do not report &#39;Loading...&#39; messages.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.SwitchModelSimIniFile">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.SwitchModelSimIniFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchModelSimIniFile</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;modelsimini&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagRangeCheck">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagRangeCheck">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagRangeCheck</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rangecheck&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.SwitchCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.SwitchCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchCoverage</span><span class="p">(</span><span class="n">OptionalModelSimPlusArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cover&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagEnableFocusedExpressionCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagEnableFocusedExpressionCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableFocusedExpressionCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;coverfec&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagDisableFocusedExpressionCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagDisableFocusedExpressionCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableFocusedExpressionCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nocoverfec&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagEnableRapidExpressionCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagEnableRapidExpressionCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableRapidExpressionCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;coverrec&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagDisableRapidExpressionCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagDisableRapidExpressionCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableRapidExpressionCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nocoverrec&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagEnableRecognitionOfImplicitFSMResetTransitions">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagEnableRecognitionOfImplicitFSMResetTransitions">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableRecognitionOfImplicitFSMResetTransitions</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsmresettrans&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagDisableRecognitionOfImplicitFSMResetTransitions">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagDisableRecognitionOfImplicitFSMResetTransitions">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableRecognitionOfImplicitFSMResetTransitions</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nofsmresettrans&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagEnableRecognitionOfSingleBitFSMState">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagEnableRecognitionOfSingleBitFSMState">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableRecognitionOfSingleBitFSMState</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsmsingle&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagDisableRecognitionOfSingleBitFSMState">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagDisableRecognitionOfSingleBitFSMState">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableRecognitionOfSingleBitFSMState</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nofsmsingle&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagEnableRecognitionOfImplicitFSMTransitions">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagEnableRecognitionOfImplicitFSMTransitions">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableRecognitionOfImplicitFSMTransitions</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsmimplicittrans&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagDisableRecognitionOfImplicitFSMTransitions">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagDisableRecognitionOfImplicitFSMTransitions">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableRecognitionOfImplicitFSMTransitions</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nofsmimplicittrans&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.SwitchFSMVerbosityLevel">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.SwitchFSMVerbosityLevel">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchFSMVerbosityLevel</span><span class="p">(</span><span class="n">OptionalModelSimMinusArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsmverbose&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagReportAsNote">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagReportAsNote">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsNote</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;note&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagReportAsError">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagReportAsError">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsError</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagReportAsWarning">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagReportAsWarning">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsWarning</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagReportAsFatal">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagReportAsFatal">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsFatal</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fatal&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagRelaxLanguageChecks">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagRelaxLanguageChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagRelaxLanguageChecks</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;permissive&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.FlagForceLanguageChecks">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.FlagForceLanguageChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagForceLanguageChecks</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pedanticerrors&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.SwitchVHDLVersion">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.SwitchVHDLVersion">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchVHDLVersion</span><span class="p">(</span><span class="n">StringArgument</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.ArgLogFile">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.ArgLogFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ArgLogFile</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;l&quot;</span><span class="p">):</span> <span class="o">...</span>			<span class="c1"># what&#39;s the difference to -logfile ?</span></div>
+
+
+<div class="viewcode-block" id="VHDLCompiler.SwitchVHDLLibrary">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompiler.SwitchVHDLLibrary">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchVHDLLibrary</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;work&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+</div>
+
+
+	<span class="c1"># @CLIArgument()</span>
+	<span class="c1"># class ArgSourceFile(PathArgument): ...</span>
+
+
+<div class="viewcode-block" id="VHDLSimulator">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VHDLSimulator</span><span class="p">(</span><span class="n">Executable</span><span class="p">,</span> <span class="n">ToolMixIn</span><span class="p">):</span>
+	<span class="n">_executableNames</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;Linux&quot;</span><span class="p">:</span>   <span class="s2">&quot;vsim&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;Windows&quot;</span><span class="p">:</span> <span class="s2">&quot;vsim.exe&quot;</span>
+	<span class="p">}</span>
+
+<div class="viewcode-block" id="VHDLSimulator.FlagQuietMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagQuietMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagQuietMode</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;quiet&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Run simulation in quiet mode. (Don&#39;t show &#39;Loading...&#39; messages.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagBatchMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagBatchMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagBatchMode</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;batch&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Run simulation in batch mode.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagGuiMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagGuiMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagGuiMode</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gui&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Run simulation in GUI mode.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.SwitchBatchCommand">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.SwitchBatchCommand">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchBatchCommand</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;do&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Specify a Tcl batch script for the batch mode.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagCommandLineMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagCommandLineMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagCommandLineMode</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Run simulation in command line mode.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.SwitchModelSimIniFile">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.SwitchModelSimIniFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchModelSimIniFile</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;modelsimini&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Specify the used &#39;modelsim.ini&#39; file.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnableOptimization">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnableOptimization">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableOptimization</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vopt&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Enabled optimization while elaborating the design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagDisableOptimization">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagDisableOptimization">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableOptimization</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;novopt&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Disabled optimization while elaborating the design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnableOptimizationVerbosity">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnableOptimizationVerbosity">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableOptimizationVerbosity</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vopt_verbose&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Enabled optimization while elaborating the design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnableKeepAssertionCountsForCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnableKeepAssertionCountsForCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableKeepAssertionCountsForCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;assertcover&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagDisableKeepAssertionCountsForCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagDisableKeepAssertionCountsForCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableKeepAssertionCountsForCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;noassertcover&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnableCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnableCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;coverage&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagDisableCoverage">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagDisableCoverage">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisableCoverage</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nocoverage&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnablePSL">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnablePSL">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnablePSL</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;psl&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagDisablePSL">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagDisablePSL">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisablePSL</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;nopsl&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagEnableFSMDebugging">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagEnableFSMDebugging">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagEnableFSMDebugging</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsmdebug&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagReportAsNote">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagReportAsNote">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsNote</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;note&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagReportAsError">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagReportAsError">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsError</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagReportAsWarning">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagReportAsWarning">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsWarning</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;warning&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagReportAsFatal">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagReportAsFatal">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReportAsFatal</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fatal&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagRelaxLanguageChecks">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagRelaxLanguageChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagRelaxLanguageChecks</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;permissive&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.FlagForceLanguageChecks">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.FlagForceLanguageChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagForceLanguageChecks</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pedanticerrors&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.SwitchTimeResolution">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.SwitchTimeResolution">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchTimeResolution</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;t&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set simulation time resolution.&quot;&quot;&quot;</span></div>
+
+		<span class="c1"># -t [1|10|100]fs|ps|ns|us|ms|sec  Time resolution limit</span>
+
+<div class="viewcode-block" id="VHDLSimulator.ArgLogFile">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.ArgLogFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ArgLogFile</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;l&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+		<span class="c1"># what&#39;s the difference to -logfile ?</span>
+
+<div class="viewcode-block" id="VHDLSimulator.ArgKeepStdOut">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.ArgKeepStdOut">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ArgKeepStdOut</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;keepstdout&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.ArgVHDLLibraryName">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.ArgVHDLLibraryName">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ArgVHDLLibraryName</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lib&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.ArgOnFinishMode">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.ArgOnFinishMode">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">ArgOnFinishMode</span><span class="p">(</span><span class="n">ShortTupleFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;onfinish&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Customize the kernel shutdown behavior at the end of simulation; Valid modes: ask, stop, exit, final (Default: ask).&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VHDLSimulator.SwitchTopLevel">
+<a class="viewcode-back" href="../../../../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLSimulator.SwitchTopLevel">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">SwitchTopLevel</span><span class="p">(</span><span class="n">StringArgument</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;The top-level for simulation.&quot;&quot;&quot;</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2014-2025, Patrick Lehmann, Unai Martinez-Corral.
+      <span class="lastupdated">Last updated on 09.05.2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
