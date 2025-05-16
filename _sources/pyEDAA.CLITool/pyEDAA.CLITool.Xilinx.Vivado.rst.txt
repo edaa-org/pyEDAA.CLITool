@@ -1,0 +1,80 @@
+.. # Template modified by Patrick Lehmann
+     * removed automodule on top, because private members are activated for autodoc (no doubled documentation).
+     * Made sections like 'submodules' bold text, but no headlines to reduce number of ToC levels.
+
+============================
+pyEDAA.CLITool.Xilinx.Vivado
+============================
+
+.. automodule:: pyEDAA.CLITool.Xilinx.Vivado
+
+
+.. currentmodule:: pyEDAA.CLITool.Xilinx.Vivado
+
+
+**Classes**
+
+- :py:class:`Vvgl`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`XElab`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`XSim`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+- :py:class:`Synth`:
+  Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`.
+
+
+
+---------------------
+
+**Classes**
+
+
+
+
+.. autoclass:: Vvgl
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Vvgl
+      :parts: 1
+
+.. autoclass:: XElab
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: XElab
+      :parts: 1
+
+.. autoclass:: XSim
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: XSim
+      :parts: 1
+
+.. autoclass:: Synth
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: Synth
+      :parts: 1

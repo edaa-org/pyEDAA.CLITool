@@ -1,0 +1,38 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.w3.org/1999/xlink" width="427pt" height="27pt" viewBox="0.00 0.00 427.00 27.00">
+<ns0:g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 23)">
+<ns0:title>inheritancee2af0ca9da</ns0:title>
+
+<ns0:g id="node1" class="node">
+<ns0:title>Flags</ns0:title>
+<ns0:polygon fill="white" stroke="#1e90ff" points="211,-19 157,-19 157,0 211,0 211,-19" />
+<ns0:text text-anchor="middle" x="184" y="-7" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Flags</ns0:text>
+</ns0:g>
+
+<ns0:g id="node3" class="node">
+<ns0:title>VHDLCompilerCoverageOptions</ns0:title>
+<ns0:g id="a_node3"><ns0:a ns1:href="../pyEDAA.CLITool/pyEDAA.CLITool.Mentor.ModelSim.html#pyEDAA.CLITool.Mentor.ModelSim.VHDLCompilerCoverageOptions" ns1:title="VHDLCompilerCoverageOptions" target="_top">
+<ns0:polygon fill="white" stroke="#1e90ff" points="419,-19 247,-19 247,0 419,0 419,-19" />
+<ns0:text text-anchor="middle" x="333" y="-7" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">VHDLCompilerCoverageOptions</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge2" class="edge">
+<ns0:title>Flags-&gt;VHDLCompilerCoverageOptions</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M211.28,-9.5C220.16,-9.5 230.64,-9.5 241.64,-9.5" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="241.74,-11.25 246.74,-9.5 241.74,-7.75 241.74,-11.25" />
+</ns0:g>
+
+<ns0:g id="node2" class="node">
+<ns0:title>FlagsArithmeticMixin</ns0:title>
+<ns0:polygon fill="white" stroke="#1e90ff" points="121,-19 0,-19 0,0 121,0 121,-19" />
+<ns0:text text-anchor="middle" x="60.5" y="-7" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">FlagsArithmeticMixin</ns0:text>
+</ns0:g>
+
+<ns0:g id="edge1" class="edge">
+<ns0:title>FlagsArithmeticMixin-&gt;Flags</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M121.18,-9.5C131.71,-9.5 142.29,-9.5 151.64,-9.5" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="151.7,-11.25 156.7,-9.5 151.7,-7.75 151.7,-11.25" />
+</ns0:g>
+</ns0:g>
+</ns0:svg>
