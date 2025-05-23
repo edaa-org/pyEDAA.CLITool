@@ -1,0 +1,52 @@
+.. # Template modified by Patrick Lehmann
+     * removed automodule on top, because private members are activated for autodoc (no doubled documentation).
+     * Made sections like 'submodules' bold text, but no headlines to reduce number of ToC levels.
+
+===============================
+pyEDAA.CLITool.Aldec.RivieraPRO
+===============================
+
+.. automodule:: pyEDAA.CLITool.Aldec.RivieraPRO
+
+
+.. currentmodule:: pyEDAA.CLITool.Aldec.RivieraPRO
+
+
+**Classes**
+
+- :py:class:`VHDLLibraryTool`:
+  Abstraction of Riviera-PRO's VHDL library management tool ``vlib``.
+
+- :py:class:`VHDLSimulator`:
+  Abstraction of Riviera-PRO's HDL simulator ``vsim``.
+
+
+
+---------------------
+
+**Classes**
+
+
+
+
+.. autoclass:: VHDLLibraryTool
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLLibraryTool
+      :parts: 1
+
+.. autoclass:: VHDLSimulator
+   :members:
+   :private-members:
+   :special-members:
+   :inherited-members:
+   :exclude-members: __weakref__
+
+   .. rubric:: Inheritance
+   .. inheritance-diagram:: VHDLSimulator
+      :parts: 1
