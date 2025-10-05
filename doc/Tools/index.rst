@@ -1,7 +1,7 @@
 Supported Tools
 ###############
 
-* :ref:`Aldec <TOC:Aldec>`
+* :ref:`Aldec <TOC/Aldec>`
 
   * 🚧 Active-HDL
   * 🚧 Riviera-PRO
@@ -11,16 +11,16 @@ Supported Tools
   * 🚧 Quartus
   * 🚫 ModelSim Altera (Student) Edition
 
-* :ref:`Cadence <TOC:Cadence>`
+* :ref:`Cadence <TOC/Cadence>`
 
   * 🙋 need a list of tools
 
-* :ref:`IntelFPGA <TOC:IntelFPGA>`
+* :ref:`IntelFPGA <TOC/IntelFPGA>`
 
   * 🚧 Quartus
   * 🚫 ModelSim Altera (Student) Edition
 
-* :ref:`Lattice <TOC:Lattice>`
+* :ref:`Lattice <TOC/Lattice>`
 
   * 🚧 Diamond
   * 🚫 Active-HDL Lattice Edition
@@ -31,32 +31,32 @@ Supported Tools
   * ✅ ModelSim DE/SE/PE
   * 🚫 QuestaSim
 
-* :ref:`SiemensEDA <TOC:SiemensEDA>`
+* :ref:`SiemensEDA <TOC/SiemensEDA>`
 
   * 🚫 ModelSim DE/SE/PE
   * 🚫 QuestaSim
 
-* :ref:`Synopsys <TOC:Synopsys>`
+* :ref:`Synopsys <TOC/Synopsys>`
 
   * 🙋 need a list of tools
 
-* :ref:`Xilinx <TOC:Xilinx>`
+* :ref:`Xilinx <TOC/Xilinx>`
 
   * 🚧 ISE
   * 🚧 Vivado
   * 🚫 Vivado-SDK
   * 🚫 Vitis
 
-* :ref:`System Tools <TOC:SystemTools>`
+* :ref:`System Tools <TOC/SystemTools>`
 
   * ✅ Git
 
-* :ref:`Open Source <TOC:OpenSource>`
+* :ref:`Open Source <TOC/OpenSource>`
 
   * ✅ GHDL
   * ✅ GTKWave
 
-* :ref:`Yosys <TOC:Yosys>`
+* :ref:`Yosys <TOC/Yosys>`
 
   * 🙋 need a list of tools
 
