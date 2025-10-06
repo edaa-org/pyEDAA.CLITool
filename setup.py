@@ -39,7 +39,8 @@ packageName =            "pyEDAA.CLITool"
 packageDirectory =       packageName.replace(".", "/")
 packageInformationFile = Path(f"{packageDirectory}/__init__.py")
 
-setup(**DescribePythonPackageHostedOnGitHub(
+setup(
+	**DescribePythonPackageHostedOnGitHub(
 		packageName=packageName,
 		description="An abstraction layer of EDA CLI tools.",
 		gitHubNamespace=gitHubNamespace,
@@ -48,7 +49,8 @@ setup(**DescribePythonPackageHostedOnGitHub(
 		classifiers=list(DEFAULT_CLASSIFIERS) + [
 			"Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
 		],
-	dataFiles={
-		packageName: ["py.typed"]
-	}
-))
+		dataFiles={
+			packageName: ["py.typed"]
+		}
+	)
+)
