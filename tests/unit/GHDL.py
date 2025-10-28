@@ -136,6 +136,7 @@ class Analyze(GHDLTestcases):
 
 		analyzer = self._GetAnalyzer()
 		for file in libraryFiles:
+			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
 			tool[tool.FlagLibrary] = "libCommon"
 			tool[tool.OptionPaths] = (file, )
@@ -147,6 +148,7 @@ class Analyze(GHDLTestcases):
 			self.assertEqual(0, tool.ExitCode)
 
 		for file in designFiles:
+			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
 			tool[tool.FlagLibrary] = "libDesign"
 			tool[tool.OptionPaths] = (file, )
