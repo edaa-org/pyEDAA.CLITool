@@ -33,7 +33,7 @@ Param(
 )
 
 $PackageName = "pyEDAA.CLITool"
-$PackageVersion = "0.3.6"
+$PackageVersion = "0.3.9"
 
 # set default values
 $EnableDebug =        [bool]$PSCmdlet.MyInvocation.BoundParameters["Debug"]
@@ -105,7 +105,7 @@ if ($install)
   { Write-Host -ForegroundColor Cyan        "[ADMIN][UNINSTALL] Uninstalling $PackageName ..."
     py -3.13 -m pip uninstall -y $PackageName
     Write-Host -ForegroundColor Cyan        "[ADMIN][INSTALL]   Installing $PackageName from wheel ..."
-    py -3.13 -m pip install .\dist\$PackageName-$PackageVersion-py3-none-any.whl
+    py -3.13 -m pip install .\dist\$($PackageName.Replace(".", "_").ToLower())-$PackageVersion-py3-none-any.whl
 
     Write-Host -ForegroundColor Cyan        "[ADMIN][INSTALL]   Closing window in 5 seconds ..."
     Start-Sleep -Seconds 5

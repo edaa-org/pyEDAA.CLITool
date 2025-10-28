@@ -17,10 +17,11 @@ jobs:
   UnitTestingParams:
     uses: pyTooling/Actions/.github/workflows/Parameters.yml@r6
     with:
-      package_namespace: 'pyEDAA'
-      package_name:      'CLITool'
-      exclude_list:      'ubuntu-arm:* windows-arm:*'
-      disable_list:      'windows:*'
+      package_namespace:   'pyEDAA'
+      package_name:        'CLITool'
+      python_version_list: '3.11 3.12 3.13 3.14'
+      exclude_list:        'ubuntu-arm:* windows-arm:*'
+      disable_list:        'windows:*'
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r6
