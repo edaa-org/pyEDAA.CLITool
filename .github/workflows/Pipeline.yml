@@ -19,7 +19,7 @@ jobs:
     with:
       package_namespace:   'pyEDAA'
       package_name:        'CLITool'
-      python_version_list: '3.11 3.12 3.13 3.14'
+      python_version_list: '3.11 3.12 3.13 3.14 pypy-3.11'
       exclude_list:        'ubuntu-arm:* windows-arm:*'
       disable_list:        'windows:*'
 
