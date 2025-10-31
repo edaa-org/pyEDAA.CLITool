@@ -1,0 +1,56 @@
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" xmlns:ns1="http://www.w3.org/1999/xlink" width="296pt" height="64pt" viewBox="0.00 0.00 296.00 64.00">
+<ns0:g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 60)">
+<ns0:title>inheritance5d8223d995</ns0:title>
+
+<ns0:g id="node1" class="node">
+<ns0:title>Executable</ns0:title>
+<ns0:g id="a_node1"><ns0:a ns1:href="https://pytooling.github.io/pyTooling/pyTooling/pyTooling.CLIAbstraction.html#pyTooling.CLIAbstraction.Executable" ns1:title="Represent a CLI executable derived from :class:`Program`, that adds an abstraction of :class:`subprocess.Popen`." target="_top">
+<ns0:polygon fill="white" stroke="#1e90ff" points="164,-19 94,-19 94,0 164,0 164,-19" />
+<ns0:text text-anchor="middle" x="129" y="-7" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Executable</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="node4" class="node">
+<ns0:title>VHDLCompiler</ns0:title>
+<ns0:g id="a_node4"><ns0:a ns1:href="../pyEDAA.CLITool/pyEDAA.CLITool.Aldec.ActiveHDL.html#pyEDAA.CLITool.Aldec.ActiveHDL.VHDLCompiler" ns1:title="Abstraction of Active-HDL's VHDL compiler ``vcom``." target="_top">
+<ns0:polygon fill="white" stroke="#1e90ff" points="288,-37 200,-37 200,-18 288,-18 288,-37" />
+<ns0:text text-anchor="middle" x="244" y="-25" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">VHDLCompiler</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge2" class="edge">
+<ns0:title>Executable-&gt;VHDLCompiler</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M164.21,-14.95C173.81,-16.48 184.44,-18.17 194.69,-19.81" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="194.48,-21.54 199.69,-20.6 195.03,-18.09 194.48,-21.54" />
+</ns0:g>
+
+<ns0:g id="node2" class="node">
+<ns0:title>Program</ns0:title>
+<ns0:g id="a_node2"><ns0:a ns1:href="https://pytooling.github.io/pyTooling/pyTooling/pyTooling.CLIAbstraction.html#pyTooling.CLIAbstraction.Program" ns1:title="Represent a simple command line interface (CLI) executable (program or script)." target="_top">
+<ns0:polygon fill="white" stroke="#1e90ff" points="58,-19 0,-19 0,0 58,0 58,-19" />
+<ns0:text text-anchor="middle" x="29" y="-7" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">Program</ns0:text>
+</ns0:a>
+</ns0:g>
+</ns0:g>
+
+<ns0:g id="edge1" class="edge">
+<ns0:title>Program-&gt;Executable</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M58.08,-9.5C67.52,-9.5 78.24,-9.5 88.39,-9.5" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="88.64,-11.25 93.64,-9.5 88.64,-7.75 88.64,-11.25" />
+</ns0:g>
+
+<ns0:g id="node3" class="node">
+<ns0:title>ToolMixIn</ns0:title>
+<ns0:polygon fill="white" stroke="#1e90ff" points="160.5,-56 97.5,-56 97.5,-37 160.5,-37 160.5,-56" />
+<ns0:text text-anchor="middle" x="129" y="-44" font-family="Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans" font-size="10.00">ToolMixIn</ns0:text>
+</ns0:g>
+
+<ns0:g id="edge3" class="edge">
+<ns0:title>ToolMixIn-&gt;VHDLCompiler</ns0:title>
+<ns0:path fill="none" stroke="black" stroke-width="0.5" d="M160.58,-41.36C171.01,-39.6 182.94,-37.6 194.43,-35.67" />
+<ns0:polygon fill="black" stroke="black" stroke-width="0.5" points="195.03,-37.34 199.67,-34.79 194.45,-33.89 195.03,-37.34" />
+</ns0:g>
+</ns0:g>
+</ns0:svg>
