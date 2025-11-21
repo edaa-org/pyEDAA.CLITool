@@ -1,0 +1,1089 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyEDAA.CLITool.GHDL &mdash; pyEDAA.CLITool 0.3.10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=55b73dce" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-reports.089ed2e62f89368aa21ac7591d90c12a.css?v=83177741" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/override.css?v=e6c450a4" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=9f76a604"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const style = document.createElement('style');
+style.textContent = `.mermaid-container {
+    position: relative !important;
+    display: inline-block;
+    width: 100%;
+}
+
+.mermaid-fullscreen-btn {
+    position: absolute !important;
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-fullscreen-content {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-fullscreen-content.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-fullscreen-content .mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-fullscreen-content .mermaid svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 85vh;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}
+`;
+document.head.appendChild(style);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const initFullscreen = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(initFullscreen, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-fullscreen-content${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-fullscreen-content');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = '';
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", initFullscreen);
+</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="https://edaa-org.github.io/">Used as a layer of EDA² ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Installation/Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Dependency.html">Dependencies</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tools/index.html">Supported Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References and Reports</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.html">Python Class Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../unittests/index.html">Unittest Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coverage/index.html">Code Coverage Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CodeCoverage.html">Code Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DocCoverage.html">Doc. Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../typing/index.html">Static Type Check Report ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../License.html">Apache License 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Doc-License.html">Creative Commons Attribution 4.0 International</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Python Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TODO.html">TODOs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyEDAA.CLITool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../CLITool.html">pyEDAA.CLITool</a></li>
+      <li class="breadcrumb-item active">pyEDAA.CLITool.GHDL</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pyEDAA.CLITool.GHDL</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ==================================================================================================================== #</span>
+<span class="c1">#              _____ ____    _        _      ____ _     ___ _____           _                                          #</span>
+<span class="c1">#  _ __  _   _| ____|  _ \  / \      / \    / ___| |   |_ _|_   _|__   ___ | |                                         #</span>
+<span class="c1"># | &#39;_ \| | | |  _| | | | |/ _ \    / _ \  | |   | |    | |  | |/ _ \ / _ \| |                                         #</span>
+<span class="c1"># | |_) | |_| | |___| |_| / ___ \  / ___ \ | |___| |___ | |  | | (_) | (_) | |                                         #</span>
+<span class="c1"># | .__/ \__, |_____|____/_/   \_\/_/   \_(_)____|_____|___| |_|\___/ \___/|_|                                         #</span>
+<span class="c1"># |_|    |___/                                                                                                         #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1"># Authors:                                                                                                             #</span>
+<span class="c1">#   Patrick Lehmann                                                                                                    #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># License:                                                                                                             #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1"># Copyright 2017-2025 Patrick Lehmann - Boetzingen, Germany                                                            #</span>
+<span class="c1"># Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);                                                      #</span>
+<span class="c1"># you may not use this file except in compliance with the License.                                                     #</span>
+<span class="c1"># You may obtain a copy of the License at                                                                              #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1">#   http://www.apache.org/licenses/LICENSE-2.0                                                                         #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software                                                  #</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,                                                    #</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.                                             #</span>
+<span class="c1"># See the License for the specific language governing permissions and                                                  #</span>
+<span class="c1"># limitations under the License.                                                                                       #</span>
+<span class="c1">#                                                                                                                      #</span>
+<span class="c1"># SPDX-License-Identifier: Apache-2.0                                                                                  #</span>
+<span class="c1"># ==================================================================================================================== #</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot;This module contains the CLI abstraction layer for `GHDL &lt;https://github.com/ghdl/ghdl&gt;`__.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">re</span><span class="w">                    </span><span class="kn">import</span> <span class="n">search</span> <span class="k">as</span> <span class="n">re_search</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w">                </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span> <span class="k">as</span> <span class="n">Nullable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.Decorators</span><span class="w">  </span><span class="kn">import</span> <span class="n">export</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.MetaClasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExtendedType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyVHDLModel</span><span class="w">           </span><span class="kn">import</span> <span class="n">VHDLVersion</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction</span><span class="w">               </span><span class="kn">import</span> <span class="n">CLIArgument</span><span class="p">,</span> <span class="n">Executable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.Argument</span><span class="w">      </span><span class="kn">import</span> <span class="n">PathListArgument</span><span class="p">,</span> <span class="n">StringArgument</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.Command</span><span class="w">       </span><span class="kn">import</span> <span class="n">CommandArgument</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.Flag</span><span class="w">          </span><span class="kn">import</span> <span class="n">ShortFlag</span><span class="p">,</span> <span class="n">LongFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.BooleanFlag</span><span class="w">   </span><span class="kn">import</span> <span class="n">LongBooleanFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.ValuedFlag</span><span class="w">    </span><span class="kn">import</span> <span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">LongValuedFlag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyTooling.CLIAbstraction.KeyValueFlag</span><span class="w">  </span><span class="kn">import</span> <span class="n">ShortKeyValueFlag</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyEDAA.CLITool</span><span class="w">       </span><span class="kn">import</span> <span class="n">CLIToolException</span>
+
+
+<div class="viewcode-block" id="GHDLVersion">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDLVersion">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GHDLVersion</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ExtendedType</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+	<span class="n">_major</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">_minor</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">_micro</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">_dev</span><span class="p">:</span> <span class="nb">bool</span>
+	<span class="n">_commitsSinceLastTag</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">_gitHash</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">_dirty</span><span class="p">:</span> <span class="nb">bool</span>
+	<span class="n">_edition</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">_gnatCompiler</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+	<span class="n">_backend</span><span class="p">:</span> <span class="nb">str</span>
+
+	<span class="n">VERSION_LINE_PATTERN</span> <span class="o">=</span> <span class="p">(</span>
+		<span class="sa">r</span><span class="s2">&quot;GHDL&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;\s(?P&lt;Major&gt;\d+)\.(?P&lt;Minor&gt;\d+)\.(?P&lt;Micro&gt;\d+)(?:-(?P&lt;Suffix&gt;dev|rc\d+))?&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;\s\((?:&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;(?:&quot;</span>
+				<span class="sa">r</span><span class="s2">&quot;(?P&lt;Packaging&gt;tarball)&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;)|(?:&quot;</span>
+				<span class="sa">r</span><span class="s2">&quot;[a-z]?(?P&lt;major2&gt;\d+)\.(?P&lt;minor2&gt;\d+)\.(?P&lt;micro2&gt;\d+)\.(?:r(?P&lt;cslt&gt;\d+))\.(?:g(?P&lt;Hash&gt;[0-9a-f]+))(?:\.(?P&lt;Dirty&gt;dirty))?&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;)|(?:&quot;</span>
+				<span class="sa">r</span><span class="s2">&quot;Ubuntu\s(?P&lt;UbuntuMajor&gt;\d+)\.(?P&lt;UbuntuMinor&gt;\d+)\.(?P&lt;UbuntuMicro&gt;\d+)\+dfsg-(?P&lt;dfsg&gt;\d+)ubuntu(?P&lt;UbuntuPackage&gt;\d+)&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;)&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;)\)&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;\s\[(?P&lt;Edition&gt;[\w\s]+)\]&quot;</span>
+	<span class="p">)</span>
+	<span class="n">GNAT_LINE_PATTERN</span> <span class="o">=</span> <span class="p">(</span>
+		<span class="sa">r</span><span class="s2">&quot;\s*[\w\s]+:\s&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;(?:&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;(?:(?P&lt;Major&gt;\d+)\.(?P&lt;Minor&gt;\d+)\.(?P&lt;Micro&gt;\d+))&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;|&quot;</span>
+			<span class="sa">r</span><span class="s2">&quot;(?:Community\s(?P&lt;Year&gt;\d</span><span class="si">{4}</span><span class="s2">)\s\((?P&lt;DateCode&gt;\d</span><span class="si">{8}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">)\))&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;)&quot;</span>
+	<span class="p">)</span>
+	<span class="n">BACKEND_LINE_PATTERN</span> <span class="o">=</span> <span class="p">(</span>
+		<span class="sa">r</span><span class="s2">&quot;\s*&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;(?:static elaboration, )?&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;(?P&lt;Backend&gt;llvm|mcode|gcc)&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;(?: (?P&lt;LLVMMajor&gt;\d+)\.(?P&lt;LLVMMinor&gt;\d+)\.(?P&lt;LLVMMicro&gt;\d+))?&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot;(?: JIT)?&quot;</span>
+		<span class="sa">r</span><span class="s2">&quot; code generator&quot;</span>
+	<span class="p">)</span>
+
+<div class="viewcode-block" id="GHDLVersion.__init__">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDLVersion.__init__">[docs]</a>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">versionLine</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">gnatLine</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">backendLine</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+		<span class="n">match</span> <span class="o">=</span> <span class="n">re_search</span><span class="p">(</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">VERSION_LINE_PATTERN</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="n">versionLine</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">CLIToolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown first GHDL version string &#39;</span><span class="si">{</span><span class="n">versionLine</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_major</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Major&quot;</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_minor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Minor&quot;</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_micro</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Micro&quot;</span><span class="p">])</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">suffix</span> <span class="o">:=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;Suffix&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_dev</span> <span class="o">=</span> <span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;dev&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_dev</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">cslt</span> <span class="o">:=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;cslt&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_commitsSinceLastTag</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cslt</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_commitsSinceLastTag</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_gitHash</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;Hash&quot;</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_dirty</span> <span class="o">=</span> <span class="s2">&quot;Dirty&quot;</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_edition</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;Edition&quot;</span><span class="p">]</span>
+
+		<span class="n">match</span> <span class="o">=</span> <span class="n">re_search</span><span class="p">(</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">GNAT_LINE_PATTERN</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="n">gnatLine</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">CLIToolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown second GHDL version string &#39;</span><span class="si">{</span><span class="n">gnatLine</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_gnatCompiler</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Major&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Minor&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Micro&quot;</span><span class="p">]))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_gnatCompiler</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+		<span class="n">match</span> <span class="o">=</span> <span class="n">re_search</span><span class="p">(</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">BACKEND_LINE_PATTERN</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span><span class="p">,</span> <span class="n">backendLine</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="n">CLIToolException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown third GHDL version string &#39;</span><span class="si">{</span><span class="n">backendLine</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_backend</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;Backend&quot;</span><span class="p">]</span></div>
+
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Major</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_major</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Minor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minor</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Micro</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_micro</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Dev</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">CommitsSinceLastTag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_commitsSinceLastTag</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">GitHash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gitHash</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dirty</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">Edition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edition</span>
+
+<div class="viewcode-block" id="GHDLVersion.__str__">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDLVersion.__str__">[docs]</a>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="n">dev</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;-dev&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+		<span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_micro</span><span class="si">}{</span><span class="n">dev</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDLVersion.__repr__">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDLVersion.__repr__">[docs]</a>
+	<span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span><span class="si">}</span><span class="s2"> (Backend: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="si">}</span><span class="s2">; Git: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_gitHash</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GHDL">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL">[docs]</a>
+<span class="nd">@export</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GHDL</span><span class="p">(</span><span class="n">Executable</span><span class="p">):</span>
+	<span class="n">_executableNames</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;Darwin&quot;</span><span class="p">:</span>  <span class="s2">&quot;ghdl&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;FreeBSD&quot;</span><span class="p">:</span> <span class="s2">&quot;ghdl&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;Linux&quot;</span><span class="p">:</span>   <span class="s2">&quot;ghdl&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;Windows&quot;</span><span class="p">:</span> <span class="s2">&quot;ghdl.exe&quot;</span>
+	<span class="p">}</span>
+
+	<span class="c1"># XXX: overwrite __init__ and get backend variant</span>
+	<span class="c1"># XXX: check for compatible backends</span>
+
+<div class="viewcode-block" id="GHDL.CommandHelp">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandHelp">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandHelp</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;help&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Print help page(s).&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandVersion">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandVersion">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandVersion</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Print version information.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandSyntax">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandSyntax">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandSyntax</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;syntax&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Check syntax.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandElaborationOrder">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandElaborationOrder">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandElaborationOrder</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;elab-order&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Display (elaboration) ordered source files.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandAnalyze">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandAnalyze">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandAnalyze</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;analyze&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Analyze VHDL source file(s).&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandElaborate">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandElaborate">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandElaborate</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;elaborate&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Elaborate design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandElaborationAndRun">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandElaborationAndRun">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandElaborationAndRun</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;elab-run&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Elaborate and simulate design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandRun">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandRun">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandRun</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;run&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Simulate design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandBind">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandBind">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandBind</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bind&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Bind design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandLink">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandLink">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandLink</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;link&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Link design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandListLink">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandListLink">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandListLink</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;list-link&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;List objects file to link a design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandCompile">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandCompile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandCompile</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;compile&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Generate whole sequence to elaborate design from files.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandGenerateDependencies">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandGenerateDependencies">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandGenerateDependencies</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;gen-depends&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Generate dependencies of design.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.CommandSynthesize">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.CommandSynthesize">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">CommandSynthesize</span><span class="p">(</span><span class="n">CommandArgument</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;synth&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Synthesis from design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagVerbose">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagVerbose">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagVerbose</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Run in verbose mode (print more messages).&quot;&quot;&quot;</span></div>
+
+
+	<span class="c1"># Analyze and elaborate options</span>
+<div class="viewcode-block" id="GHDL.FlagVHDLStandard">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagVHDLStandard">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagVHDLStandard</span><span class="p">(</span><span class="n">LongValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set the used VHDL standard version.&quot;&quot;&quot;</span>
+		<span class="n">_value</span><span class="p">:</span> <span class="n">VHDLVersion</span>
+
+<div class="viewcode-block" id="GHDL.FlagVHDLStandard.__init__">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagVHDLStandard.__init__">[docs]</a>
+		<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">VHDLVersion</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># XXX: add message</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+		<span class="nd">@property</span>
+		<span class="k">def</span><span class="w"> </span><span class="nf">Value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VHDLVersion</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+		<span class="nd">@Value</span><span class="o">.</span><span class="n">setter</span>
+		<span class="k">def</span><span class="w"> </span><span class="nf">Value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">VHDLVersion</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># XXX: add message</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="GHDL.FlagVHDLStandard.AsArgument">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagVHDLStandard.AsArgument">[docs]</a>
+		<span class="k">def</span><span class="w"> </span><span class="nf">AsArgument</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># XXX: add message</span>
+
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pattern</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span></div>
+</div>
+
+
+<div class="viewcode-block" id="GHDL.FlagIEEEFlavor">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagIEEEFlavor">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagIEEEFlavor</span><span class="p">(</span><span class="n">LongValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ieee&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set the used VHDL flavor.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagSynopsys">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagSynopsys">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagSynopsys</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fsynopsys&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set used VHDL flavor to *Synopsys* and make Synopsys packages visible in library ``ìeee``.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagRelaxed">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagRelaxed">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagRelaxed</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;frelaxed&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Relax some LRM rules.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagExplicit">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagExplicit">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagExplicit</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fexplicit&quot;</span><span class="p">):</span> <span class="o">...</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagLibrary">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagLibrary">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagLibrary</span><span class="p">(</span><span class="n">LongValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;work&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set working library.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWorkingDirectory">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWorkingDirectory">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWorkingDirectory</span><span class="p">(</span><span class="n">LongValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;workdir&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set working directory.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagMultiByteComments">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagMultiByteComments">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagMultiByteComments</span><span class="p">(</span><span class="n">LongFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mb-comments&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Allow multi-byte comments.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagSyntesisBindingRule">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagSyntesisBindingRule">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagSyntesisBindingRule</span><span class="p">(</span><span class="n">LongFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;syn-binding&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Enable synthesis binding rule.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagSearchPath">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagSearchPath">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagSearchPath</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}{1}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Add search path.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagTimeResolution">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagTimeResolution">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagTimeResolution</span><span class="p">(</span><span class="n">LongValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;time-resolution&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set base time resolution.</span>
+
+<span class="sd">		Allowed values are ``auto`` (default), ``fs``, ``ps``, ``ns``, ``us``, ``ms`` or ``sec``.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagVitalChecks">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagVitalChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagVitalChecks</span><span class="p">(</span><span class="n">LongBooleanFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vital-checks&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">falsePattern</span><span class="o">=</span><span class="s2">&quot;--no-</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Check VITAL restrictions.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnUnboundComponents">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnUnboundComponents">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnUnboundComponents</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;binding&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns for unbound components.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnReservedWords">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnReservedWords">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnReservedWords</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns if VHDL&#39;93 reserved words are used in VHDL&#39;87.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnRedefinedDesignUnits">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnRedefinedDesignUnits">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnRedefinedDesignUnits</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;library&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns for redefined design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnNonVitalGenericNames">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnNonVitalGenericNames">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnNonVitalGenericNames</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vital-generic&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns of non-vital generic names.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnElaborationChecks">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnElaborationChecks">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnElaborationChecks</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;delayed-checks&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns for checks performed at elaboration.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnUnnecessaryPackageBody">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnUnnecessaryPackageBody">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnUnnecessaryPackageBody</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns for unnecessary package body.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWarnOthersSpecifications">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWarnOthersSpecifications">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWarnOthersSpecifications</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;specs&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns if an all/others specification does not apply.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagUnused">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagUnused">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagUnused</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unused&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Warns for unused subprograms.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagError">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagError">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagError</span><span class="p">(</span><span class="n">ShortFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-W</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Turns warnings into errors.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.OptionPaths">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.OptionPaths">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">OptionPaths</span><span class="p">(</span><span class="n">PathListArgument</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Add list of VHDL files to analyze.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.OptionTopLevel">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.OptionTopLevel">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">OptionTopLevel</span><span class="p">(</span><span class="n">StringArgument</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Specify the toplevel design unit.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.OptionArchitecture">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.OptionArchitecture">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">OptionArchitecture</span><span class="p">(</span><span class="n">StringArgument</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Specify the architecture name, if the toplevel design unit is an entity.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagGenerics">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagGenerics">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagGenerics</span><span class="p">(</span><span class="n">ShortKeyValueFlag</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;-</span><span class="si">{0}{1}</span><span class="s2">=</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Set a generic value.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagAsserts">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagAsserts">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagAsserts</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;asserts&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Select how assertions are handled.</span>
+
+<span class="sd">		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables</span>
+<span class="sd">		only at the start of simulation.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagIEEEAsserts">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagIEEEAsserts">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagIEEEAsserts</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ieee-asserts&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Select how assertions are handled.</span>
+
+<span class="sd">		It can be ``enable`` (the default), ``disable`` which disables all assertions and ``disable-at-0`` which disables</span>
+<span class="sd">		only at the start of simulation.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagStopTime">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagStopTime">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagStopTime</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;stop-time&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Stop the simulation after a given simulation time.</span>
+
+<span class="sd">		The time is expressed as a time value, without any spaces. The time is the simulation time, not the real execution time.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagMaxDeltaCycles">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagMaxDeltaCycles">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagMaxDeltaCycles</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;stop-delta&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Stop the simulation after N delta cycles in the same current time.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagDisplayDeltaCycles">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagDisplayDeltaCycles">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagDisplayDeltaCycles</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;disp-time&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Display the time and delta cycle number as simulation advances.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagUnbufferedIO">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagUnbufferedIO">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagUnbufferedIO</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unbuffered&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Disable buffering on STDOUT, STDERR and files opened in write or append mode (TEXTIO).&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagReadWaveformOptionsFile">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagReadWaveformOptionsFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagReadWaveformOptionsFile</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;read-wave-opt&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Filter signals to be dumped to the waveform file according to the wavefile option file provided.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagWriteWaveformOptionsFile">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagWriteWaveformOptionsFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagWriteWaveformOptionsFile</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;write-wave-opt&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;If the wavefile option file doesn’t exist, creates it with all the signals of the design.</span>
+<span class="sd">		Otherwise, it throws an error, because it won’t erase an existing file.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GHDL.FlagGHWWaveformFile">
+<a class="viewcode-back" href="../../../pyEDAA.CLITool/pyEDAA.CLITool.GHDL.html#pyEDAA.CLITool.GHDL.GHDL.FlagGHWWaveformFile">[docs]</a>
+	<span class="nd">@CLIArgument</span><span class="p">()</span>
+	<span class="k">class</span><span class="w"> </span><span class="nc">FlagGHWWaveformFile</span><span class="p">(</span><span class="n">ShortValuedFlag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wave&quot;</span><span class="p">):</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;Write the waveforms into a GHDL Waveform (``*.ghw``) file.</span>
+
+<span class="sd">		Contrary to VCD files, any VHDL type can be dumped into a GHW file.</span>
+<span class="sd">		&quot;&quot;&quot;</span></div>
+
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">_CopyParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="s2">&quot;GHDL&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cliParameters__</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_NeedsParameterInitialization</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+				<span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cliParameters__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">Value</span>
+				<span class="n">tool</span><span class="o">.</span><span class="n">__cliParameters__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">tool</span><span class="o">.</span><span class="n">__cliParameters__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span><span class="p">()</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">_SetParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="s2">&quot;GHDL&quot;</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="n">VHDLVersion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ieee</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">tool</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FlagVHDLStandard</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">ieee</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">tool</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FlagVHDLStandard</span><span class="p">]</span> <span class="o">=</span> <span class="n">ieee</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">GetGHDLAsAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="n">VHDLVersion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ieee</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GHDL&quot;</span><span class="p">:</span>
+		<span class="n">tool</span> <span class="o">=</span> <span class="n">GHDL</span><span class="p">(</span><span class="n">executablePath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_executablePath</span><span class="p">)</span>
+
+		<span class="n">tool</span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">CommandAnalyze</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_CopyParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_SetParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">ieee</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">tool</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">GetGHDLAsElaborator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="n">VHDLVersion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ieee</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GHDL&quot;</span><span class="p">:</span>
+		<span class="n">tool</span> <span class="o">=</span> <span class="n">GHDL</span><span class="p">(</span><span class="n">executablePath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_executablePath</span><span class="p">)</span>
+
+		<span class="n">tool</span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">CommandElaborate</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_CopyParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_SetParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">ieee</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">tool</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">GetGHDLAsSimulator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="n">VHDLVersion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ieee</span><span class="p">:</span> <span class="n">Nullable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;GHDL&quot;</span><span class="p">:</span>
+		<span class="n">tool</span> <span class="o">=</span> <span class="n">GHDL</span><span class="p">(</span><span class="n">executablePath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_executablePath</span><span class="p">)</span>
+
+		<span class="n">tool</span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">CommandRun</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_CopyParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_SetParameters</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">ieee</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">tool</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">Help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="n">tool</span> <span class="o">=</span> <span class="n">GHDL</span><span class="p">(</span><span class="n">executablePath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_executablePath</span><span class="p">)</span>
+
+		<span class="n">tool</span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">CommandHelp</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+		<span class="n">tool</span><span class="o">.</span><span class="n">StartProcess</span><span class="p">()</span>
+		<span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">GetLineReader</span><span class="p">())</span>
+
+	<span class="k">def</span><span class="w"> </span><span class="nf">Version</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GHDLVersion</span><span class="p">:</span>
+		<span class="n">tool</span> <span class="o">=</span> <span class="n">GHDL</span><span class="p">(</span><span class="n">executablePath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_executablePath</span><span class="p">)</span>
+
+		<span class="n">tool</span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">CommandVersion</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+		<span class="n">tool</span><span class="o">.</span><span class="n">StartProcess</span><span class="p">()</span>
+		<span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">tool</span><span class="o">.</span><span class="n">GetLineReader</span><span class="p">())</span>
+		<span class="n">firstLine</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+		<span class="n">secondLine</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+		<span class="n">thirdLine</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">GHDLVersion</span><span class="p">(</span><span class="n">firstLine</span><span class="p">,</span> <span class="n">secondLine</span><span class="p">,</span> <span class="n">thirdLine</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2014-2025, Patrick Lehmann, Unai Martinez-Corral.
+      <span class="lastupdated">Last updated on 21.11.2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

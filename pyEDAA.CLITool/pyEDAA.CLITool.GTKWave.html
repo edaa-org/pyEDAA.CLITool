@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyEDAA.CLITool.GTKWave &mdash; pyEDAA.CLITool 0.3.10 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=55b73dce" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-reports.089ed2e62f89368aa21ac7591d90c12a.css?v=83177741" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/override.css?v=e6c450a4" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.svg"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=9f76a604"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyEDAA.CLITool.IntelFPGA" href="pyEDAA.CLITool.IntelFPGA.html" />
+    <link rel="prev" title="pyEDAA.CLITool.GHDL" href="pyEDAA.CLITool.GHDL.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="https://edaa-org.github.io/">Used as a layer of EDA² ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation/Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Dependency.html">Dependencies</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Main Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tools/index.html">Supported Tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References and Reports</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="pyEDAA.CLITool.html">Python Class Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.Aldec.html">pyEDAA.CLITool.Aldec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.Docker.html">pyEDAA.CLITool.Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.GHDL.html">pyEDAA.CLITool.GHDL</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyEDAA.CLITool.GTKWave</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave"><code class="docutils literal notranslate"><span class="pre">GTKWave</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave._executableNames"><code class="docutils literal notranslate"><span class="pre">GTKWave._executableNames</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.AsArgument"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.AsArgument()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Name"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.Name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Value"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.Value</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__class_getitem__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__class_getitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__init__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__init_subclass__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__new__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__new__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__repr__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__repr__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__str__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagDumpFile.__str__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.AsArgument"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.AsArgument()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Name"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.Name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Value"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.Value</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__class_getitem__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__class_getitem__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__init__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__init_subclass__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__new__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__new__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__repr__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__repr__()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__str__"><code class="docutils literal notranslate"><span class="pre">GTKWave.FlagSaveFile.__str__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__cliOptions__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__cliOptions__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__cliParameters__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__cliParameters__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__getitem__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__init__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__init_subclass__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__repr__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave.__str__"><code class="docutils literal notranslate"><span class="pre">GTKWave.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave._dryRun"><code class="docutils literal notranslate"><span class="pre">GTKWave._dryRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave._executablePath"><code class="docutils literal notranslate"><span class="pre">GTKWave._executablePath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave._platform"><code class="docutils literal notranslate"><span class="pre">GTKWave._platform</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.IntelFPGA.html">pyEDAA.CLITool.IntelFPGA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.Lattice.html">pyEDAA.CLITool.Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.Mentor.html">pyEDAA.CLITool.Mentor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.Xilinx.html">pyEDAA.CLITool.Xilinx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyEDAA.CLITool.html#pyEDAA.CLITool.CLIToolException"><code class="docutils literal notranslate"><span class="pre">CLIToolException</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../unittests/index.html">Unittest Summary Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage/index.html">Code Coverage Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CodeCoverage.html">Code Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DocCoverage.html">Doc. Coverage Report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../typing/index.html">Static Type Check Report ➚</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../License.html">Apache License 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Doc-License.html">Creative Commons Attribution 4.0 International</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py-modindex.html">Python Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TODO.html">TODOs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEDAA.CLITool</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="pyEDAA.CLITool.html">pyEDAA.CLITool</a></li>
+      <li class="breadcrumb-item active">pyEDAA.CLITool.GTKWave</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/pyEDAA.CLITool/pyEDAA.CLITool.GTKWave.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <style type="text/css">
+  span.bolditalic {font-weight: bold; font-style: italic; }
+  span.underline {text-decoration: underline; }
+  span.strike {text-decoration: line-through; }
+  span.xlarge {font-size: x-large; }
+  span.colorred {color: #CC0000; }
+  span.colorgreen {color: #009933; }
+  span.colorblue {color: #0066FF; }
+  span.colorpurple {color: #9900CC; }
+</style><section id="module-pyEDAA.CLITool.GTKWave">
+<span id="pyedaa-clitool-gtkwave"></span><h1>pyEDAA.CLITool.GTKWave<a class="headerlink" href="#module-pyEDAA.CLITool.GTKWave" title="Link to this heading"></a></h1>
+<p>This module contains the CLI abstraction layer for <a class="reference external" href="https://github.com/gtkwave/gtkwave">GTKWave</a>.</p>
+<p><strong>Classes</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pyEDAA.CLITool.GTKWave.GTKWave" title="pyEDAA.CLITool.GTKWave.GTKWave"><code class="xref py py-class docutils literal notranslate"><span class="pre">GTKWave</span></code></a>:
+Represent a CLI executable derived from <code class="xref py py-class docutils literal notranslate"><span class="pre">Program</span></code>, that adds an abstraction of <a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.Popen" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">subprocess.Popen</span></code></a>.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Classes</strong></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyEDAA.CLITool.GTKWave.</span></span><span class="sig-name descname"><span class="pre">GTKWave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">executablePath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binaryDirectoryPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workingDirectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dryRun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDAA/CLITool/GTKWave.html#GTKWave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave" title="Link to this definition"></a></dt>
+<dd><p class="rubric">Inheritance</p>
+<div class="graphviz"><object data="../_images/inheritance-ee741961d8785aafc52c915b2211740e2ec50032.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">Inheritance diagram of GTKWave</p></object></div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>executablePath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>binaryDirectoryPath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>workingDirectory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>environment</strong> (<a class="reference external" href="https://pytooling.github.io/pyTooling/pyTooling/pyTooling.CLIAbstraction.html#pyTooling.CLIAbstraction.Environment" title="(in pyTooling v8.8)"><em>Environment</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dryRun</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave._executableNames">
+<span class="sig-name descname"><span class="pre">_executableNames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[Dict[str,</span> <span class="pre">str]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'Darwin':</span> <span class="pre">'gtkwave',</span> <span class="pre">'FreeBSD':</span> <span class="pre">'gtkwave',</span> <span class="pre">'Linux':</span> <span class="pre">'gtkwave',</span> <span class="pre">'Windows':</span> <span class="pre">'gtkwave.exe'}</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave._executableNames" title="Link to this definition"></a></dt>
+<dd><p>Dictionary of platform specific executable names.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FlagDumpFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDAA/CLITool/GTKWave.html#GTKWave.FlagDumpFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile" title="Link to this definition"></a></dt>
+<dd><p>Waveform file to load.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.AsArgument">
+<span class="sig-name descname"><span class="pre">AsArgument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.AsArgument" title="Link to this definition"></a></dt>
+<dd><p>Convert this argument instance to a string representation with proper escaping using the matching pattern based on
+the internal name and value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted argument.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If internal name is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Name" title="Link to this definition"></a></dt>
+<dd><p>Get the internal name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Internal name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Value">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ValueT</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.Value" title="Link to this definition"></a></dt>
+<dd><p>Get the internal value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Internal value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__class_getitem__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__class_getitem__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__class_getitem__" title="Link to this definition"></a></dt>
+<dd><p>Parameterizes a generic class.</p>
+<p>At least, parameterizing a generic class is the <em>main</em> thing this
+method does. For example, for some generic class <cite>Foo</cite>, this is called
+when we do <cite>Foo[int]</cite> - there, with <cite>cls=Foo</cite> and <cite>params=int</cite>.</p>
+<p>However, note that this method is also called when defining generic
+classes in the first place with <cite>class Foo[T]: …</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>ValueT</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init_subclass__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__init_subclass__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'--{0}={1}'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__init_subclass__" title="Link to this definition"></a></dt>
+<dd><p>This method is called when a class is derived.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Any positional arguments.</p></li>
+<li><p><strong>pattern</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – This pattern is used to format an argument.</p></li>
+<li><p><strong>kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Any keyword argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__new__">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__new__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of this argument instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Argument formatted and enclosed in double quotes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of this argument instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Argument formatted and enclosed in double quotes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FlagSaveFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyEDAA/CLITool/GTKWave.html#GTKWave.FlagSaveFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile" title="Link to this definition"></a></dt>
+<dd><p>Load waveform settings file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.AsArgument">
+<span class="sig-name descname"><span class="pre">AsArgument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.AsArgument" title="Link to this definition"></a></dt>
+<dd><p>Convert this argument instance to a string representation with proper escaping using the matching pattern based on
+the internal name and value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted argument.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><strong>ValueError</strong></a> – If internal name is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Name">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Name" title="Link to this definition"></a></dt>
+<dd><p>Get the internal name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Internal name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Value">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ValueT</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.Value" title="Link to this definition"></a></dt>
+<dd><p>Get the internal value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Internal value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__class_getitem__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__class_getitem__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__class_getitem__" title="Link to this definition"></a></dt>
+<dd><p>Parameterizes a generic class.</p>
+<p>At least, parameterizing a generic class is the <em>main</em> thing this
+method does. For example, for some generic class <cite>Foo</cite>, this is called
+when we do <cite>Foo[int]</cite> - there, with <cite>cls=Foo</cite> and <cite>params=int</cite>.</p>
+<p>However, note that this method is also called when defining generic
+classes in the first place with <cite>class Foo[T]: …</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>ValueT</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init_subclass__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__init_subclass__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'--{0}={1}'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__init_subclass__" title="Link to this definition"></a></dt>
+<dd><p>This method is called when a class is derived.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Any positional arguments.</p></li>
+<li><p><strong>pattern</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – This pattern is used to format an argument.</p></li>
+<li><p><strong>kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – Any keyword argument.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__new__">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__new__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of this argument instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Argument formatted and enclosed in double quotes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return a string representation of this argument instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Argument formatted and enclosed in double quotes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__cliOptions__">
+<span class="sig-name descname"><span class="pre">__cliOptions__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[Dict[Type[CommandLineArgument],</span> <span class="pre">int]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'pyEDAA.CLITool.GTKWave.GTKWave.FlagDumpFile'&gt;:</span> <span class="pre">0,</span> <span class="pre">&lt;class</span> <span class="pre">'pyEDAA.CLITool.GTKWave.GTKWave.FlagSaveFile'&gt;:</span> <span class="pre">1}</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__cliOptions__" title="Link to this definition"></a></dt>
+<dd><p>List of all possible CLI options.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__cliParameters__">
+<span class="sig-name descname"><span class="pre">__cliParameters__</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict[Type[CommandLineArgument],</span> <span class="pre">Nullable[CommandLineArgument]]</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__cliParameters__" title="Link to this definition"></a></dt>
+<dd><p>List of all CLI parameters (used CLI options).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Access to a CLI parameter by CLI option (key must be of type <code class="xref py py-class docutils literal notranslate"><span class="pre">CommandLineArgument</span></code>), which is already used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">executablePath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binaryDirectoryPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workingDirectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dryRun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>executablePath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>binaryDirectoryPath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>workingDirectory</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)"><em>Path</em></a>)</p></li>
+<li><p><strong>environment</strong> (<a class="reference external" href="https://pytooling.github.io/pyTooling/pyTooling/pyTooling.CLIAbstraction.html#pyTooling.CLIAbstraction.Environment" title="(in pyTooling v8.8)"><em>Environment</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>dryRun</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__init_subclass__">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__init_subclass__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__init_subclass__" title="Link to this definition"></a></dt>
+<dd><p>Whenever a subclass is derived from :class:<code class="docutils literal notranslate"><span class="pre">Program</span></code>, all nested classes declared within <code class="docutils literal notranslate"><span class="pre">Program</span></code> and which are
+marked with attribute <code class="docutils literal notranslate"><span class="pre">CLIArgument</span></code> are collected and then listed in the <code class="docutils literal notranslate"><span class="pre">__cliOptions__</span></code> dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave._dryRun">
+<span class="sig-name descname"><span class="pre">_dryRun</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave._dryRun" title="Link to this definition"></a></dt>
+<dd><p>True, if program shall run in <em>dry-run mode</em>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave._executablePath">
+<span class="sig-name descname"><span class="pre">_executablePath</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave._executablePath" title="Link to this definition"></a></dt>
+<dd><p>The path to the executable (binary, script, …).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyEDAA.CLITool.GTKWave.GTKWave._platform">
+<span class="sig-name descname"><span class="pre">_platform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#pyEDAA.CLITool.GTKWave.GTKWave._platform" title="Link to this definition"></a></dt>
+<dd><p>Current platform the executable runs on (Linux, Windows, …)</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyEDAA.CLITool.GHDL.html" class="btn btn-neutral float-left" title="pyEDAA.CLITool.GHDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyEDAA.CLITool.IntelFPGA.html" class="btn btn-neutral float-right" title="pyEDAA.CLITool.IntelFPGA" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2014-2025, Patrick Lehmann, Unai Martinez-Corral.
+      <span class="lastupdated">Last updated on 21.11.2025.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
