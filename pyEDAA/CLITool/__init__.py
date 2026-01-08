@@ -57,7 +57,7 @@ class ToolMixIn(metaclass=ExtendedType, mixin=True):
 	_version: str
 	_logger: Any
 
-	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None):
+	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None) -> None:
 		self._platform =            platform
 		self._dryrun =              dryrun
 		self._binaryDirectoryPath = binaryDirectoryPath

@@ -92,7 +92,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		r" code generator"
 	)
 
-	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
+	def __init__(self, versionLine: str, gnatLine: str, backendLine: str) -> None:
 		match = re_search("^" + self.VERSION_LINE_PATTERN + "$", versionLine)
 		if match is None:
 			raise CLIToolException(f"Unknown first GHDL version string '{versionLine}'.")
