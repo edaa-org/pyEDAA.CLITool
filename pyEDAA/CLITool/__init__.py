@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2025 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -32,9 +32,9 @@
 """An abstraction layer of EDA CLI tools."""
 __author__ =    "Patrick Lehmann"
 __email__ =     "Paebbels@gmail.com"
-__copyright__ = "2014-2025, Patrick Lehmann, Unai Martinez-Corral"
+__copyright__ = "2014-2026, Patrick Lehmann, Unai Martinez-Corral"
 __license__ =   "Apache License, Version 2.0"
-__version__ =   "0.3.10"
+__version__ =   "0.3.11"
 __keywords__ =  ["cli", "abstraction layer", "eda"]
 
 from pathlib import Path
@@ -57,7 +57,7 @@ class ToolMixIn(metaclass=ExtendedType, mixin=True):
 	_version: str
 	_logger: Any
 
-	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None):
+	def __init__(self, platform: str, dryrun: bool, binaryDirectoryPath: Path, version: str, logger: Nullable[Any] =None) -> None:
 		self._platform =            platform
 		self._dryrun =              dryrun
 		self._binaryDirectoryPath = binaryDirectoryPath

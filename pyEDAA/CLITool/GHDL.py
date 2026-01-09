@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2025 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -92,7 +92,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		r" code generator"
 	)
 
-	def __init__(self, versionLine: str, gnatLine: str, backendLine: str):
+	def __init__(self, versionLine: str, gnatLine: str, backendLine: str) -> None:
 		match = re_search("^" + self.VERSION_LINE_PATTERN + "$", versionLine)
 		if match is None:
 			raise CLIToolException(f"Unknown first GHDL version string '{versionLine}'.")
