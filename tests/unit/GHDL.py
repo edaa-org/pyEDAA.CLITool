@@ -87,8 +87,8 @@ class Analyze(GHDLTestcases):
 		tool.StartProcess()
 		for line in tool.GetLineReader():
 			print(line)
-		tool.Terminate()
-		print(tool.ExitCode)
+
+		print(tool.Wait())
 
 	def _GetAnalyzer(self) -> GHDL:
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
@@ -118,8 +118,8 @@ class Analyze(GHDLTestcases):
 		tool.StartProcess()
 		for line in tool.GetLineReader():
 			print(line)
-		tool.Terminate()
 
+		self.assertEqual(1, tool.Wait())
 		self.assertEqual(1, tool.ExitCode)
 
 	def test_AnalyzeSingleFiles(self) -> None:
@@ -143,8 +143,8 @@ class Analyze(GHDLTestcases):
 			tool.StartProcess()
 			for line in tool.GetLineReader():
 				print(line)
-			tool.Terminate()
 
+			self.assertEqual(0, tool.Wait())
 			self.assertEqual(0, tool.ExitCode)
 
 		for file in designFiles:
@@ -155,9 +155,8 @@ class Analyze(GHDLTestcases):
 			tool.StartProcess()
 			for line in tool.GetLineReader():
 				print(line)
-			tool.Terminate()
 
-			self.assertEqual(0, tool.ExitCode)
+			self.assertEqual(0, tool.Wait())
 
 	def test_AnalyzeMultipleFiles(self) -> None:
 		print()
@@ -178,9 +177,8 @@ class Analyze(GHDLTestcases):
 		tool.StartProcess()
 		for line in tool.GetLineReader():
 			print(line)
-		tool.Terminate()
 
-		self.assertEqual(0, tool.ExitCode)
+		self.assertEqual(0, tool.Wait())
 
 		tool = analyzer.GetGHDLAsAnalyzer()
 		tool[tool.FlagLibrary] = "libDesign"
@@ -188,6 +186,5 @@ class Analyze(GHDLTestcases):
 		tool.StartProcess()
 		for line in tool.GetLineReader():
 			print(line)
-		tool.Terminate()
 
-		self.assertEqual(0, tool.ExitCode)
+		self.assertEqual(0, tool.Wait())
