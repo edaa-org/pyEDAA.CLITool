@@ -33,8 +33,27 @@ from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
 
-from pyEDAA.CLITool.GHDL  import GHDL
+from pyEDAA.CLITool.GHDL  import GHDL, GHDLVersion
 from .                    import Helper
+
+class VersionString(TestCase):
+	def test_ReleaseVersion(self) -> None:
+		versionLine =  "GHDL 6.0.0-dev (4.1.0.r1065.gd3ea86f11.dirty) [Dunoon edition]"
+		compilerLine = " Compiled with GNAT Version: 15.2.0"
+		backendLine =  " static elaboration, mcode JIT code generator"
+
+		version = GHDLVersion(versionLine, compilerLine, backendLine)
+
+		self.assertEqual(6, version.Major)
+		self.assertEqual(0, version.Minor)
+		self.assertEqual(0, version.Micro)
+		self.assertTrue(version.Dev)
+		self.assertEqual(1065, version.CommitsSinceLastTag)
+		self.assertEqual("d3ea86f11", version.GitHash)
+		# FIXME: self.assertTrue(version.Dirty)
+		self.assertEqual("Dunoon edition", version.Edition)
+		# TODO: GNAT version
+		self.assertEqual("mcode", version.Backend)
 
 
 class GHDLTestcases(TestCase, Helper):
@@ -88,7 +107,7 @@ class Analyze(GHDLTestcases):
 		for line in tool.GetLineReader():
 			print(line)
 
-		print(tool.Wait())
+		self.assertEqual(1, tool.Wait())
 
 	def _GetAnalyzer(self) -> GHDL:
 		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
