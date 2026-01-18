@@ -37,8 +37,8 @@ jobs:
       jobs: ${{ needs.UnitTestingParams.outputs.python_jobs }}
       ubuntu_before_script: |
         (
-          mkdir -p install
-          cd install
+          mkdir -p install-ghdl
+          cd install-ghdl
           curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
@@ -49,8 +49,16 @@ jobs:
           sudo xargs --no-run-if-empty -a ./ubuntu.requirements -- apt-get install -y --no-install-recommends
         )
 
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
+
+        (
+          mkdir -p install-nvc
+          cd install-nvc
+          curl -L "https://github.com/nickg/nvc/releases/download/r1.18.2/nvc_1.18.2-1_amd64_ubuntu-24.04.deb"
+          dpkg -i nvc_1.18.2-1_amd64_ubuntu-24.04.deb
+          apt-get install -f
+        )
       macos_before_script: |
         (
           mkdir -p install
