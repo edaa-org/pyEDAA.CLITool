@@ -29,7 +29,6 @@
 # ==================================================================================================================== #
 #
 """This module contains the CLI abstraction layer for `NVC <https://github.com/nickg/nvc>`__."""
-from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag, ShortTupleFlag
 from re                    import search as re_search
 from typing                import Union, Iterable, Optional as Nullable
 
@@ -37,15 +36,16 @@ from pyTooling.Decorators  import export
 from pyTooling.MetaClasses import ExtendedType
 from pyVHDLModel           import VHDLVersion
 
-from pyTooling.CLIAbstraction               import CLIArgument, Executable
-from pyTooling.CLIAbstraction.Argument      import PathListArgument, StringArgument
-from pyTooling.CLIAbstraction.Command       import CommandArgument, LongCommand
-from pyTooling.CLIAbstraction.Flag          import ShortFlag, LongFlag
-from pyTooling.CLIAbstraction.BooleanFlag   import LongBooleanFlag
-from pyTooling.CLIAbstraction.ValuedFlag    import ShortValuedFlag, LongValuedFlag
-from pyTooling.CLIAbstraction.KeyValueFlag  import ShortKeyValueFlag, LongKeyValueFlag
+from pyTooling.CLIAbstraction                 import CLIArgument, Executable
+from pyTooling.CLIAbstraction.Argument        import PathListArgument, StringArgument
+from pyTooling.CLIAbstraction.Command         import LongCommand
+from pyTooling.CLIAbstraction.Flag            import ShortFlag, LongFlag
+from pyTooling.CLIAbstraction.BooleanFlag     import LongBooleanFlag
+from pyTooling.CLIAbstraction.ValuedFlag      import ShortValuedFlag, LongValuedFlag
+from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag, ShortTupleFlag
+from pyTooling.CLIAbstraction.KeyValueFlag    import ShortKeyValueFlag, LongKeyValueFlag
 
-from pyEDAA.CLITool                         import CLIToolException
+from pyEDAA.CLITool                           import CLIToolException
 
 
 @export
