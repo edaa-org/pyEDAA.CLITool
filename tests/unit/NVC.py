@@ -33,6 +33,9 @@ from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
 
+from pytest               import mark
+from pyTooling.Platform   import CurrentPlatform
+
 from pyEDAA.CLITool.NVC   import NVC, NVCVersion
 from .                    import Helper
 
@@ -51,10 +54,14 @@ class VersionString(TestCase):
 
 
 class NVCTestcases(TestCase, Helper):
-	_binaryDirectoryPath = Path("C:\\Program Files\\NVC\\bin\\")  # (Path(os_getenv("NVC_PREFIX", default="/usr/lib/nvc")) / "../../bin").resolve()
+	if CurrentPlatform.IsNativeWindows:
+		_binaryDirectoryPath = Path(os_getenv("NVC_BINDIR", default="C:\\Program Files\\NVC\\bin")).resolve()
+	else:
+		_binaryDirectoryPath = Path(os_getenv("NVC_BINDIR", default="/usr/bin")).resolve()
 
 
 class CommonOptions(NVCTestcases):
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_Help(self) -> None:
 		print()
 
@@ -67,6 +74,7 @@ class CommonOptions(NVCTestcases):
 		helpText = tool.Help()
 		print(helpText)
 
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_Version(self) -> None:
 		print()
 
@@ -83,6 +91,7 @@ class CommonOptions(NVCTestcases):
 	# TODO: --do <TCL file>
 
 class Analyze(NVCTestcases):
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_Analyze(self) -> None:
 		print()
 
@@ -109,6 +118,7 @@ class Analyze(NVCTestcases):
 
 		return tool
 
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_AnalyzeFaultyFile(self) -> None:
 		print()
 
@@ -132,6 +142,7 @@ class Analyze(NVCTestcases):
 		self.assertEqual(1, tool.Wait())
 		self.assertEqual(1, tool.ExitCode)
 
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_AnalyzeSingleFiles(self) -> None:
 		print()
 
@@ -169,6 +180,7 @@ class Analyze(NVCTestcases):
 
 			self.assertEqual(0, tool.Wait())
 
+	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
 	def test_AnalyzeMultipleFiles(self) -> None:
 		print()
 
