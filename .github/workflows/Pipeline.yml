@@ -49,20 +49,21 @@ jobs:
           sudo xargs --no-run-if-empty -a ./ubuntu.requirements -- apt-get install -y --no-install-recommends
         )
 
-        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
+        tee --append "${GITHUB_ENV}" <<EOF
+        GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl
+        EOF
 
         (
           mkdir -p install-nvc
           cd install-nvc
-          curl -L "https://github.com/nickg/nvc/releases/download/r1.18.2/nvc_1.18.2-1_amd64_ubuntu-24.04.deb"
-          dpkg -i nvc_1.18.2-1_amd64_ubuntu-24.04.deb
-          apt-get install -f
+          curl -L --output "nvc.deb" "https://github.com/nickg/nvc/releases/download/r1.18.2/nvc_1.18.2-1_amd64_ubuntu-24.04.deb"
+          sudo dpkg -i nvc.deb
+          sudo apt-get install -f
         )
       macos_before_script: |
         (
-          mkdir -p install
-          cd install
+          mkdir -p install-ghdl
+          cd install-ghdl
           curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-macos15-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
@@ -71,12 +72,13 @@ jobs:
           )
         )
 
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+        tee --append "${GITHUB_ENV}" <<EOF
+        GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl
+        EOF
       macos_arm_before_script: |
         (
-          mkdir -p install
-          cd install
+          mkdir -p install-ghdl
+          cd install-ghdl
           curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-llvm-6.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
@@ -85,13 +87,14 @@ jobs:
           )
         )
 
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(pwd)/install/lib/ghdl" >> $GITHUB_ENV
+        tee --append "${GITHUB_ENV}" <<EOF
+        GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl
+        EOF
 #      windows_before_script: |
 #        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip" -o ghdl.zip
 #        dir
-#        mkdir install
-#        cd install
+#        mkdir install-ghdl
+#        cd install-ghdl
 #        unzip ../ghdl.zip
 #        dir
 
@@ -101,16 +104,20 @@ jobs:
 
         which ghdl
         ghdl version
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+
+        tee --append "${GITHUB_ENV}" <<EOF
+        GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)
+        EOF
       ucrt64_before_script: |
         curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
         which ghdl
         ghdl version
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl) >> $GITHUB_ENV"
-        echo "GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)" >> $GITHUB_ENV
+
+        tee --append "${GITHUB_ENV}" <<EOF
+        GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)
+        EOF
       requirements:             '-r tests/unit/requirements.txt'
       unittest_report_xml:      ${{ needs.ConfigParams.outputs.unittest_report_xml }}
       coverage_report_html:     ${{ needs.ConfigParams.outputs.coverage_report_html }}
