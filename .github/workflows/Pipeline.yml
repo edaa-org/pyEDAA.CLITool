@@ -26,7 +26,7 @@ jobs:
       package_name:        'CLITool'
       python_version_list: '3.11 3.12 3.13 3.14 pypy-3.11'
       exclude_list:        'ubuntu-arm:* windows-arm:*'
-      disable_list:        'windows:* macos:*'   # GHDL 6.0.0-dev not yet build for macos-15 intel
+      disable_list:        'macos:*'   # GHDL 6.0.0-dev not yet build for macos-15 intel
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r7
@@ -90,13 +90,22 @@ jobs:
         # WORKAROUND: tee does not support --append on macos
         echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
-#      windows_before_script: |
-#        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip" -o ghdl.zip
-#        dir
-#        mkdir install-ghdl
-#        cd install-ghdl
-#        unzip ../ghdl.zip
-#        dir
+      windows_before_script: |
+        curl -L --output "ghdl.zip" "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip"
+        mkdir install-ghdl
+        cd install-ghdl
+        unzip -q ../ghdl.zip
+        #echo "Content of $((pwd).Path):"
+        #dir
+        cd ..
+        echo "------------------------------------------------------"
+        ./install-ghdl/bin/ghdl.exe --version
+        echo "------------------------------------------------------"
+
+        echo "GHDL_PREFIX=$((pwd).Path)\install-ghdl\lib\ghdl >> $env:GITHUB_ENV"
+        echo "GHDL_PREFIX=$((pwd).Path)\install-ghdl\lib\ghdl" >> $env:GITHUB_ENV
+
+        winget install --accept-source-agreements --silent NickGasson.NVC
 
       mingw64_before_script: |
         curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst

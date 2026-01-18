@@ -72,7 +72,7 @@ class NVCTestcases(TestCase, Helper):
 
 
 class CommonOptions(NVCTestcases):
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Help(self) -> None:
 		print()
 
@@ -85,7 +85,7 @@ class CommonOptions(NVCTestcases):
 		helpText = tool.Help()
 		print(helpText)
 
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Version(self) -> None:
 		print()
 
@@ -102,7 +102,7 @@ class CommonOptions(NVCTestcases):
 	# TODO: --do <TCL file>
 
 class Analyze(NVCTestcases):
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Analyze(self) -> None:
 		print()
 
@@ -129,7 +129,7 @@ class Analyze(NVCTestcases):
 
 		return tool
 
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeFaultyFile(self) -> None:
 		print()
 
@@ -153,7 +153,7 @@ class Analyze(NVCTestcases):
 		self.assertEqual(1, tool.Wait())
 		self.assertEqual(1, tool.ExitCode)
 
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeSingleFiles(self) -> None:
 		print()
 
@@ -191,7 +191,7 @@ class Analyze(NVCTestcases):
 
 			self.assertEqual(0, tool.Wait())
 
-	@mark.skipif(CurrentPlatform.IsCI and not CurrentPlatform.IsNativeLinux, reason="Runs only on Linux.")
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeMultipleFiles(self) -> None:
 		print()
 
