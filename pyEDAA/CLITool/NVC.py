@@ -72,7 +72,11 @@ class NVCVersion(metaclass=ExtendedType, slots=True):
 		r"nvc"
 		r"\s(?P<Major>\d+)\.(?P<Minor>\d+)\.(?P<Micro>\d+)(?:-(?P<Suffix>dev|rc\d+))?"
 		r"\s\((?:"
-			r"(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
+			r"(?:"
+				r"(?P<major2>\d+)\.(?P<minor2>\d+)\.(?P<micro2>\d+)\.(?:r(?P<cslt>\d+))\.(?:g(?P<Hash>[0-9a-f]+))(?:\.(?P<Dirty>dirty))?"
+			r")|(?:"
+				r"(?P<Hash2>[0-9a-f]{7})"
+			r")"
 		r")\)"
 		r"\s\(Using (?P<Backend>\w+) (?P<BackendMajor>\d+)\.(?P<BackendMinor>\d+)\.(?P<BackendMicro>\d+)\)"
 	)
@@ -93,7 +97,7 @@ class NVCVersion(metaclass=ExtendedType, slots=True):
 			self._commitsSinceLastTag = int(cslt)
 		else:
 			self._commitsSinceLastTag = 0
-		self._gitHash = match["Hash"]
+		self._gitHash = match["Hash"] if match["Hash"] is not None else match["Hash2"]
 		self._backend = match["Backend"]
 
 	@property

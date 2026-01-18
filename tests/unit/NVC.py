@@ -41,7 +41,7 @@ from .                    import Helper
 
 
 class VersionString(TestCase):
-	def test_ReleaseVersion(self) -> None:
+	def test_ReleaseVersion1(self) -> None:
 		versionLine = "nvc 1.18.2 (1.18.2.r0.g8893318a) (Using LLVM 21.1.5)"
 		version = NVCVersion(versionLine)
 
@@ -50,6 +50,17 @@ class VersionString(TestCase):
 		self.assertEqual(2, version.Micro)
 		self.assertEqual(0, version.CommitsSinceLastTag)
 		self.assertEqual("8893318a", version.GitHash)
+		self.assertEqual("LLVM", version.Backend)
+
+	def test_ReleaseVersion2(self) -> None:
+		versionLine = "nvc 1.18.2 (8893318) (Using LLVM 18.1.3)"
+		version = NVCVersion(versionLine)
+
+		self.assertEqual(1, version.Major)
+		self.assertEqual(18, version.Minor)
+		self.assertEqual(2, version.Micro)
+		self.assertEqual(0, version.CommitsSinceLastTag)
+		self.assertEqual("8893318", version.GitHash)
 		self.assertEqual("LLVM", version.Backend)
 
 

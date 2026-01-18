@@ -72,9 +72,9 @@ jobs:
           )
         )
 
-        tee --append "${GITHUB_ENV}" <<EOF
-        GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl
-        EOF
+        # WORKAROUND: tee does not support --append on macos
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
       macos_arm_before_script: |
         (
           mkdir -p install-ghdl
@@ -87,9 +87,9 @@ jobs:
           )
         )
 
-        tee --append "${GITHUB_ENV}" <<EOF
-        GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl
-        EOF
+        # WORKAROUND: tee does not support --append on macos
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
+        echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
 #      windows_before_script: |
 #        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip" -o ghdl.zip
 #        dir
