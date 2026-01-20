@@ -28,80 +28,92 @@
 # SPDX-License-Identifier: Apache-2.0                                                                                  #
 # ==================================================================================================================== #
 #
-"""Unit tests for executable ``ghdl``."""
+"""Unit tests for executable ``nvc``."""
 from os                   import getenv as os_getenv
 from pathlib              import Path
 from unittest             import TestCase
 
-from pyEDAA.CLITool.GHDL  import GHDL, GHDLVersion
+from pytest               import mark
+from pyTooling.Platform   import CurrentPlatform
+
+from pyEDAA.CLITool.NVC   import NVC, NVCVersion
 from .                    import Helper
 
+
 class VersionString(TestCase):
-	def test_ReleaseVersion(self) -> None:
-		versionLine =  "GHDL 6.0.0-dev (4.1.0.r1065.gd3ea86f11.dirty) [Dunoon edition]"
-		compilerLine = " Compiled with GNAT Version: 15.2.0"
-		backendLine =  " static elaboration, mcode JIT code generator"
+	def test_ReleaseVersion1(self) -> None:
+		versionLine = "nvc 1.18.2 (1.18.2.r0.g8893318a) (Using LLVM 21.1.5)"
+		version = NVCVersion(versionLine)
 
-		version = GHDLVersion(versionLine, compilerLine, backendLine)
+		self.assertEqual(1, version.Major)
+		self.assertEqual(18, version.Minor)
+		self.assertEqual(2, version.Micro)
+		self.assertEqual(0, version.CommitsSinceLastTag)
+		self.assertEqual("8893318a", version.GitHash)
+		self.assertEqual("LLVM", version.Backend)
 
-		self.assertEqual(6, version.Major)
-		self.assertEqual(0, version.Minor)
-		self.assertEqual(0, version.Micro)
-		self.assertTrue(version.Dev)
-		self.assertEqual(1065, version.CommitsSinceLastTag)
-		self.assertEqual("d3ea86f11", version.GitHash)
-		# FIXME: self.assertTrue(version.Dirty)
-		self.assertEqual("Dunoon edition", version.Edition)
-		# TODO: GNAT version
-		self.assertEqual("mcode", version.Backend)
+	def test_ReleaseVersion2(self) -> None:
+		versionLine = "nvc 1.18.2 (8893318) (Using LLVM 18.1.3)"
+		version = NVCVersion(versionLine)
+
+		self.assertEqual(1, version.Major)
+		self.assertEqual(18, version.Minor)
+		self.assertEqual(2, version.Micro)
+		self.assertEqual(0, version.CommitsSinceLastTag)
+		self.assertEqual("8893318", version.GitHash)
+		self.assertEqual("LLVM", version.Backend)
 
 
-class GHDLTestcases(TestCase, Helper):
-	_binaryDirectoryPath = (Path(os_getenv("GHDL_PREFIX", default="/usr/lib/ghdl")) / "../../bin").resolve()
+class NVCTestcases(TestCase, Helper):
+	if CurrentPlatform.IsNativeWindows:
+		_binaryDirectoryPath = Path(os_getenv("NVC_BINDIR", default="C:\\Program Files\\NVC\\bin")).resolve()
+	else:
+		_binaryDirectoryPath = Path(os_getenv("NVC_BINDIR", default="/usr/bin")).resolve()
 
 
-class CommonOptions(GHDLTestcases):
+class CommonOptions(NVCTestcases):
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Help(self) -> None:
 		print()
 
-		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool = NVC(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandHelp] = True
 
-		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"help\"]", repr(tool))
+		executable = self.getExecutablePath("nvc", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--help\"]", repr(tool))
 
 		helpText = tool.Help()
 		print(helpText)
 
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Version(self) -> None:
 		print()
 
-		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool = NVC(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandVersion] = True
 
-		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"version\"]", repr(tool))
+		executable = self.getExecutablePath("nvc", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--version\"]", repr(tool))
 
 		version = tool.Version()
 		print(str(version))
 		print(repr(version))
 
+	# TODO: --do <TCL file>
 
-class Analyze(GHDLTestcases):
+class Analyze(NVCTestcases):
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_Analyze(self) -> None:
 		print()
 
-		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+		tool = NVC(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagVHDLStandard] = "08"
-		tool[tool.FlagSynopsys] = True
 		tool[tool.FlagRelaxed] = True
-		tool[tool.FlagExplicit] = True
-		tool[tool.FlagMultiByteComments] = True
 		tool[tool.FlagLibrary] = "lib_Test"
 
-		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\"]", repr(tool))
+		executable = self.getExecutablePath("nvc", self._binaryDirectoryPath)
+		self.assertEqual(f"[\"{executable}\", \"--std=08\", \"--work=lib_Test\", \"-a\", \"--relaxed\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
@@ -109,16 +121,15 @@ class Analyze(GHDLTestcases):
 
 		self.assertEqual(1, tool.Wait())
 
-	def _GetAnalyzer(self) -> GHDL:
-		tool = GHDL(binaryDirectoryPath=self._binaryDirectoryPath)
+	def _GetAnalyzer(self) -> NVC:
+		tool = NVC(binaryDirectoryPath=self._binaryDirectoryPath)
 		tool[tool.FlagVHDLStandard] = "08"
-		tool[tool.FlagSynopsys] = True
+		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagRelaxed] = True
-		tool[tool.FlagExplicit] = True
-		tool[tool.FlagMultiByteComments] = True
 
 		return tool
 
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeFaultyFile(self) -> None:
 		print()
 
@@ -127,12 +138,13 @@ class Analyze(GHDLTestcases):
 		path = Path("tests/project/designB/file_B1.vhdl")
 
 		tool = self._GetAnalyzer()
-		tool[tool.CommandAnalyze] = True
 		tool[tool.FlagLibrary] = "lib_Test"
 		tool[tool.OptionPaths] = (path, )
 
-		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"{path!s}\"]", repr(tool))
+		executable = self.getExecutablePath("nvc", self._binaryDirectoryPath)
+		print(Path.cwd())
+		print(repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"--std=08\", \"--work=lib_Test\", \"-a\", \"{path!s}\", \"--relaxed\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
@@ -141,6 +153,7 @@ class Analyze(GHDLTestcases):
 		self.assertEqual(1, tool.Wait())
 		self.assertEqual(1, tool.ExitCode)
 
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeSingleFiles(self) -> None:
 		print()
 
@@ -156,7 +169,7 @@ class Analyze(GHDLTestcases):
 		analyzer = self._GetAnalyzer()
 		for file in libraryFiles:
 			print(f"analyze '{file}'")
-			tool = analyzer.GetGHDLAsAnalyzer()
+			tool = analyzer.GetNVCAsAnalyzer()
 			tool[tool.FlagLibrary] = "libCommon"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -168,7 +181,8 @@ class Analyze(GHDLTestcases):
 
 		for file in designFiles:
 			print(f"analyze '{file}'")
-			tool = analyzer.GetGHDLAsAnalyzer()
+			tool = analyzer.GetNVCAsAnalyzer()
+			tool[tool.FlagLibrarySearchPath] = "."
 			tool[tool.FlagLibrary] = "libDesign"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -177,6 +191,7 @@ class Analyze(GHDLTestcases):
 
 			self.assertEqual(0, tool.Wait())
 
+	@mark.skipif(CurrentPlatform.IsCI and not (CurrentPlatform.IsNativeLinux or CurrentPlatform.IsNativeWindows), reason="Runs only on Linux.")
 	def test_AnalyzeMultipleFiles(self) -> None:
 		print()
 
@@ -190,7 +205,7 @@ class Analyze(GHDLTestcases):
 		)
 
 		analyzer = self._GetAnalyzer()
-		tool = analyzer.GetGHDLAsAnalyzer()
+		tool = analyzer.GetNVCAsAnalyzer()
 		tool[tool.FlagLibrary] = "libCommon"
 		tool[tool.OptionPaths] = libraryFiles
 		tool.StartProcess()
@@ -199,7 +214,8 @@ class Analyze(GHDLTestcases):
 
 		self.assertEqual(0, tool.Wait())
 
-		tool = analyzer.GetGHDLAsAnalyzer()
+		tool = analyzer.GetNVCAsAnalyzer()
+		tool[tool.FlagLibrarySearchPath] = "."
 		tool[tool.FlagLibrary] = "libDesign"
 		tool[tool.OptionPaths] = designFiles
 		tool.StartProcess()

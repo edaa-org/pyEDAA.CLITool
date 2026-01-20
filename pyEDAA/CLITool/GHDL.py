@@ -50,13 +50,26 @@ from pyEDAA.CLITool       import CLIToolException
 
 @export
 class GHDLVersion(metaclass=ExtendedType, slots=True):
+	"""
+
+	.. code-block::
+
+	   GHDL 6.0.0-dev (4.1.0.r1065.gd3ea86f11.dirty) [Dunoon edition]
+      Compiled with GNAT Version: 15.2.0
+      static elaboration, mcode JIT code generator
+     Written by Tristan Gingold.
+
+     Copyright (C) 2003 - 2025 Tristan Gingold.
+     GHDL is free software, covered by the GNU General Public License.  There is NO
+     warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	"""
 	_major: int
 	_minor: int
 	_micro: int
-	_dev: bool
+	_dev:   bool
 	_commitsSinceLastTag: int
 	_gitHash: str
-	_dirty: bool
+	_dirty:   bool
 	_edition: str
 	_gnatCompiler: Tuple[int, int, int]
 	_backend: str
@@ -159,6 +172,10 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 	def Edition(self) -> str:
 		return self._edition
 
+	@property
+	def Backend(self) -> str:
+		return self._backend
+
 	def __str__(self) -> str:
 		dev = f"-dev" if self._dev else ""
 		return f"{self._major}.{self._minor}.{self._micro}{dev}"
@@ -247,7 +264,7 @@ class GHDL(Executable):
 
 		def __init__(self, value: VHDLVersion):
 			if value is None:
-				raise ValueError(f"")  # XXX: add message
+				raise ValueError(f"")  # FIXME: add message
 
 			self._value = value
 
@@ -258,13 +275,13 @@ class GHDL(Executable):
 		@Value.setter
 		def Value(self, value: VHDLVersion) -> None:
 			if value is None:
-				raise ValueError(f"")  # XXX: add message
+				raise ValueError(f"")  # FIXME: add message
 
 			self._value = value
 
 		def AsArgument(self) -> Union[str, Iterable[str]]:
 			if self._name is None:
-				raise ValueError(f"")  # XXX: add message
+				raise ValueError(f"")  # FIXME: add message
 
 			return self._pattern.format(self._name, str(self._value)[-2:])
 
