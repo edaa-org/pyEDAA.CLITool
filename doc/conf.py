@@ -1,9 +1,10 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-from sys import path as sys_path
-from os.path import abspath
-from pathlib import Path
+from sys      import path as sys_path
+from os.path  import abspath
+from pathlib  import Path
+from textwrap import dedent
 
 from pyTooling.Packaging import extractVersionInformation
 
@@ -11,8 +12,8 @@ from pyTooling.Packaging import extractVersionInformation
 # Project configuration
 # ==============================================================================
 githubNamespace = "edaa-org"
-project = "pyEDAA.CLITool"
-directoryName = project.replace('.', '/')
+githubProject = pythonProject = "pyEDAA.CLITool"
+directoryName = pythonProject.replace('.', '/')
 
 # ==============================================================================
 # Project paths
@@ -33,6 +34,7 @@ sys_path.insert(0, abspath(f"../{directoryName}"))
 packageInformationFile = Path(f"../{directoryName}/__init__.py")
 versionInformation = extractVersionInformation(packageInformationFile)
 
+project =   pythonProject
 author =    versionInformation.Author
 copyright = versionInformation.Copyright
 version =   ".".join(versionInformation.Version.split(".")[:2])  # e.g. 2.3    The short X.Y version.
@@ -104,56 +106,61 @@ htmlhelp_basename = f"{project}Doc"
 # The empty string is equivalent to '%b %d, %Y'.
 html_last_updated_fmt = "%d.%m.%Y"
 
+
 # ==============================================================================
 # Python settings
 # ==============================================================================
 modindex_common_prefix = [
-	f"{project}."
+	f"{pythonProject}."
 ]
+
 
 # ==============================================================================
 # Options for LaTeX / PDF output
 # ==============================================================================
-from textwrap import dedent
-
+latex_engine = "lualatex"
+latex_use_xindy = False
 latex_elements = {
-	# The paper size ('letterpaper' or 'a4paper').
-	"papersize": "a4paper",
+	"papersize":   "a4paper",      # The paper size ('letterpaper' or 'a4paper').
+	"pointsize":   "10pt",         # The font size ('10pt', '11pt' or '12pt').
+	"inputenc":    "",            # Let LuaLaTeX handle input encoding
+	"utf8extra":   "",
+	"polyglossia": "",
+	"babel":      r"\usepackage[english]{babel}",
+	"fontenc":    r"\usepackage{fontspec}",  # Disable the default T1 font encoding (Essential for LuaLaTeX)
+	"fontpkg":    dedent("""\
+		\\usepackage{unicode-math}
 
-	# The font size ('10pt', '11pt' or '12pt').
-	#'pointsize': '10pt',
+		% Set the Text Fonts (Libertinus)
+		\\setmainfont{Libertinus Serif}
+		\\setsansfont{Libertinus Sans}
+		\\setmonofont{Libertinus Mono}
+		\\setmathfont{Libertinus Math}
 
-	# Additional stuff for the LaTeX preamble.
-	"preamble": dedent(r"""
-		% ================================================================================
-		% User defined additional preamble code
-		% ================================================================================
-		% Add more Unicode characters for pdfLaTeX.
-		% - Alternatively, compile with XeLaTeX or LuaLaTeX.
-		% - https://GitHub.com/sphinx-doc/sphinx/issues/3511
-		%
-		\ifdefined\DeclareUnicodeCharacter
-			\DeclareUnicodeCharacter{2265}{$\geq$}
-			\DeclareUnicodeCharacter{21D2}{$\Rightarrow$}
-		\fi
-
-
-		% ================================================================================
-		"""),
-
-	# Latex figure (float) alignment
-	#'figure_align': 'htbp',
+		% Set Symbol font
+		\\usepackage{newunicodechar}
+		\\newfontfamily{\\emojifont}[Renderer=OpenType]{NotoColorEmoji.ttf}
+		\\usepackage{pytooling}
+	"""),
+	"passoptionstopackages": dedent("""\
+		\\PassOptionsToPackage{verbatimvisiblespace=\\ }{sphinx}
+	"""),
+# "sphinxsetup": "verbatimvisiblespace=\\textvisiblespace"
+# "figure_align": "htbp",     # Latex figure (float) alignment
+	"makeindex":  r"\usepackage[columns=1]{idxlayout}\makeindex",
+	"printindex": r"\def\twocolumn[#1]{#1}\printindex",
 }
+
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
 	( master_doc,
-		f"{project}.tex",
-		f"The {project} Documentation",
-		f"Patrick Lehmann",
-		f"manual"
+		f"{githubProject}.tex",
+		f"The {githubProject} Documentation",
+		 "Patrick Lehmann",
+		 "manual"
 	),
 ]
 
@@ -214,9 +221,9 @@ autodoc_typehints = "both"
 # ==============================================================================
 extlinks = {
 	"gh":          (f"https://GitHub.com/%s", "%s"),
-	"ghissue":     (f"https://GitHub.com/{githubNamespace}/{project}/issues/%s", "issue #%s"),
-	"ghpull":      (f"https://GitHub.com/{githubNamespace}/{project}/pull/%s", "pull request #%s"),
-	"ghsrc":       (f"https://GitHub.com/{githubNamespace}/{project}/blob/main/%s", None),
+	"ghissue":     (f"https://GitHub.com/{githubNamespace}/{githubProject}/issues/%s", "issue #%s"),
+	"ghpull":      (f"https://GitHub.com/{githubNamespace}/{githubProject}/pull/%s", "pull request #%s"),
+	"ghsrc":       (f"https://GitHub.com/{githubNamespace}/{githubProject}/blob/main/%s", None),
 	"pypi":        ( "https://PyPI.org/project/%s", "%s"),
 	"wiki":        (f"https://en.wikipedia.org/wiki/%s", None),
 }
@@ -231,6 +238,8 @@ graphviz_output_format = "svg"
 # ==============================================================================
 # SphinxContrib.Mermaid
 # ==============================================================================
+mermaid_cmd = "mmdc"
+mermaid_cmd_shell = True
 mermaid_params = [
 	'--backgroundColor', 'transparent',
 ]
@@ -262,13 +271,13 @@ todo_link_only = True
 # ==============================================================================
 report_unittest_testsuites = {
 	"src": {
-		"name":        f"{project}",
+		"name":        f"{pythonProject}",
 		"xml_report":  "../report/unit/unittest.xml",
 	}
 }
 report_codecov_packages = {
 	"src": {
-		"name":        f"{project}",
+		"name":        f"{pythonProject}",
 		"json_report": "../report/coverage/coverage.json",
 		"fail_below":  80,
 		"levels":      "default"
@@ -276,7 +285,7 @@ report_codecov_packages = {
 }
 report_doccov_packages = {
 	"src": {
-		"name":       f"{project}",
+		"name":       f"{pythonProject}",
 		"directory":  f"../{directoryName}",
 		"fail_below": 80,
 		"levels":     "default"
@@ -294,9 +303,9 @@ report_doccov_packages = {
 # AutoAPI.Sphinx
 # ==============================================================================
 autoapi_modules = {
-	f"{project}":  {
+	f"{pythonProject}":  {
 		"template": "module",
-		"output":   project,
+		"output":   pythonProject,
 		"override": True
 	}
 }
