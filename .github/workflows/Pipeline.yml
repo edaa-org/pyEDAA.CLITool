@@ -26,7 +26,7 @@ jobs:
       package_name:        'CLITool'
       python_version_list: '3.11 3.12 3.13 3.14 pypy-3.11'
       exclude_list:        'ubuntu-arm:* windows-arm:*'
-      disable_list:        'macos:*'   # GHDL 6.0.0-dev not yet build for macos-15 intel
+      disable_list:        'macos:*'   # GHDL 7.0.0-dev not yet build for macos-15 intel
 
   UnitTesting:
     uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r7
@@ -39,7 +39,7 @@ jobs:
         (
           mkdir -p install-ghdl
           cd install-ghdl
-          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ubuntu24.04-x86_64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-7.0.0-dev-ubuntu26.04-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -56,7 +56,7 @@ jobs:
         (
           mkdir -p install-nvc
           cd install-nvc
-          curl -L --output "nvc.deb" "https://github.com/nickg/nvc/releases/download/r1.18.2/nvc_1.18.2-1_amd64_ubuntu-24.04.deb"
+          curl -L --output "nvc.deb" "https://github.com/nickg/nvc/releases/download/r1.21.1/nvc_1.21.1-1_amd64_ubuntu-26.04.deb"
           sudo dpkg -i nvc.deb
           sudo apt-get install -f
         )
@@ -64,7 +64,7 @@ jobs:
         (
           mkdir -p install-ghdl
           cd install-ghdl
-          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-macos15-x86_64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-7.0.0-dev-macos15-x86_64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -79,7 +79,7 @@ jobs:
         (
           mkdir -p install-ghdl
           cd install-ghdl
-          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-llvm-6.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
+          curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-llvm-7.0.0-dev-macos14-aarch64.tar.gz" | tar -xz --strip-components 1
           (
             cd bin
             pwd
@@ -91,7 +91,7 @@ jobs:
         echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl >> $GITHUB_ENV"
         echo "GHDL_PREFIX=$(pwd)/install-ghdl/lib/ghdl" >> $GITHUB_ENV
       windows_before_script: |
-        curl -L --output "ghdl.zip" "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-6.0.0-dev-ucrt64.zip"
+        curl -L --output "ghdl.zip" "https://github.com/ghdl/ghdl/releases/download/nightly/ghdl-mcode-7.0.0-dev-ucrt64.zip"
         mkdir install-ghdl
         cd install-ghdl
         unzip -q ../ghdl.zip
@@ -108,7 +108,7 @@ jobs:
         winget install --accept-source-agreements --silent NickGasson.NVC
 
       mingw64_before_script: |
-        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-7.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
         which ghdl
@@ -118,7 +118,7 @@ jobs:
         GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)
         EOF
       ucrt64_before_script: |
-        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-6.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
+        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-7.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
 
         which ghdl
