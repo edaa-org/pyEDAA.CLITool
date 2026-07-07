@@ -50,7 +50,7 @@ class VersionString(TestCase):
 		self.assertTrue(version.Dev)
 		self.assertEqual(1065, version.CommitsSinceLastTag)
 		self.assertEqual("d3ea86f11", version.GitHash)
-		# FIXME: self.assertTrue(version.Dirty)
+		self.assertTrue(version.Dirty)
 		self.assertEqual("Dunoon edition", version.Edition)
 		# TODO: GNAT version
 		self.assertEqual("mcode", version.Backend)
