@@ -30,12 +30,15 @@
 # ==================================================================================================================== #
 #
 """An abstraction layer of EDA CLI tools."""
-__author__ =    "Patrick Lehmann"
-__email__ =     "Paebbels@gmail.com"
-__copyright__ = "2014-2026, Patrick Lehmann, Unai Martinez-Corral"
-__license__ =   "Apache License, Version 2.0"
-__version__ =   "0.4.3"
-__keywords__ =  ["cli", "abstraction layer", "eda"]
+__author__ =            "Patrick Lehmann"
+__email__ =             "Paebbels@gmail.com"
+__copyright__ =         "2014-2026, Patrick Lehmann, Unai Martinez-Corral"
+__license__ =           "Apache License, Version 2.0"
+__version__ =           "0.4.4"
+__keywords__ =          ["cli", "abstraction layer", "eda"]
+__project_url__ =       "https://github.com/edaa-org/pyEDAA.CLITool"
+__documentation_url__ = "https://edaa-org.github.io/pyEDAA.CLITool"
+__issue_tracker_url__ = "https://GitHub.com/edaa-org/pyEDAA.CLITool/issues"
 
 from pathlib import Path
 from typing  import Any, Optional as Nullable
