@@ -122,7 +122,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		else:
 			self._commitsSinceLastTag = 0
 		self._gitHash = match["Hash"]
-		self._dirty = "Dirty" in match.groups()
+		self._dirty = match["Dirty"] is not None
 		self._edition = match["Edition"]
 
 		match = re_search("^" + self.GNAT_LINE_PATTERN + "$", gnatLine)
