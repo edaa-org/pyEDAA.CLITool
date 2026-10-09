@@ -183,9 +183,11 @@ class NVC(Executable):
 	@CLIArgument()
 	class FlagMaxMemorySize(ShortTupleFlag, name="M"):
 		"""
-		Set the maximum amount of memory in bytes used for the internal representations of design units. The default is
-		16 megabytes but this may be insufficient when elaborating a large design. The size parameter takes an optional k,
-		m, or g suffix to indicate kilobytes, megabytes, and gigabytes respectively. For example -M64m for 64 megabytes.
+		Set the maximum amount of memory in bytes used for the internal representations of design units.
+
+		The default is 16 megabytes but this may be insufficient when elaborating a large design. The size parameter takes
+		an optional k, m, or g suffix to indicate kilobytes, megabytes, and gigabytes respectively. For example -M64m for 64
+		megabytes.
 		"""
 
 	@CLIArgument()
@@ -212,10 +214,12 @@ class NVC(Executable):
 	@CLIArgument()
 	class FlagVHDLStandard(LongValuedFlag, name="std"):
 		"""
-		Select the VHDL standard revision to use. VHDL standard revisions are commonly referred to by the year they were
-		published. For example IEEE 1076-1993 is known as VHDL-93. Specify either the full year such as 1993 or just the
-		last two digits such as ``93``. The accepted revisions are 1993, 2000, 2002, 2008, 2019. Note there is very limited
-		supported VHDL-2019 at present and VHDL-87 is not supported. The default standard revision is VHDL-2008.
+		Select the VHDL standard revision to use.
+
+		VHDL standard revisions are commonly referred to by the year they were published. For example IEEE 1076-1993 is
+		known as VHDL-93. Specify either the full year such as 1993 or just the last two digits such as ``93``. The
+		accepted revisions are 1993, 2000, 2002, 2008, 2019. Note there is very limited supported VHDL-2019 at present and
+		VHDL-87 is not supported. The default standard revision is VHDL-2008.
 		"""
 		_value: VHDLVersion
 
