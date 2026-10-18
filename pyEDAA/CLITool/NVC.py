@@ -221,7 +221,7 @@ class NVC(Executable):
 
 		def __init__(self, value: VHDLVersion):
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
@@ -232,13 +232,13 @@ class NVC(Executable):
 		@Value.setter
 		def Value(self, value: VHDLVersion) -> None:
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
 		def AsArgument(self) -> Union[str, Iterable[str]]:
 			if self._name is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			return self._pattern.format(self._name, str(self._value)[-2:])
 
