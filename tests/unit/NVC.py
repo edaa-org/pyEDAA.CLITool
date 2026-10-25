@@ -31,6 +31,7 @@
 """Unit tests for executable ``nvc``."""
 from os                   import getenv as os_getenv
 from pathlib              import Path
+from tempfile             import TemporaryDirectory
 from unittest             import TestCase
 
 from pytest               import mark
@@ -167,11 +168,13 @@ class Analyze(NVCTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		for file in libraryFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetNVCAsAnalyzer()
-			tool[tool.FlagLibrary] = "libCommon"
+			tool[tool.FlagLibrary] = f"libCommon:{Path(directory) / 'libcommon'}"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
 			for line in tool.GetLineReader():
@@ -183,8 +186,8 @@ class Analyze(NVCTestcases):
 		for file in designFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetNVCAsAnalyzer()
-			tool[tool.FlagLibrarySearchPath] = "."
-			tool[tool.FlagLibrary] = "libDesign"
+			tool[tool.FlagLibrarySearchPath] = directory
+			tool[tool.FlagLibrary] = f"libDesign:{Path(directory) / 'libdesign'}"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
 			for line in tool.GetLineReader():
@@ -205,9 +208,11 @@ class Analyze(NVCTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		tool = analyzer.GetNVCAsAnalyzer()
-		tool[tool.FlagLibrary] = "libCommon"
+		tool[tool.FlagLibrary] = f"libCommon:{Path(directory) / 'libcommon'}"
 		tool[tool.OptionPaths] = libraryFiles
 		tool.StartProcess()
 		for line in tool.GetLineReader():
@@ -216,8 +221,8 @@ class Analyze(NVCTestcases):
 		self.assertEqual(0, tool.Wait())
 
 		tool = analyzer.GetNVCAsAnalyzer()
-		tool[tool.FlagLibrarySearchPath] = "."
-		tool[tool.FlagLibrary] = "libDesign"
+		tool[tool.FlagLibrarySearchPath] = directory
+		tool[tool.FlagLibrary] = f"libDesign:{Path(directory) / 'libdesign'}"
 		tool[tool.OptionPaths] = designFiles
 		tool.StartProcess()
 		for line in tool.GetLineReader():
