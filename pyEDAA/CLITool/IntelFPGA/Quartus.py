@@ -40,7 +40,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class Map(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "quartus_map",
 		"Windows": "quartus_map.exe"
 	}
@@ -60,7 +60,7 @@ class Map(Executable, ToolMixIn):
 
 @export
 class TclShell(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "quartus_sh",
 		"Windows": "quartus_sh.exe"
 	}
