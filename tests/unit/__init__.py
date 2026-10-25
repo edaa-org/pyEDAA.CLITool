@@ -36,6 +36,7 @@ Helper classes for unit tests.
 """
 from pathlib  import Path
 from platform import system
+from shutil   import which
 from typing   import Optional as Nullable
 
 
@@ -44,9 +45,20 @@ class Helper:
 
 	@classmethod
 	def getExecutablePath(cls, programName: str, binaryDirectory: Nullable[Path] = None) -> str:
+		"""
+		Return the executable's path as a program's :func:`repr` writes it.
+
+		Without a binary directory, a program found in ``PATH`` is written with its full path. Backslashes are escaped.
+
+		:param programName:     The program's name without extension.
+		:param binaryDirectory: Optional, the directory containing the program.
+		:returns:               The path as written inside the string literal of :func:`repr`.
+		"""
 		extensions = ".exe" if cls._system == "Windows" else ""
 		programName = f"{programName}{extensions}"
 		if binaryDirectory is not None:
-			return str(binaryDirectory / programName)
+			path = str(binaryDirectory / programName)
 		else:
-			return programName
+			path = which(programName) or programName
+
+		return path.replace("\\", "\\\\")
