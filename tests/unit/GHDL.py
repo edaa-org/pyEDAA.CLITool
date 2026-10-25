@@ -31,6 +31,7 @@
 """Unit tests for executable ``ghdl``."""
 from os                   import getenv as os_getenv
 from pathlib              import Path
+from tempfile             import TemporaryDirectory
 from unittest             import TestCase
 
 from pyEDAA.CLITool.GHDL  import GHDL, GHDLVersion
@@ -154,10 +155,13 @@ class Analyze(GHDLTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		for file in libraryFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagWorkingDirectory] = directory
 			tool[tool.FlagLibrary] = "libCommon"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -170,6 +174,8 @@ class Analyze(GHDLTestcases):
 		for file in designFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagWorkingDirectory] = directory
+			tool[tool.FlagSearchPath] = directory
 			tool[tool.FlagLibrary] = "libDesign"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -190,8 +196,11 @@ class Analyze(GHDLTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagWorkingDirectory] = directory
 		tool[tool.FlagLibrary] = "libCommon"
 		tool[tool.OptionPaths] = libraryFiles
 		tool.StartProcess()
@@ -201,6 +210,8 @@ class Analyze(GHDLTestcases):
 		self.assertEqual(0, tool.Wait())
 
 		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagWorkingDirectory] = directory
+		tool[tool.FlagSearchPath] = directory
 		tool[tool.FlagLibrary] = "libDesign"
 		tool[tool.OptionPaths] = designFiles
 		tool.StartProcess()

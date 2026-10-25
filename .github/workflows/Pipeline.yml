@@ -14,22 +14,35 @@ permissions:
 
 jobs:
   Prepare:
-    uses: pyTooling/Actions/.github/workflows/PrepareJob.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PrepareJob.yml@r9
 
   ConfigParams:
-    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@r7
+    uses: pyTooling/Actions/.github/workflows/ExtractConfiguration.yml@r9
 
   UnitTestingParams:
-    uses: pyTooling/Actions/.github/workflows/Parameters.yml@r7
+    uses: pyTooling/Actions/.github/workflows/Parameters.yml@r9
     with:
       package_namespace:   'pyEDAA'
       package_name:        'CLITool'
-      python_version_list: '3.11 3.12 3.13 3.14 pypy-3.11'
+      python_version_list: '3.11 3.12 3.13 3.14 3.15 pypy-3.11 pypy-3.12'
       exclude_list:        'ubuntu-arm:* windows-arm:*'
       disable_list:        'macos:*'   # GHDL 7.0.0-dev not yet build for macos-15 intel
 
+  VersionCheck:
+    uses: pyTooling/Actions/.github/workflows/CheckReleaseVersion.yml@r9
+    needs:
+      - Prepare
+      - UnitTestingParams
+    if: needs.Prepare.outputs.version != ''
+    with:
+      python_version:       ${{ needs.UnitTestingParams.outputs.python_version }}
+      version:              ${{ needs.Prepare.outputs.version }}
+      package_version:      ${{ needs.UnitTestingParams.outputs.package_version }}
+      check_pypi_duplicate: ${{ needs.Prepare.outputs.is_release_commit }}
+      pypi_package:         ${{ needs.UnitTestingParams.outputs.package_fullname }}
+
   UnitTesting:
-    uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r7
+    uses: pyTooling/Actions/.github/workflows/UnitTesting.yml@r9
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -107,16 +120,6 @@ jobs:
 
         winget install --accept-source-agreements --silent NickGasson.NVC
 
-      mingw64_before_script: |
-        curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-x86_64-ghdl-mcode-7.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
-        pacman -U --noconfirm ghdl.pkg.tar.zst
-
-        which ghdl
-        ghdl version
-
-        tee --append "${GITHUB_ENV}" <<EOF
-        GHDL_PREFIX=$(realpath $(dirname $(which ghdl))/../lib/ghdl)
-        EOF
       ucrt64_before_script: |
         curl -L "https://github.com/ghdl/ghdl/releases/download/nightly/mingw-w64-ucrt-x86_64-ghdl-mcode-7.0.0.dev-1-any.pkg.tar.zst" -o ghdl.pkg.tar.zst
         pacman -U --noconfirm ghdl.pkg.tar.zst
@@ -134,7 +137,7 @@ jobs:
       coverage_sqlite_artifact: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_sqlite }}
 
   StaticTypeCheck:
-    uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@r7
+    uses: pyTooling/Actions/.github/workflows/StaticTypeCheck.yml@r9
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -144,7 +147,7 @@ jobs:
       html_artifact:  ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   CodeQuality:
-    uses: pyTooling/Actions/.github/workflows/CheckCodeQuality.yml@r7
+    uses: pyTooling/Actions/.github/workflows/CheckCodeQuality.yml@r9
     needs:
       - UnitTestingParams
     with:
@@ -155,15 +158,15 @@ jobs:
       artifact:          CodeQuality
 
   DocCoverage:
-    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@r7
+    uses: pyTooling/Actions/.github/workflows/CheckDocumentation.yml@r9
     needs:
       - UnitTestingParams
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
-      directory:      ${{ needs.UnitTestingParams.outputs.package_directors }}
+      directory:      ${{ needs.UnitTestingParams.outputs.package_directory }}
 
   Package:
-    uses: pyTooling/Actions/.github/workflows/Package.yml@r7
+    uses: pyTooling/Actions/.github/workflows/Package.yml@r9
     needs:
       - UnitTestingParams
     with:
@@ -173,7 +176,7 @@ jobs:
   # AppTesting?
 
   PublishCoverageResults:
-    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PublishCoverageResults.yml@r9
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -191,7 +194,7 @@ jobs:
       CODACY_TOKEN:  ${{ secrets.CODACY_TOKEN }}
 
   PublishTestResults:
-    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PublishTestResults.yml@r9
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -207,7 +210,7 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   Documentation:
-    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@r7
+    uses: pyTooling/Actions/.github/workflows/SphinxDocumentation.yml@r9
     needs:
       - ConfigParams
       - UnitTestingParams
@@ -222,7 +225,7 @@ jobs:
       latex_artifact:         ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_latex }}
 
   IntermediateCleanUp:
-    uses: pyTooling/Actions/.github/workflows/CleanupArtifacts.yml@r7
+    uses: pyTooling/Actions/.github/workflows/CleanupArtifacts.yml@r9
     needs:
       - UnitTestingParams
       - PublishCoverageResults
@@ -235,7 +238,7 @@ jobs:
         codecoverage_sqlite:-*
 
   PDFDocumentation:
-    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r7
+    uses: pyTooling/Actions/.github/workflows/LaTeXDocumentation.yml@r9
     needs:
       - UnitTestingParams
       - Documentation
@@ -246,68 +249,99 @@ jobs:
       can-fail:       'true'
 
   PublishToGitHubPages:
-    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PublishToGitHubPages.yml@r9
     needs:
+      - Prepare
       - UnitTestingParams
       - Documentation
 #      - PDFDocumentation
       - PublishCoverageResults
       - StaticTypeCheck
+    if: >-
+      ${{ !failure() && !cancelled()
+       && needs.Documentation.result == 'success'
+       && needs.PublishCoverageResults.result == 'success'
+       && needs.StaticTypeCheck.result == 'success'
+       && needs.Prepare.outputs.publish_pages == 'true'
+      }}
     with:
       doc:      ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).documentation_html }}
       coverage: ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).codecoverage_html }}
       typing:   ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).statictyping_html }}
 
   TriggerTaggedRelease:
-    uses: pyTooling/Actions/.github/workflows/TagReleaseCommit.yml@r7
+    uses: pyTooling/Actions/.github/workflows/TagReleaseCommit.yml@r9
     needs:
       - Prepare
+      - VersionCheck
       - UnitTesting
 #      - AppTesting
 #      - StaticTypeCheck
       - Package
       - PublishToGitHubPages
-    if: needs.Prepare.outputs.is_release_commit == 'true' && github.event_name != 'schedule'
+    if: >-
+      ${{ !failure() && !cancelled()
+       && needs.Prepare.outputs.is_release_commit == 'true'
+       && needs.VersionCheck.result == 'success'
+       && github.event_name != 'schedule'
+      }}
     permissions:
       contents: write  # required for create tag
       actions:  write  # required for trigger workflow
     with:
-      version:  ${{ needs.Prepare.outputs.version }}
-      auto_tag: ${{ needs.Prepare.outputs.is_release_commit }}
+      version:        ${{ needs.Prepare.outputs.version }}
+      auto_tag:       ${{ needs.Prepare.outputs.is_release_commit }}
+      pypi_compliant: ${{ needs.Package.outputs.pypi_compliant }}
     secrets: inherit
 
   ReleasePage:
-    uses: pyTooling/Actions/.github/workflows/PublishReleaseNotes.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PublishReleaseNotes.yml@r9
     needs:
       - Prepare
+      - VersionCheck
       - UnitTesting
 #      - AppTesting
 #      - StaticTypeCheck
       - Package
       - PublishToGitHubPages
-    if: needs.Prepare.outputs.is_release_tag == 'true'
+    if: >-
+      ${{ !failure() && !cancelled()
+       && needs.Prepare.outputs.is_release_tag == 'true'
+       && needs.VersionCheck.result == 'success'
+      }}
     permissions:
       contents: write
       actions:  write
     with:
-      tag: ${{ needs.Prepare.outputs.version }}
+      tag:        ${{ needs.Prepare.outputs.version }}
+      prerelease: ${{ needs.Prepare.outputs.is_prerelease == 'true' }}
+      latest:     ${{ needs.Prepare.outputs.is_prerelease != 'true' }}
     secrets: inherit
 
   PublishOnPyPI:
-    uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@r7
+    uses: pyTooling/Actions/.github/workflows/PublishOnPyPI.yml@r9
     needs:
+      - Prepare
+      - VersionCheck
       - UnitTestingParams
+      - Package
       - ReleasePage
-    if: needs.Prepare.outputs.is_release_tag == 'true'
+    if: >-
+      ${{ !failure() && !cancelled()
+       && needs.Package.result == 'success'
+       && needs.Prepare.outputs.is_release_tag == 'true'
+       && needs.VersionCheck.result == 'success'
+      }}
     with:
       python_version: ${{ needs.UnitTestingParams.outputs.python_version }}
       requirements:   '-r dist/requirements.txt'
       artifact:       ${{ fromJson(needs.UnitTestingParams.outputs.artifact_names).package_all }}
+      pypi_compliant: ${{ needs.Package.outputs.pypi_compliant }}
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
 
   ArtifactCleanUp:
-    uses: pyTooling/Actions/.github/workflows/CleanupArtifacts.yml@r7
+    uses: pyTooling/Actions/.github/workflows/CleanupArtifacts.yml@r9
     needs:
       - Prepare
       - UnitTestingParams
