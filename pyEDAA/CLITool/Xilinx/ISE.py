@@ -40,7 +40,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class Fuse(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "fuse",
 		"Windows": "fuse.exe"
 	}
@@ -71,7 +71,7 @@ class Fuse(Executable, ToolMixIn):
 
 @export
 class ISESimulator(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "isim",
 		"Windows": "isim.exe"
 	}
@@ -91,7 +91,7 @@ class ISESimulator(Executable):
 
 @export
 class Xst(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "xst",
 		"Windows": "xst.exe"
 	}
@@ -108,7 +108,7 @@ class Xst(Executable, ToolMixIn):
 
 @export
 class CoreGenerator(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "coregen",
 		"Windows": "coregen.exe"
 	}

@@ -138,7 +138,7 @@ class NVCVersion(metaclass=ExtendedType, slots=True):
 
 @export
 class NVC(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Darwin":  "nvc",
 		"FreeBSD": "nvc",
 		"Linux":   "nvc",
@@ -241,10 +241,10 @@ class NVC(Executable):
 			self._value = value
 
 		def AsArgument(self) -> Union[str, Iterable[str]]:
-			if self._name is None:
+			if self._NAME is None:
 				raise ValueError("")  # FIXME: add message
 
-			return self._pattern.format(self._name, str(self._value)[-2:])
+			return self._PATTERN.format(self._NAME, str(self._value)[-2:])
 
 	@CLIArgument()
 	class FlagRandomSeed(LongValuedFlag, name="stderr"):

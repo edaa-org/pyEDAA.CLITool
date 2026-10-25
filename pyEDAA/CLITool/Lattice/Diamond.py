@@ -38,7 +38,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class Synth(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "synthesis",
 		"Windows": "synthesis.exe"
 	}

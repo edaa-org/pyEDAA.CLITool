@@ -53,8 +53,7 @@ class CLIToolException(ExceptionBase):
 	"""Base-class for all pyEDAA.CLITool specific exceptions."""
 
 
-class ToolMixIn(metaclass=ExtendedType, mixin=True):
-	_platform: str
+class ToolMixIn(metaclass=ExtendedType, mixin=True, expects=("_platform",)):
 	_dryrun: bool
 	_binaryDirectoryPath: Path
 	_version: str

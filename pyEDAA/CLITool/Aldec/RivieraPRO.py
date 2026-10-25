@@ -42,7 +42,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 class VHDLLibraryTool(Executable, ToolMixIn):
 	"""Abstraction of Riviera-PRO's VHDL library management tool ``vlib``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
@@ -54,7 +54,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 class VHDLCompiler(Executable, ToolMixIn):
 	"""Abstraction of Riviera-PRO's VHDL compiler ``vcom``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
 	}
@@ -76,7 +76,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 class VHDLSimulator(Executable, ToolMixIn):
 	"""Abstraction of Riviera-PRO's HDL simulator ``vsim``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}

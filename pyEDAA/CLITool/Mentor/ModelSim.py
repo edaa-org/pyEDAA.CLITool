@@ -55,7 +55,7 @@ class OptionalModelSimPlusArgument(OptionalValuedFlag, pattern="-{0}", patternWi
 
 @export
 class VHDLLibraryTool(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
@@ -92,7 +92,7 @@ class VHDLCompilerFSMVerbosityLevel(Enum):
 
 @export
 class VHDLCompiler(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
 	}
@@ -183,7 +183,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 
 @export
 class VHDLSimulator(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}

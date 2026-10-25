@@ -42,7 +42,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class Vvgl(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Windows": "unwrapped/win64.o/vvgl.exe"
 	}
 
@@ -57,7 +57,7 @@ class Vvgl(Executable):
 
 @export
 class XElab(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "xelab",
 		"Windows": "xelab.bat"
 	}
@@ -100,7 +100,7 @@ class XElab(Executable, ToolMixIn):
 
 @export
 class XSim(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "xsim",
 		"Windows": "xsim.bat"
 	}
@@ -123,7 +123,7 @@ class XSim(Executable, ToolMixIn):
 
 @export
 class Synth(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vivado",
 		"Windows": "vivado.bat"
 	}
