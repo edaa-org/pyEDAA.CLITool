@@ -24,7 +24,7 @@ jobs:
     with:
       package_namespace:   'pyEDAA'
       package_name:        'CLITool'
-      python_version_list: '3.11 3.12 3.13 3.14 3.15 pypy-3.11'
+      python_version_list: '3.11 3.12 3.13 3.14 3.15 pypy-3.11 pypy-3.12'
       exclude_list:        'ubuntu-arm:* windows-arm:*'
       disable_list:        'macos:*'   # GHDL 7.0.0-dev not yet build for macos-15 intel
 
