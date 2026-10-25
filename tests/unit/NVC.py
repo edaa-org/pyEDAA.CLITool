@@ -142,9 +142,10 @@ class Analyze(NVCTestcases):
 		tool[tool.OptionPaths] = (path, )
 
 		executable = self.getExecutablePath("nvc", self._binaryDirectoryPath)
+		file       = str(path).replace("\\", "\\\\")
 		print(Path.cwd())
 		print(repr(tool))
-		self.assertEqual(f"[\"{executable}\", \"--std=08\", \"--work=lib_Test\", \"-a\", \"{path!s}\", \"--relaxed\"]", repr(tool))
+		self.assertEqual(f"[\"{executable}\", \"--std=08\", \"--work=lib_Test\", \"-a\", \"{file}\", \"--relaxed\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
