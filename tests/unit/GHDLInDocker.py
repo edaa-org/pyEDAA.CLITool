@@ -32,25 +32,33 @@
 from pathlib import Path
 from typing  import Optional as Nullable
 
-from pytest                 import mark, skip
+from pytest                 import mark
 from unittest               import TestCase
+
+from pyTooling.MetaClasses  import BaseClassIsNotAMixinError
 
 from pyEDAA.CLITool.GHDL    import GHDL
 from pyEDAA.CLITool.Docker  import Docker
 from .                      import Helper
 
 
-skip("pyTooling 10 accepts only mixin-classes as secondary base-classes, but 'GHDL' is an executable class. "
-     "Waits for pyGHDL.dom being upstreamed.", allow_module_level=True)
+try:
+	class GHDLInDocker(Docker, GHDL):
+		def __init__(self, executablePath: Nullable[Path] = None, binaryDirectoryPath: Nullable[Path] = None, dryRun: bool = False) -> None:
+			super().__init__(executablePath, binaryDirectoryPath, dryRun)
+
+			self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")
+except BaseClassIsNotAMixinError:
+	GHDLInDocker = None
+
+skipWithoutGHDLInDocker = mark.skipif(
+	GHDLInDocker is None,
+	reason="pyTooling 10 accepts only mixin-classes as secondary base-classes, but 'GHDL' is an executable class. "
+	       "Waits for pyGHDL.dom being upstreamed."
+)
 
 
-class GHDLInDocker(Docker, GHDL):
-	def __init__(self, executablePath: Nullable[Path] = None, binaryDirectoryPath: Nullable[Path] = None, dryRun: bool = False) -> None:
-		super().__init__(executablePath, binaryDirectoryPath, dryRun)
-
-		self.__cliParameters__[Docker.ValueCommand] = Docker.ValueCommand("ghdl")
-
-
+@skipWithoutGHDLInDocker
 class CommonOptions(TestCase, Helper):
 	@mark.xfail
 	def test_Help(self) -> None:
@@ -77,6 +85,7 @@ class CommonOptions(TestCase, Helper):
 		self.assertEqual(f"[\"{executable}\", \"container\", \"run\", \"--rm\", \"ghdl:latest\", \"ghdl\", \"version\"]", repr(tool))
 
 
+@skipWithoutGHDLInDocker
 class Analyze(TestCase, Helper):
 	@mark.xfail
 	def test_AnalyzeFile(self) -> None:
