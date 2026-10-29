@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2021-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -40,7 +40,7 @@ from pyTooling.CLIAbstraction.ValuedTupleFlag import LongTupleFlag
 
 @export
 class Docker(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Darwin":  "docker",
 		"FreeBSD": "docker",
 		"Linux":   "docker",

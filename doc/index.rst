@@ -78,63 +78,6 @@ This layer is used by:
 * 🚧 `Open Source Verification Bundle (OSVB) <https://umarcor.github.io/osvb>`__
 
 
-.. _NEWS:
-
-News
-****
-
-.. only:: html
-
-   July/Dez 2024 - General Updates
-   ===============================
-
-.. only:: latex
-
-   .. rubric:: General Updates
-
-* Updated to support pyTooling v8.0.
-* Replaced Sphinx theme with ReadTheDocs theme.
-* FreeBSD support for GHDL, GTKWave and Docker.
-* Reworked documentation.
-
-.. only:: html
-
-   Feb. 2022 - Supporting more Tools
-   =================================
-
-.. only:: latex
-
-   .. rubric:: Supporting more Tools
-
-* Added more CLI abstraction.
-* Updated to support CLIAbstraction v0.4.0.
-
-
-.. only:: html
-
-   Jan. 2022 - GHDL, GTKWave, ModelSim
-   ===================================
-
-.. only:: latex
-
-   .. rubric:: GHDL, GTKWave, ModelSim
-
-* Added CLI abstraction for GHDL, GTKWave and ModelSim.
-* Prepared structure for other vendors and tools.
-
-
-.. only:: html
-
-   Dec. 2021 - Extracted CLITool from pyIPCMI
-   ==========================================
-
-.. only:: latex
-
-   .. rubric:: Extracted CLITool from pyIPCMI
-
-* The EDA tool abstraction has been extracted from `pyIPCMI <https://GitHub.com/Paebbels/pyIPCMI>`__.
-
-
 .. _CONTRIBUTORS:
 
 Contributors
@@ -163,6 +106,7 @@ The accompanying documentation is licensed under :ref:`Creative Commons - Attrib
    :caption: Introduction
    :hidden:
 
+   News
    Installation
    Dependency
 
@@ -189,8 +133,7 @@ The accompanying documentation is licensed under :ref:`Creative Commons - Attrib
    Python Class Reference <pyEDAA.CLITool/pyEDAA.CLITool>
    unittests/index
    coverage/index
-   CodeCoverage
-   Doc. Coverage Report <DocCoverage>
+   Doc. Coverage Report <doccoverage/index>
    Static Type Check Report ➚ <typing/index>
 
 .. Coverage Report ➚ <coverage/index>

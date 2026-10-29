@@ -11,8 +11,9 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -42,7 +43,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 
 @export
 class Vvgl(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Windows": "unwrapped/win64.o/vvgl.exe"
 	}
 
@@ -57,7 +58,7 @@ class Vvgl(Executable):
 
 @export
 class XElab(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "xelab",
 		"Windows": "xelab.bat"
 	}
@@ -100,7 +101,7 @@ class XElab(Executable, ToolMixIn):
 
 @export
 class XSim(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "xsim",
 		"Windows": "xsim.bat"
 	}
@@ -123,7 +124,7 @@ class XSim(Executable, ToolMixIn):
 
 @export
 class Synth(Executable, ToolMixIn):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vivado",
 		"Windows": "vivado.bat"
 	}

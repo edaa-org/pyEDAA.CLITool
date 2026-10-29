@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
 # Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
@@ -32,9 +33,9 @@
 """An abstraction layer of EDA CLI tools."""
 __author__ =            "Patrick Lehmann"
 __email__ =             "Paebbels@gmail.com"
-__copyright__ =         "2014-2026, Patrick Lehmann, Unai Martinez-Corral"
+__copyright__ =         "2021-2026, Electronic Design Automation Abstraction (EDA²)"
 __license__ =           "Apache License, Version 2.0"
-__version__ =           "0.4.4"
+__version__ =           "0.5.0"
 __keywords__ =          ["cli", "abstraction layer", "eda"]
 __project_url__ =       "https://github.com/edaa-org/pyEDAA.CLITool"
 __documentation_url__ = "https://edaa-org.github.io/pyEDAA.CLITool"
@@ -53,8 +54,7 @@ class CLIToolException(ExceptionBase):
 	"""Base-class for all pyEDAA.CLITool specific exceptions."""
 
 
-class ToolMixIn(metaclass=ExtendedType, mixin=True):
-	_platform: str
+class ToolMixIn(metaclass=ExtendedType, mixin=True, expects=("_platform",)):
 	_dryrun: bool
 	_binaryDirectoryPath: Path
 	_version: str

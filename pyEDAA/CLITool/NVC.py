@@ -11,7 +11,7 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2025-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2026-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -138,7 +138,7 @@ class NVCVersion(metaclass=ExtendedType, slots=True):
 
 @export
 class NVC(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Darwin":  "nvc",
 		"FreeBSD": "nvc",
 		"Linux":   "nvc",
@@ -183,9 +183,11 @@ class NVC(Executable):
 	@CLIArgument()
 	class FlagMaxMemorySize(ShortTupleFlag, name="M"):
 		"""
-		Set the maximum amount of memory in bytes used for the internal representations of design units. The default is
-		16 megabytes but this may be insufficient when elaborating a large design. The size parameter takes an optional k,
-		m, or g suffix to indicate kilobytes, megabytes, and gigabytes respectively. For example -M64m for 64 megabytes.
+		Set the maximum amount of memory in bytes used for the internal representations of design units.
+
+		The default is 16 megabytes but this may be insufficient when elaborating a large design. The size parameter takes
+		an optional k, m, or g suffix to indicate kilobytes, megabytes, and gigabytes respectively. For example -M64m for 64
+		megabytes.
 		"""
 
 	@CLIArgument()
@@ -212,16 +214,18 @@ class NVC(Executable):
 	@CLIArgument()
 	class FlagVHDLStandard(LongValuedFlag, name="std"):
 		"""
-		Select the VHDL standard revision to use. VHDL standard revisions are commonly referred to by the year they were
-		published. For example IEEE 1076-1993 is known as VHDL-93. Specify either the full year such as 1993 or just the
-		last two digits such as ``93``. The accepted revisions are 1993, 2000, 2002, 2008, 2019. Note there is very limited
-		supported VHDL-2019 at present and VHDL-87 is not supported. The default standard revision is VHDL-2008.
+		Select the VHDL standard revision to use.
+
+		VHDL standard revisions are commonly referred to by the year they were published. For example IEEE 1076-1993 is
+		known as VHDL-93. Specify either the full year such as 1993 or just the last two digits such as ``93``. The
+		accepted revisions are 1993, 2000, 2002, 2008, 2019. Note there is very limited supported VHDL-2019 at present and
+		VHDL-87 is not supported. The default standard revision is VHDL-2008.
 		"""
 		_value: VHDLVersion
 
 		def __init__(self, value: VHDLVersion):
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
@@ -232,15 +236,15 @@ class NVC(Executable):
 		@Value.setter
 		def Value(self, value: VHDLVersion) -> None:
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
 		def AsArgument(self) -> Union[str, Iterable[str]]:
-			if self._name is None:
-				raise ValueError(f"")  # FIXME: add message
+			if self._NAME is None:
+				raise ValueError("")  # FIXME: add message
 
-			return self._pattern.format(self._name, str(self._value)[-2:])
+			return self._PATTERN.format(self._NAME, str(self._value)[-2:])
 
 	@CLIArgument()
 	class FlagRandomSeed(LongValuedFlag, name="stderr"):

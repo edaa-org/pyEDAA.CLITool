@@ -11,8 +11,9 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -38,7 +39,7 @@ from pyTooling.CLIAbstraction.ValuedFlag import LongValuedFlag
 
 @export
 class GTKWave(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Darwin":  "gtkwave",
 		"FreeBSD": "gtkwave",
 		"Linux":   "gtkwave",

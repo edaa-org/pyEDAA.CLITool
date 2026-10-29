@@ -11,7 +11,8 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -31,6 +32,7 @@
 """Unit tests for executable ``ghdl``."""
 from os                   import getenv as os_getenv
 from pathlib              import Path
+from tempfile             import TemporaryDirectory
 from unittest             import TestCase
 
 from pyEDAA.CLITool.GHDL  import GHDL, GHDLVersion
@@ -132,7 +134,8 @@ class Analyze(GHDLTestcases):
 		tool[tool.OptionPaths] = (path, )
 
 		executable = self.getExecutablePath("ghdl", self._binaryDirectoryPath)
-		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"{path!s}\"]", repr(tool))
+		file       = str(path).replace("\\", "\\\\")
+		self.assertEqual(f"[\"{executable}\", \"analyze\", \"--std=08\", \"-fsynopsys\", \"-frelaxed\", \"-fexplicit\", \"--work=lib_Test\", \"--mb-comments\", \"{file}\"]", repr(tool))
 
 		tool.StartProcess()
 		for line in tool.GetLineReader():
@@ -153,10 +156,13 @@ class Analyze(GHDLTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		for file in libraryFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagWorkingDirectory] = directory
 			tool[tool.FlagLibrary] = "libCommon"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -169,6 +175,8 @@ class Analyze(GHDLTestcases):
 		for file in designFiles:
 			print(f"analyze '{file}'")
 			tool = analyzer.GetGHDLAsAnalyzer()
+			tool[tool.FlagWorkingDirectory] = directory
+			tool[tool.FlagSearchPath] = directory
 			tool[tool.FlagLibrary] = "libDesign"
 			tool[tool.OptionPaths] = (file, )
 			tool.StartProcess()
@@ -189,8 +197,11 @@ class Analyze(GHDLTestcases):
 			Path("tests/project/designA/file_A2.vhdl"),
 		)
 
+		directory = self.enterContext(TemporaryDirectory())
+
 		analyzer = self._GetAnalyzer()
 		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagWorkingDirectory] = directory
 		tool[tool.FlagLibrary] = "libCommon"
 		tool[tool.OptionPaths] = libraryFiles
 		tool.StartProcess()
@@ -200,6 +211,8 @@ class Analyze(GHDLTestcases):
 		self.assertEqual(0, tool.Wait())
 
 		tool = analyzer.GetGHDLAsAnalyzer()
+		tool[tool.FlagWorkingDirectory] = directory
+		tool[tool.FlagSearchPath] = directory
 		tool[tool.FlagLibrary] = "libDesign"
 		tool[tool.OptionPaths] = designFiles
 		tool.StartProcess()

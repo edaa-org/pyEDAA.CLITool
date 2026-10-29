@@ -11,8 +11,9 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -42,7 +43,7 @@ from pyEDAA.CLITool                     import ToolMixIn
 class VHDLLibraryTool(Executable, ToolMixIn):
 	"""Abstraction of Active-HDL's VHDL library management tool ``vlib``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vlib",
 		"Windows": "vlib.exe"
 	}
@@ -56,7 +57,7 @@ class VHDLLibraryTool(Executable, ToolMixIn):
 class VHDLCompiler(Executable, ToolMixIn):
 	"""Abstraction of Active-HDL's VHDL compiler ``vcom``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vcom",
 		"Windows": "vcom.exe"
 	}
@@ -93,7 +94,7 @@ class VHDLCompiler(Executable, ToolMixIn):
 class VHDLSimulator(Executable, ToolMixIn):
 	"""Abstraction of Active-HDL's simulator ``vsim``."""
 
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Linux":   "vsim",
 		"Windows": "vsim.exe"
 	}

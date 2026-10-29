@@ -11,8 +11,9 @@
 #                                                                                                                      #
 # License:                                                                                                             #
 # ==================================================================================================================== #
-# Copyright 2017-2026 Patrick Lehmann - Boetzingen, Germany                                                            #
-# Copyright 2014-2016 Technische Universität Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture     #
+# Copyright 2021-2026 Electronic Design Automation Abstraction (EDA²)                                                  #
+# Copyright 2017-2020 Patrick Lehmann - Boetzingen, Germany                                                            #
+# Copyright 2014-2016 Technische Universitaet Dresden - Germany, Chair of VLSI-Design, Diagnostics and Architecture    #
 #                                                                                                                      #
 # Licensed under the Apache License, Version 2.0 (the "License");                                                      #
 # you may not use this file except in compliance with the License.                                                     #
@@ -177,7 +178,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 		return self._backend
 
 	def __str__(self) -> str:
-		dev = f"-dev" if self._dev else ""
+		dev = "-dev" if self._dev else ""
 		return f"{self._major}.{self._minor}.{self._micro}{dev}"
 
 	def __repr__(self) -> str:
@@ -186,7 +187,7 @@ class GHDLVersion(metaclass=ExtendedType, slots=True):
 
 @export
 class GHDL(Executable):
-	_executableNames = {
+	_EXECUTABLE_NAMES = {
 		"Darwin":  "ghdl",
 		"FreeBSD": "ghdl",
 		"Linux":   "ghdl",
@@ -264,7 +265,7 @@ class GHDL(Executable):
 
 		def __init__(self, value: VHDLVersion):
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
@@ -275,15 +276,15 @@ class GHDL(Executable):
 		@Value.setter
 		def Value(self, value: VHDLVersion) -> None:
 			if value is None:
-				raise ValueError(f"")  # FIXME: add message
+				raise ValueError("")  # FIXME: add message
 
 			self._value = value
 
 		def AsArgument(self) -> Union[str, Iterable[str]]:
-			if self._name is None:
-				raise ValueError(f"")  # FIXME: add message
+			if self._NAME is None:
+				raise ValueError("")  # FIXME: add message
 
-			return self._pattern.format(self._name, str(self._value)[-2:])
+			return self._PATTERN.format(self._NAME, str(self._value)[-2:])
 
 	@CLIArgument()
 	class FlagIEEEFlavor(LongValuedFlag, name="ieee"):
