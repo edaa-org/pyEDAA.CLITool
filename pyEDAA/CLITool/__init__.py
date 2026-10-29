@@ -33,7 +33,7 @@
 """An abstraction layer of EDA CLI tools."""
 __author__ =            "Patrick Lehmann"
 __email__ =             "Paebbels@gmail.com"
-__copyright__ =         "2021-2026, Electronic Design Automation Abstraction (EDA²), Unai Martinez-Corral"
+__copyright__ =         "2021-2026, Electronic Design Automation Abstraction (EDA²)"
 __license__ =           "Apache License, Version 2.0"
 __version__ =           "0.5.0"
 __keywords__ =          ["cli", "abstraction layer", "eda"]
